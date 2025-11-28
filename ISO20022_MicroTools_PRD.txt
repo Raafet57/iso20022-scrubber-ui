@@ -1,0 +1,348 @@
+Product Requirements Document
+ISO 20022 Micro-Tools Suite
+Five Payment Operations Productivity Tools
+Document Version
+1.0
+Date
+November 25, 2025
+Status
+Draft
+Author
+[Author Name]
+Stakeholders
+Product, Engineering, Operations, Compliance
+Executive Summary
+Overview
+This document outlines the product requirements for a suite of five micro-tools designed to address specific pain points in Financial Operations (FinOps) and Payment processing. These tools tackle the complexity inherent in ISO 20022 messaging standards, which have become the global standard for financial messaging but present significant usability challenges for operations teams.
+The core value proposition follows a proven formula: take complex XML/JSON standards, filter out technical noise (headers, signatures, metadata), and present only the business-critical information (amounts, parties, dates, reasons) in human-readable formats.
+Strategic Context
+ISO 20022 adoption is accelerating globally with SWIFT's CBPR+ migration, the Federal Reserve's FedNow implementation, and TARGET2 modernization in Europe. A single payment message can exceed 500 lines of XML code, creating operational bottlenecks for teams who must manually interpret these messages for investigations, compliance reviews, and exception handling.
+These micro-tools are positioned as lightweight, web-based utilities that require no integration—operations staff can immediately gain value through simple copy-paste workflows. This approach enables rapid deployment and viral adoption within financial institutions.
+Product Suite Overview
+Product
+Codename
+Primary Value
+Narrative Generator
+"The Storyteller"
+Natural language payment summaries
+XML Anonymizer
+"The Scrubber"
+PII removal with structure preservation
+Chain Visualizer
+"The Map"
+Visual payment routing diagrams
+MT/MX Translator
+"The Rosetta Stone"
+Legacy-to-rich format mapping
+Reject Decoder
+"The Fixer"
+Actionable rejection diagnosis
+Product 1: ISO 20022 Narrative Generator
+Codename: "The Storyteller"
+1.1 Problem Statement
+Operations analysts and customer support agents struggle to quickly understand the "story" of a payment file. Reading raw XML tags (<UltmtDbtr>, <Cdtr>, <Purp>, <RmtInf>) requires mental translation from technical nomenclature to business meaning. This cognitive overhead leads to slower response times on customer inquiries, potential misinterpretation of payment intent, increased training burden for junior analysts, and higher error rates during peak processing periods.
+A typical cross-border payment in pacs.008 format contains 150-300 data elements. An analyst investigating a single payment may need to mentally parse debtor information, creditor details, intermediary banks, charge bearers, regulatory reporting codes, and unstructured remittance information—all encoded in nested XML hierarchies.
+1.2 Target Users
+Primary: L1/L2 Payment Operations Support staff handling customer inquiries and payment investigations
+Secondary: Compliance Officers reviewing flagged transactions for AML/KYC purposes
+Tertiary: Client Service Representatives explaining payment status to corporate treasurers
+1.3 Value Proposition
+Instantly converts complex ISO 20022 XML into a natural language paragraph, reducing cognitive load and investigation time by an estimated 40%. Enables junior analysts to understand payment context without deep technical training, accelerates customer response times, and reduces interpretation errors.
+1.4 Functional Requirements (MVP)
+1.4.1 Input Interface
+Text area for XML paste supporting minimum 50,000 characters
+File upload option (.xml files up to 5MB)
+Supported message types: pacs.008 (Customer Credit Transfer), pacs.009 (Financial Institution Credit Transfer), camt.053 (Bank-to-Customer Statement)
+Auto-detection of message type from XML namespace
+1.4.2 Processing Logic
+The system shall extract and identify the following elements:
+Actors: Debtor (Dbtr), Ultimate Debtor (UltmtDbtr), Creditor (Cdtr), Ultimate Creditor (UltmtCdtr), Instructing Agent, Intermediary Agents (1-3), Creditor Agent
+Financial Elements: Instructed Amount (InstdAmt), Settlement Amount (IntrBkSttlmAmt), Currency, Exchange Rate (if applicable)
+Temporal Data: Creation Date/Time, Requested Execution Date, Settlement Date
+Reference Data: End-to-End ID, UETR, Transaction Reference
+Remittance Information: Unstructured (Ustrd) and Structured (Strd) including invoice references
+Charge Information: Charge Bearer (SHA/OUR/BEN), Charges breakdown if available
+1.4.3 Output Generation
+The system shall generate output using a lightweight LLM (Claude Haiku or equivalent) to produce natural language. Two output modes:
+Narrative Mode (Default): Full paragraph format. Example: "Acme Corporation is sending $50,000.00 USD to Global Suppliers Ltd on behalf of their subsidiary, Acme EU GmbH. This payment is specifically for Invoice #INV-2024-5592 dated March 15, 2024. The transaction will be routed through Deutsche Bank as intermediary. All banking charges are being shared between the parties (SHA)."
+Concise Mode: Structured bullet points for quick scanning
+1.5 Non-Functional Requirements
+Performance: Response time < 3 seconds for standard messages
+Security: No server-side storage of pasted XML; client-side processing preferred
+Availability: 99.5% uptime during business hours (US/EU/APAC)
+1.6 Success Metrics
+Metric
+Target
+Measurement
+Accuracy Rating
+> 4.5/5 stars
+In-app feedback widget
+Time on Page
+< 30 seconds avg
+Analytics tracking
+Weekly Active Users
+500+ by Month 3
+User authentication/sessions
+1.7 Technical Architecture
+Frontend: React/Next.js single-page application
+XML Parsing: Client-side using fast-xml-parser or xml2js
+LLM Integration: Anthropic Claude API (claude-3-haiku) for narrative generation
+Hosting: Vercel/Netlify for serverless deployment
+1.8 User Stories
+US-1.1: As an L1 support agent, I want to paste a pacs.008 XML and immediately see who is paying whom, so that I can answer customer calls faster.
+US-1.2: As a compliance analyst, I want to understand the purpose of a flagged payment in plain English, so that I can determine if further investigation is warranted.
+US-1.3: As a new team member, I want to toggle between narrative and bullet-point views, so that I can learn the payment structure while getting work done.
+Product 2: Smart XML Anonymizer
+Codename: "The Scrubber"
+2.1 Problem Statement
+When payment processing fails, operations and engineering teams need to share XML logs with external parties for debugging: SWIFT support desks, core banking vendors (FIS, Temenos, Finastra), payment processors, or developer communities (Stack Overflow, GitHub Issues). However, production payment files contain Personally Identifiable Information (PII) including customer names and addresses, International Bank Account Numbers (IBANs), national identifiers (SSN, Tax IDs), and transaction amounts that may reveal sensitive business relationships.
+Current workarounds are problematic. Manual redaction is time-consuming, error-prone, and often breaks XML structure. Generic find-replace corrupts validation (e.g., replacing an IBAN with "XXXX" creates an invalid IBAN that fails mod-97 checksum validation). Sharing unredacted files violates GDPR, CCPA, and internal data governance policies.
+2.2 Target Users
+Primary: Implementation Managers coordinating with vendors during go-live
+Secondary: QA Engineers creating test cases from production failures
+Tertiary: Developers debugging integration issues in non-production environments
+2.3 Value Proposition
+Enables safe sharing of production payment data by intelligently scrubbing sensitive information while preserving structural integrity and validation logic. Reduces debug cycle time from hours to minutes while maintaining regulatory compliance.
+2.4 Functional Requirements (MVP)
+2.4.1 Smart Masking Engine
+The system shall detect and replace the following data types while maintaining format validity:
+Data Type
+Detection Method
+Replacement Strategy
+Personal Names
+XML tag context (<Nm>)
+"Person A", "Person B", etc.
+Company Names
+Org name tags
+"Company A", "Company B"
+Addresses
+<PstlAdr> structure
+"123 Test Street, Anytown, XX 12345"
+IBANs
+Regex + mod-97
+Valid dummy IBAN (passes checksum)
+Account Numbers
+<AcctId> tags
+Same-length randomized digits
+Transaction IDs
+Reference tags
+Preserve format, randomize content
+2.4.2 Consistency Mode
+If an entity (e.g., "John Smith") appears in multiple locations within the XML (Debtor Name, Remittance Information, Related Party), all instances shall be replaced with the same pseudonym ("Person A") to maintain referential integrity and debugging context.
+2.4.3 Preservation Rules
+The following elements shall NOT be anonymized:
+BIC/SWIFT codes (bank identifiers are not PII)
+Error codes and status codes
+Currency codes and country codes
+XML structure, namespaces, and schema references
+Date/time stamps (option to shift by random offset)
+2.4.4 Output Options
+Download as .xml file with "_anonymized" suffix
+Copy to clipboard functionality
+Side-by-side diff view showing original vs. anonymized
+Mapping export (CSV showing what was replaced with what)
+2.5 Success Metrics
+Metric
+Target
+Critical Threshold
+Schema Validation Pass Rate
+100%
+> 99%
+PII Detection Recall
+> 99%
+> 95%
+Processing Time
+< 2 seconds
+< 5 seconds
+2.6 User Stories
+US-2.1: As an implementation manager, I want to share a failing payment file with my vendor without exposing client data, so that I can get faster technical support.
+US-2.2: As a QA engineer, I want to generate test data from production failures, so that I can reproduce issues in our test environment.
+US-2.3: As a developer, I want the anonymized file to still pass XML schema validation, so that I can run it through our parsing logic without modification.
+Product 3: Payment Chain Visualizer
+Codename: "The Map"
+3.1 Problem Statement
+Cross-border payments traverse multiple financial institutions before reaching the beneficiary. In ISO 20022 messages (particularly pacs.008 and pacs.009), the chain of banks is encoded in deeply nested XML structures: Instructing Agent (InstgAgt), Intermediary Agent 1-3 (IntrmyAgt1, IntrmyAgt2, IntrmyAgt3), and Creditor Agent (CdtrAgt). Each agent block contains BIC codes, LEIs, clearing system identifiers, and branch information.
+During payment investigations, analysts must manually trace this routing to answer questions like: "Which bank has my payment right now?" and "Why did the payment route through Singapore when it was supposed to go direct?" This requires mentally parsing nested XML while cross-referencing BIC directories—a time-consuming process prone to errors.
+3.2 Target Users
+Primary: Payment Investigations Teams tracking stuck or delayed payments
+Secondary: Liquidity Managers understanding nostro/vostro relationships
+Tertiary: Correspondent Banking teams analyzing routing efficiency
+3.3 Value Proposition
+Transforms complex agent chains into intuitive visual flowcharts, enabling instant comprehension of payment routing. Reduces time-to-insight for investigations from 15+ minutes of manual XML analysis to under 30 seconds.
+3.4 Functional Requirements (MVP)
+3.4.1 XML Parser
+Extract all agent BICs from the payment chain:
+Debtor Agent (DbtrAgt)
+Instructing Agent (InstgAgt)
+Intermediary Agent 1, 2, 3 (IntrmyAgt1/2/3)
+Creditor Agent (CdtrAgt)
+Instructed Agent (InstdAgt)
+3.4.2 BIC Enrichment
+For each BIC code, resolve via external API (SWIFT Ref Data or open BIC directory):
+Full institution name
+Country (with flag emoji/icon)
+City
+Institution type (Commercial Bank, Central Bank, etc.)
+3.4.3 Visualization Engine
+Generate left-to-right flowchart using D3.js or React Flow:
+Nodes: Rectangular boxes with bank name, BIC, and country flag
+Edges: Directional arrows labeled with settlement method (COVE = Cover Payment, INGA = Interbank Gross Amount, INDA = Interbank Net Amount)
+Highlighting: Optional color-coding for different clearing systems (TARGET2, CHIPS, Fedwire)
+3.4.4 Time Analysis (Phase 2)
+If timestamps available in header (CreDtTm) and settlement (SttlmDt), display estimated "time in flight" between each hop.
+3.5 Success Metrics
+Time to Insight: Reduction in time to identify intermediary banks (target: < 30 seconds vs. 15+ minute baseline)
+User Engagement: Diagram export rate (PNG/PDF) > 25% of sessions
+Accuracy: BIC resolution accuracy > 99%
+3.6 User Stories
+US-3.1: As a payment investigator, I want to see a visual map of the bank chain, so that I can quickly identify which intermediary is causing a delay.
+US-3.2: As a liquidity manager, I want to understand our correspondent banking relationships visually, so that I can optimize routing for cost and speed.
+US-3.3: As a client service rep, I want to export a visual diagram, so that I can include it in customer communication about payment status.
+Product 4: Legacy-to-Rich Translator
+Codename: "The Rosetta Stone"
+4.1 Problem Statement
+The financial industry is in the midst of a multi-year migration from SWIFT MT (Message Type) formats to ISO 20022 MX formats. Senior operations staff, correspondent banking experts, and treasury professionals have decades of experience with MT103, MT202, MT940, and other legacy formats. They intuitively know that "Field 50K" contains ordering customer information or that "Field 71A" specifies charge details.
+When confronted with ISO 20022's verbose XML structure (<DbtrAcct><Id><IBAN>), these experts struggle to locate equivalent information. This knowledge gap creates training costs exceeding $10,000 per employee for comprehensive ISO 20022 certification, reliance on outdated MT knowledge during the transition period, friction in cross-generational team collaboration, and slower adoption of enhanced ISO 20022 features.
+4.2 Target Users
+Primary: Banks undergoing CBPR+ migration (SWIFT's Cross-Border Payments and Reporting Plus initiative)
+Secondary: Corporate Treasurers receiving ISO 20022 statements from their banks
+Tertiary: Training departments creating migration documentation
+4.3 Value Proposition
+Bridges the knowledge gap between legacy MT and modern MX formats by providing a side-by-side "translation" view. Acts as both an educational tool and a practical reference utility, accelerating migration adoption while preserving institutional knowledge.
+4.4 Functional Requirements (MVP)
+4.4.1 Split-View Interface
+Left Pane: Input area for ISO 20022 XML (pacs.008, pacs.009, camt.053)
+Right Pane: Generated "Virtual MT" representation (MT103, MT202, MT940 equivalent)
+4.4.2 Field Mapping Engine
+Implement comprehensive field mapping based on SWIFT's official MT-MX mapping guidelines:
+MT103 Field
+ISO 20022 Path
+Description
+:20: (TRN)
+CdtTrfTxInf/PmtId/InstrId
+Transaction Reference
+:32A: (Value Date/Amt)
+IntrBkSttlmDt + IntrBkSttlmAmt
+Settlement Date & Amount
+:50K: (Ordering Cust)
+Dbtr/Nm + Dbtr/PstlAdr
+Debtor Name & Address
+:59: (Beneficiary)
+Cdtr/Nm + Cdtr/PstlAdr
+Creditor Name & Address
+:70: (Remit Info)
+RmtInf/Ustrd
+Payment Purpose/Invoice
+:71A: (Charges)
+ChrgBr
+SHA/OUR/BEN
+Field 121 (UETR)
+CdtTrfTxInf/PmtId/UETR
+Unique End-to-End Reference
+4.4.3 Interactive Highlighting
+Hover or click on any XML element to highlight the corresponding MT field (and vice versa). Tooltip displays: "You are looking at <UETR>, which corresponds to Field 121 in MT format."
+4.4.4 Truncation Warnings
+Visually flag data in the ISO 20022 message that would be lost or truncated in MT conversion:
+Addresses longer than 4×35 characters (MT limit)
+Structured remittance data not representable in unstructured Field 70
+Ultimate party information (UltmtDbtr/UltmtCdtr) with no MT equivalent
+4.5 Success Metrics
+Feature Engagement: Highlight/hover interaction rate > 60% of sessions
+Educational Value: Post-session survey: "Did this help you understand ISO 20022?" > 4/5 rating
+Adoption: Return user rate > 40% within 30 days
+4.6 User Stories
+US-4.1: As a senior banker familiar with MT103, I want to see where Field 50K appears in ISO 20022, so that I can quickly find ordering customer information in the new format.
+US-4.2: As a trainer, I want to demonstrate the enhanced data richness of ISO 20022, so that I can show my team why migration matters.
+US-4.3: As a corporate treasurer, I want to understand my bank's new statement format, so that I can update my reconciliation processes.
+Product 5: Reject Reason Decoder
+Codename: "The Fixer"
+5.1 Problem Statement
+When a payment fails, the rejection is communicated via a pacs.002 (Payment Status Report) message. The failure reason is encoded as a four-character code (e.g., "AC03", "AM05", "BE04") buried within <TxSts><Rsn><Cd> tags, sometimes accompanied by cryptic free-text in <AddtlInf>.
+Operations teams face multiple pain points: Code lookup requires referencing 50+ page SWIFT or CBPR+ documentation, multiple codes may apply to the same scenario, the rejecting institution (Debtor Agent vs. Intermediary vs. Creditor Agent) context matters, and there's no standard guidance on remediation steps. A single failed payment investigation can consume 30-60 minutes of analyst time, with resolution often requiring multiple iterations of "fix and retry."
+5.2 Target Users
+Primary: Exception Handling Teams processing failed payments
+Secondary: Client Service Representatives explaining failures to corporate clients
+Tertiary: Technical support teams diagnosing integration issues
+5.3 Value Proposition
+Instantly diagnoses the root cause of payment rejections and provides specific, actionable remediation steps. Reduces exception resolution time from 30+ minutes to under 5 minutes while improving first-time-fix rates.
+5.4 Functional Requirements (MVP)
+5.4.1 Input Processing
+Accept pacs.002 (Payment Status Report) XML via paste or file upload
+Auto-detect and extract: Transaction Status (TxSts), Reason Code (Rsn/Cd), Additional Information (AddtlInf), Rejecting Agent (from context)
+Handle multiple rejection reasons in single message
+5.4.2 Knowledge Base
+Comprehensive database of ISO 20022 rejection codes with:
+Code
+Meaning & Remediation
+AC01
+Incorrect Account Number – Verify IBAN/account with beneficiary
+AC03
+Invalid Account Number – Check digit count and format
+AC04
+Closed Account – Contact beneficiary for new account details
+AM05
+Duplication – Check ledger; wait 30 min before retry
+BE04
+Missing Creditor Address – Add complete postal address
+RC01
+Invalid BIC – Verify beneficiary bank BIC in SWIFT directory
+NARR
+See Additional Info – Parse AddtlInf for bank-specific reason
+5.4.3 Output Structure
+For each rejection, display:
+What Happened: Plain English explanation of the rejection
+Where It Happened: Which institution in the chain rejected (with BIC if available)
+Why (Root Cause): Most likely cause based on code + context
+Actionable Fix: Specific remediation steps (e.g., "Verify IBAN checksum", "Contact beneficiary for updated account")
+Confidence Level: High/Medium/Low based on specificity of available information
+5.5 Success Metrics
+Metric
+Target
+Baseline
+Resolution Time
+< 5 minutes
+30-60 minutes
+First-Time Fix Rate
+> 80%
+~50%
+Viral Coefficient
+> 1.2
+N/A (new product)
+5.6 User Stories
+US-5.1: As an exception handler, I want to paste a pacs.002 and immediately know what went wrong, so that I can fix the payment on the first attempt.
+US-5.2: As a CSR, I want a plain-English explanation of why a client's payment failed, so that I can explain it without using technical jargon.
+US-5.3: As a new analyst, I want to learn what different rejection codes mean over time, so that I can develop expertise in exception handling.
+Appendix A: Technical Stack Recommendations
+A.1 Shared Infrastructure
+Frontend Framework: Next.js 14+ with React 18
+Styling: Tailwind CSS + shadcn/ui component library
+XML Parsing: fast-xml-parser (client-side, no server storage)
+Hosting: Vercel (automatic CI/CD, edge functions)
+Analytics: PostHog or Mixpanel for product analytics
+A.2 Product-Specific Dependencies
+Product
+Dependencies
+Narrative Generator
+Anthropic Claude API (claude-3-haiku for cost efficiency)
+XML Anonymizer
+iban.js (IBAN validation/generation), faker.js (dummy data)
+Chain Visualizer
+React Flow or D3.js, BIC lookup API (openiban.com or internal)
+MT/MX Translator
+Monaco Editor (syntax highlighting), custom mapping JSON
+Reject Decoder
+Static knowledge base JSON, optional LLM for NARR parsing
+Appendix B: Go-to-Market Recommendations
+B.1 Launch Priority
+Based on viral potential and immediate pain-point resolution, recommended launch sequence:
+Phase 1: Reject Reason Decoder ("The Fixer") – Highest emotional impact, immediate value
+Phase 2: Narrative Generator ("The Storyteller") – High volume use case, LinkedIn shareability
+Phase 3: XML Anonymizer ("The Scrubber") – Technical users, vendor/support sharing
+Phase 4: Payment Chain Visualizer ("The Map") – Investigation teams
+Phase 5: Legacy-to-Rich Translator ("The Rosetta Stone") – Migration-specific timing
+B.2 Distribution Channels
+LinkedIn: Target payment operations professionals, treasury groups, SWIFT community
+Industry Events: SIBOS, EBAday, Payments Canada Summit, AFP Conference
+Content Marketing: "ISO 20022 Migration Survival Guide" blog series
+Partnerships: Core banking vendors, SWIFT partners, fintech accelerators
+— End of Document —

@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smart XML Anonymizer</title>
+    <style>
+      :root {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        line-height: 1.5;
+        color: #1f2933;
+        background-color: #f6f7fb;
+      }
+      body {
+        margin: 0;
+        padding: 2rem;
+        background: #f6f7fb;
+      }
+      h1 {
+        margin-bottom: 0.25rem;
+      }
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.5rem;
+      }
+      .card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+        padding: 1.5rem;
+      }
+      textarea {
+        width: 100%;
+        min-height: 280px;
+        font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+        font-size: 0.9rem;
+        border-radius: 12px;
+        border: 1px solid #d4d8e1;
+        padding: 0.75rem;
+        resize: vertical;
+      }
+      textarea:focus,
+      input:focus {
+        outline: 2px solid #3b82f6;
+        border-color: transparent;
+      }
+      .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 150ms ease, box-shadow 150ms ease;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
+      }
+      .btn-primary:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .btn-primary:not(:disabled):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 32px rgba(37, 99, 235, 0.35);
+      }
+      label {
+        font-size: 0.95rem;
+        color: #5c6274;
+      }
+      .toggles {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.8rem;
+      }
+      .stat-card {
+        border: 1px solid #e2e4ec;
+        border-radius: 14px;
+        padding: 0.85rem;
+        text-align: center;
+      }
+      .stat-card .label {
+        font-size: 0.75rem;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .stat-card .value {
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+      .tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+      .tab-button {
+        border: none;
+        border-radius: 999px;
+        padding: 0.5rem 1rem;
+        background: #e6e8f2;
+        cursor: pointer;
+      }
+      .tab-button.active {
+        background: #1f6feb;
+        color: #fff;
+      }
+      pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        border-radius: 12px;
+        padding: 1rem;
+        overflow: auto;
+        max-height: 360px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      th,
+      td {
+        padding: 0.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        vertical-align: top;
+      }
+      th {
+        text-align: left;
+        color: #6b7280;
+      }
+      .actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .btn-secondary {
+        background: #eef2ff;
+        color: #3730a3;
+      }
+      .btn-secondary:hover {
+        background: #e0e7ff;
+      }
+      .alert {
+        background: #fee2e2;
+        color: #b91c1c;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        margin-top: 1rem;
+      }
+      .loader {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #2563eb;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        animation: spin 0.8s linear infinite;
+        margin: 1rem auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .diff-line {
+        white-space: pre-wrap;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .diff-add {
+        color: #10b981;
+      }
+      .diff-remove {
+        color: #ef4444;
+      }
+      .hidden {
+        display: none;
+      }
+      .file-input {
+        width: 100%;
+      }
+      @media (max-width: 640px) {
+        body {
+          padding: 1rem;
+        }
+        .actions {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <p style="color: #6b7280; margin-bottom: 0.2rem">ISO 20022 Micro-tools</p>
+        <h1>Smart XML Anonymizer (“The Scrubber”)</h1>
+        <p style="max-width: 720px; color: #4b5563">
+          Paste or upload ISO 20022 messages (pacs.008/009, camt.053, etc.) and get a vendor-safe version that preserves
+          schema fidelity while masking PII. Works entirely locally—no data leaves your browser.
+        </p>
+      </header>
+
+      <section class="layout" style="margin-top: 1.5rem">
+        <div class="card">
+          <h2>Input payment XML</h2>
+          <textarea id="inputXml" placeholder="Paste ISO 20022 XML here..."></textarea>
+          <div class="controls">
+            <label>
+              Load sample:
+              <select id="sampleSelect">
+                <option value="">Select sample...</option>
+                <option value="./samples/sample-pacs008.xml">pacs.008 – Landing Page c.105.1.1</option>
+                <option value="./samples/sample-pacs008-swiftref.xml">pacs.008 – Banco di Caribe → Harmony Bank (SWIFTRef)</option>
+                <option value="./samples/sample-pacs009-swiftref.xml">pacs.009 – Punjab National → Indian Bank (SWIFTRef)</option>
+                <option value="./samples/sample-camt053-swiftref.xml">camt.053 – BNP Paribas Statement (SWIFTRef)</option>
+              </select>
+            </label>
+            <input id="fileInput" class="file-input" type="file" accept=".xml,text/xml" />
+            <div class="toggles">
+              <label>
+                <input type="checkbox" id="consistencyToggle" checked />
+                Consistency mode (same values → same pseudonym)
+              </label>
+              <label>
+                <input type="checkbox" id="remittanceToggle" />
+                Preserve remittance text (Ustrd)
+              </label>
+              <label>
+                <input type="checkbox" id="shiftToggle" />
+                Shift timestamps
+                <input
+                  type="number"
+                  id="shiftDays"
+                  value="0"
+                  style="width: 120px; margin-left: 0.5rem"
+                  disabled
+                />
+                days
+              </label>
+            </div>
+            <button class="btn btn-primary" id="scrubButton">Scrub XML</button>
+            <div id="inputError" class="alert hidden"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem">
+            <div>
+              <h2 style="margin: 0">Results</h2>
+              <p style="margin: 0; color: #6b7280">
+                Review anonymized XML, inspect diffs, and export mapping logs for vendor sharing.
+              </p>
+            </div>
+            <div class="actions">
+              <button class="btn btn-secondary" id="copyButton" disabled>Copy XML</button>
+              <button class="btn btn-secondary" id="downloadButton" disabled>Download XML</button>
+            </div>
+          </div>
+          <div id="loader" class="loader hidden"></div>
+          <div id="resultsEmpty" style="color: #6b7280; margin-top: 1rem">
+            Run the scrubber to visualize anonymized output, diffs, and replacement mappings.
+          </div>
+          <div id="resultsContainer" class="hidden">
+            <div class="stats" id="statsContainer"></div>
+            <div class="tabs">
+              <button class="tab-button active" data-tab="output">Anonymized XML</button>
+              <button class="tab-button" data-tab="diff">Diff</button>
+              <button class="tab-button" data-tab="mapping">Mapping</button>
+            </div>
+            <div id="tab-output">
+              <textarea id="outputXml" readonly></textarea>
+            </div>
+            <div id="tab-diff" class="hidden">
+              <div id="diffContainer" style="max-height: 360px; overflow: auto"></div>
+            </div>
+            <div id="tab-mapping" class="hidden">
+              <div style="max-height: 360px; overflow: auto">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Type</th>
+                      <th>Original</th>
+                      <th>Pseudonym</th>
+                      <th>Tag</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mappingTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const sampleSelect = document.getElementById('sampleSelect');
+      const fileInput = document.getElementById('fileInput');
+      const inputXml = document.getElementById('inputXml');
+      const scrubButton = document.getElementById('scrubButton');
+      const outputXml = document.getElementById('outputXml');
+      const copyButton = document.getElementById('copyButton');
+      const downloadButton = document.getElementById('downloadButton');
+      const statsContainer = document.getElementById('statsContainer');
+      const mappingTable = document.getElementById('mappingTable');
+      const diffContainer = document.getElementById('diffContainer');
+      const resultsContainer = document.getElementById('resultsContainer');
+      const resultsEmpty = document.getElementById('resultsEmpty');
+      const inputError = document.getElementById('inputError');
+      const loader = document.getElementById('loader');
+      const consistencyToggle = document.getElementById('consistencyToggle');
+      const remittanceToggle = document.getElementById('remittanceToggle');
+      const shiftToggle = document.getElementById('shiftToggle');
+      const shiftDays = document.getElementById('shiftDays');
+
+      const tabButtons = Array.from(document.querySelectorAll('.tab-button'));
+      const tabs = {
+        output: document.getElementById('tab-output'),
+        diff: document.getElementById('tab-diff'),
+        mapping: document.getElementById('tab-mapping'),
+      };
+
+      tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          tabButtons.forEach((btn) => btn.classList.remove('active'));
+          button.classList.add('active');
+          Object.values(tabs).forEach((tab) => tab.classList.add('hidden'));
+          const target = button.dataset.tab;
+          tabs[target].classList.remove('hidden');
+        });
+      });
+
+      shiftToggle.addEventListener('change', () => {
+        shiftDays.disabled = !shiftToggle.checked;
+      });
+
+      sampleSelect.addEventListener('change', async (event) => {
+        const path = event.target.value;
+        if (!path) return;
+        try {
+          loader.classList.remove('hidden');
+          const response = await fetch(path);
+          const text = await response.text();
+          inputXml.value = text;
+          inputError.classList.add('hidden');
+        } catch (err) {
+          inputError.textContent = 'Unable to load sample file.';
+          inputError.classList.remove('hidden');
+        } finally {
+          loader.classList.add('hidden');
+        }
+      });
+
+      fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          inputXml.value = reader.result;
+          inputError.classList.add('hidden');
+        };
+        reader.readAsText(file);
+      });
+
+      function generatePlaceholder(counter, type) {
+        if (type === 'name') return `Person ${String.fromCharCode(64 + counter)}`;
+        if (type === 'address') return `123 Harmony Street, City ${counter}, ZZ 9999`;
+        if (type === 'iban') {
+          const country = 'DE';
+          const body = `${counter + 11}`.padStart(20, '0');
+          const raw = `${body}${(country.charCodeAt(0) - 55).toString()}${(
+            country.charCodeAt(1) - 55
+          ).toString()}00`;
+          let remainder = 0n;
+          for (const ch of raw) {
+            remainder = (remainder * 10n + BigInt(ch)) % 97n;
+          }
+          const checkDigits = String(98n - remainder).padStart(2, '0');
+          return `${country}${checkDigits}${body}`;
+        }
+        if (type === 'account') {
+          return `0000${(counter * 7919).toString().padStart(12, '0')}`.slice(-12);
+        }
+        if (type === 'reference') {
+          return `REF-${counter.toString().padStart(6, '0')}`;
+        }
+        return `Value-${counter}`;
+      }
+
+      function shiftIsoDate(value, offsetDays) {
+        if (!offsetDays) return value;
+        const match = value.match(/(\d{4}-\d{2}-\d{2})(T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+\-]\d{2}:?\d{2})?)?/);
+        if (!match) return value;
+        const date = new Date(match[1]);
+        if (Number.isNaN(date.getTime())) return value;
+        date.setUTCDate(date.getUTCDate() + offsetDays);
+        const isoDate = date.toISOString().slice(0, match[1].length);
+        const timePart = match[2] ?? '';
+        return value.replace(match[0], `${isoDate}${timePart}`);
+      }
+
+      function scrubXml(input, options) {
+        let xml = input;
+        const mapping = [];
+        const stats = {
+          name: 0,
+          address: 0,
+          iban: 0,
+          account: 0,
+          reference: 0,
+          date: 0,
+        };
+        const cache = new Map();
+
+        const register = (type, original, replacement, tag) => {
+          if (original === replacement) return;
+          mapping.push({ type, original: original.trim(), replacement, tag });
+          stats[type] += 1;
+        };
+
+        const placeholderFor = (type, original) => {
+          if (options.consistency) {
+            const key = `${type}::${original}`;
+            if (cache.has(key)) return cache.get(key);
+            const placeholder = generatePlaceholder(stats[type] + 1, type);
+            cache.set(key, placeholder);
+            return placeholder;
+          }
+          return generatePlaceholder(stats[type] + 1, type);
+        };
+
+        xml = xml.replace(/<Nm>([\s\S]*?)<\/Nm>/gi, (match, value) => {
+          const trimmed = value.trim();
+          if (!trimmed || trimmed.length < 3 || /BIC/i.test(trimmed)) return match;
+          const replacement = placeholderFor('name', trimmed);
+          register('name', trimmed, replacement, 'Nm');
+          return match.replace(value, replacement);
+        });
+
+        xml = xml.replace(/<PstlAdr>([\s\S]*?)<\/PstlAdr>/gi, (match, value) => {
+          const trimmed = value.trim();
+          if (!trimmed) return match;
+          const replacement = placeholderFor('address', trimmed);
+          register('address', trimmed, replacement, 'PstlAdr');
+          return `<PstlAdr><StrtNm>${replacement}</StrtNm><TwnNm>Sample City</TwnNm><Ctry>ZZ</Ctry><PstCd>99999</PstCd></PstlAdr>`;
+        });
+
+        xml = xml.replace(/<IBAN>(.*?)<\/IBAN>/gi, (match, value) => {
+          const trimmed = value.trim();
+          if (!trimmed) return match;
+          const replacement = placeholderFor('iban', trimmed);
+          register('iban', trimmed, replacement, 'IBAN');
+          return `<IBAN>${replacement}</IBAN>`;
+        });
+
+        xml = xml.replace(/<AcctId>([\s\S]*?)<\/AcctId>/gi, (match, inner) => {
+          const updated = inner.replace(/<Id>(.*?)<\/Id>/gi, (m, value) => {
+            const trimmed = value.trim();
+            if (!trimmed || trimmed.length < 6) return m;
+            const replacement = placeholderFor('account', trimmed);
+            register('account', trimmed, replacement, 'AcctId.Id');
+            return `<Id>${replacement}</Id>`;
+          });
+          return `<AcctId>${updated}</AcctId>`;
+        });
+
+        const referenceTags = ['EndToEndId', 'InstrId', 'TxId', 'UETR'];
+        for (const tag of referenceTags) {
+          const regex = new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`, 'gi');
+          xml = xml.replace(regex, (match, value) => {
+            const trimmed = value.trim();
+            if (!trimmed) return match;
+            const replacement = placeholderFor('reference', trimmed);
+            register('reference', trimmed, replacement, tag);
+            return `<${tag}>${replacement}</${tag}>`;
+          });
+        }
+
+        if (!options.preserveRemittance) {
+          xml = xml.replace(/<Ustrd>([\s\S]*?)<\/Ustrd>/gi, (match, value) => {
+            const trimmed = value.trim();
+            if (!trimmed) return match;
+            const replacement = placeholderFor('reference', trimmed);
+            register('reference', trimmed, replacement, 'Ustrd');
+            return `<Ustrd>${replacement}</Ustrd>`;
+          });
+        }
+
+        if (options.shiftDates && options.dateOffset) {
+          xml = xml.replace(
+            /(\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+\-]\d{2}:?\d{2})?)?)/g,
+            (match) => {
+              if (!/\d{4}-\d{2}-\d{2}/.test(match)) return match;
+              const replacement = shiftIsoDate(match, options.dateOffset);
+              if (replacement !== match) {
+                register('date', match, replacement, 'Timestamp');
+              }
+              return replacement;
+            },
+          );
+        }
+
+        return { output: xml, mapping, stats };
+      }
+
+      function computeDiff(original, anonymized) {
+        const origLines = original.split('\n');
+        const anonLines = anonymized.split('\n');
+        const max = Math.max(origLines.length, anonLines.length);
+        const diff = [];
+        for (let i = 0; i < max; i += 1) {
+          const o = origLines[i] ?? '';
+          const a = anonymized[i] ?? '';
+          if (o === a) {
+            diff.push({ type: 'same', value: a });
+          } else {
+            if (o) diff.push({ type: 'remove', value: `- ${o}` });
+            if (a) diff.push({ type: 'add', value: `+ ${a}` });
+          }
+        }
+        return diff;
+      }
+
+      function renderStats(stats) {
+        statsContainer.innerHTML = '';
+        const labels = {
+          name: 'Names',
+          address: 'Addresses',
+          iban: 'IBANs',
+          account: 'Accounts',
+          reference: 'References',
+          date: 'Timestamps',
+        };
+        Object.entries(stats).forEach(([key, value]) => {
+          const card = document.createElement('div');
+          card.className = 'stat-card';
+          card.innerHTML = `<div class="label">${labels[key] ?? key}</div><div class="value">${value}</div>`;
+          statsContainer.appendChild(card);
+        });
+      }
+
+      function renderMapping(mapping) {
+        mappingTable.innerHTML = '';
+        mapping.forEach((item, idx) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${item.type}</td>
+            <td><pre style="white-space: pre-wrap;">${item.original}</pre></td>
+            <td><pre style="white-space: pre-wrap;">${item.replacement}</pre></td>
+            <td>${item.tag}</td>
+          `;
+          mappingTable.appendChild(row);
+        });
+      }
+
+      function renderDiff(diff) {
+        diffContainer.innerHTML = '';
+        diff.forEach((part) => {
+          const div = document.createElement('div');
+          div.className = 'diff-line';
+          if (part.type === 'add') div.classList.add('diff-add');
+          if (part.type === 'remove') div.classList.add('diff-remove');
+          div.textContent = part.value;
+          diffContainer.appendChild(div);
+        });
+      }
+
+      async function handleScrub() {
+        const xml = inputXml.value.trim();
+        if (!xml) {
+          inputError.textContent = 'Please paste or upload XML to scrub.';
+          inputError.classList.remove('hidden');
+          return;
+        }
+        inputError.classList.add('hidden');
+        loader.classList.remove('hidden');
+        resultsEmpty.classList.add('hidden');
+        resultsContainer.classList.add('hidden');
+        try {
+          const result = scrubXml(xml, {
+            consistency: consistencyToggle.checked,
+            preserveRemittance: remittanceToggle.checked,
+            shiftDates: shiftToggle.checked,
+            dateOffset: shiftToggle.checked ? Number(shiftDays.value) || 0 : 0,
+          });
+          outputXml.value = result.output;
+          renderStats(result.stats);
+          renderMapping(
+            result.mapping.map((entry) => ({
+              ...entry,
+              type: entry.type,
+            })),
+          );
+          renderDiff(computeDiff(xml, result.output));
+          copyButton.disabled = false;
+          downloadButton.disabled = false;
+          resultsContainer.classList.remove('hidden');
+        } catch (err) {
+          console.error(err);
+          inputError.textContent = 'Failed to process XML. Ensure the content is valid ISO 20022.';
+          inputError.classList.remove('hidden');
+        } finally {
+          loader.classList.add('hidden');
+        }
+      }
+
+      scrubButton.addEventListener('click', handleScrub);
+
+      copyButton.addEventListener('click', async () => {
+        if (!outputXml.value) return;
+        await navigator.clipboard.writeText(outputXml.value);
+        copyButton.textContent = 'Copied!';
+        setTimeout(() => {
+          copyButton.textContent = 'Copy XML';
+        }, 1500);
+      });
+
+      downloadButton.addEventListener('click', () => {
+        if (!outputXml.value) return;
+        const blob = new Blob([outputXml.value], { type: 'text/xml' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'anonymized.xml';
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>SWIFTREF-PNB-CPPC-2025-07</MsgId>
+      <CreDtTm>2025-03-04T08:30:00Z</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <TtlIntrBkSttlmAmt Ccy="INR">12500000</TtlIntrBkSttlmAmt>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>PNB-CPPC-MUM-2025-03</InstrId>
+        <EndToEndId>MUMBAI-PENSION-REF-0034</EndToEndId>
+        <TxId>PNB-7456500-89711</TxId>
+        <UETR>35d87618-1834-43be-9468-61e41a58c1d0</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="INR">12500000</IntrBkSttlmAmt>
+      <ChrgBr>SHA</ChrgBr>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>PUNBINBBXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <IntermediaryAgt1>
+        <FinInstnId>
+          <BICFI>PUNB0746500</BICFI>
+          <Nm>PUNJAB NATIONAL BANK CPPC JAIPUR</Nm>
+        </FinInstnId>
+      </IntermediaryAgt1>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>IDIBINBBLAL</BICFI>
+          <Nm>INDIAN BANK LAL DARWAJA</Nm>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>ICICI BANK LTD PANJRAPOLE</Nm>
+        <PstlAdr>
+          <StrtNm>SHOP NO 9, SHIVALIK SHARDA HARMONY</StrtNm>
+          <TwnNm>AHMEDABAD</TwnNm>
+          <Ctry>IN</Ctry>
+          <PstCd>380015</PstCd>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>IN32ICIC00083660000012345</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Pension credit batch 2025/03 for Gujarat police retirees</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

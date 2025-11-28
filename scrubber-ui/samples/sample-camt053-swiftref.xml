@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.10">
+  <BkToCstmrStmt>
+    <GrpHdr>
+      <MsgId>BNPAFRPPCHS-STATEMENT-20250214</MsgId>
+      <CreDtTm>2025-02-14T07:25:00+01:00</CreDtTm>
+    </GrpHdr>
+    <Stmt>
+      <Id>BNP-CHARTRES-DAILY-2025-02-14</Id>
+      <ElctrncSeqNb>58</ElctrncSeqNb>
+      <LglSeqNb>2025</LglSeqNb>
+      <CreDtTm>2025-02-14T07:00:00+01:00</CreDtTm>
+      <Acct>
+        <Id>
+          <IBAN>FR7610096000301234567890188</IBAN>
+        </Id>
+        <Ownr>
+          <Nm>BNP PARIBAS CHARTRES</Nm>
+          <PstlAdr>
+            <StrtNm>12 RUE DU DOCTEUR MAZET</StrtNm>
+            <TwnNm>CHARTRES</TwnNm>
+            <Ctry>FR</Ctry>
+            <PstCd>28000</PstCd>
+          </PstlAdr>
+        </Ownr>
+        <Svcr>
+          <FinInstnId>
+            <BICFI>BNPAFRPPCHS</BICFI>
+          </FinInstnId>
+        </Svcr>
+      </Acct>
+      <Bal>
+        <Tp>
+          <CdOrPrtry>
+            <Cd>CLBD</Cd>
+          </CdOrPrtry>
+        </Tp>
+        <Amt Ccy="EUR">9823456.72</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt>
+          <Dt>2025-02-13</Dt>
+        </Dt>
+      </Bal>
+      <Ntry>
+        <Amt Ccy="EUR">-52000.00</Amt>
+        <CdtDbtInd>DBIT</CdtDbtInd>
+        <Sts>BOOK</Sts>
+        <BookgDt>
+          <Dt>2025-02-13</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2025-02-13</Dt>
+        </ValDt>
+        <AcctSvcrRef>BNP-CHS-00078319</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <Refs>
+              <InstrId>CPNY-AVIO-FR2025</InstrId>
+              <EndToEndId>AVIO-PAYROLL-0213</EndToEndId>
+              <TxId>PPCCITM1-000233</TxId>
+            </Refs>
+            <RltdPties>
+              <Cdtr>
+                <Nm>AVIO S.P.A.</Nm>
+                <PstlAdr>
+                  <StrtNm>VIA MAURO MACCHI 27</StrtNm>
+                  <TwnNm>MILANO</TwnNm>
+                  <Ctry>IT</Ctry>
+                  <PstCd>20124</PstCd>
+                </PstlAdr>
+              </Cdtr>
+              <Dbtr>
+                <Nm>BNP PARIBAS CERGY-PONTOISE</Nm>
+                <PstlAdr>
+                  <StrtNm>4 PLACE DE LA PREFECTURE</StrtNm>
+                  <TwnNm>CERGY</TwnNm>
+                  <Ctry>FR</Ctry>
+                  <PstCd>95000</PstCd>
+                </PstlAdr>
+              </Dbtr>
+            </RltdPties>
+            <RmtInf>
+              <Ustrd>Payroll run February 2025 - Italy branch staff</Ustrd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>

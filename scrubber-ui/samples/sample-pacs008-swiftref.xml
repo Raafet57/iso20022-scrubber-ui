@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>SWIFTREF-DB000000DAMC-001</MsgId>
+      <CreDtTm>2025-02-12T10:45:00Z</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>TXN-DB000000DAMC</InstrId>
+        <EndToEndId>END2END-ACME-4571</EndToEndId>
+        <TxId>2025-000182</TxId>
+        <UETR>1c6e5671-9f68-400b-a50c-cd6302f1f914</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="USD">87500.15</IntrBkSttlmAmt>
+      <ChrgBr>SHA</ChrgBr>
+      <Dbtr>
+        <Nm>BANCO DI CARIBE N.V. BONAIRE</Nm>
+        <PstlAdr>
+          <StrtNm>KAYA GRANDI 22</StrtNm>
+          <TwnNm>KRALENDIJK</TwnNm>
+          <Ctry>BQ</Ctry>
+          <PstCd>00000</PstCd>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>BQ20BDCC12345678901234</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>BDCCBQBNXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKUS44GAR</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>HARMONY BANK GARLAND</Nm>
+        <PstlAdr>
+          <StrtNm>515 WEST AVENUE</StrtNm>
+          <TwnNm>GARLAND</TwnNm>
+          <Ctry>US</Ctry>
+          <PstCd>75042</PstCd>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>US12HMBK11192511300001</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Invoice 4509 / Client onboarding package</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

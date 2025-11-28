@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.12">
+  <FIToFIPmtStsRpt>
+    <GrpHdr>
+      <MsgId>REJECT-AC03-20250318</MsgId>
+      <CreDtTm>2025-03-18T10:10:10Z</CreDtTm>
+    </GrpHdr>
+    <OrgnlGrpInfAndSts>
+      <OrgnlMsgId>COVER-DBCC-USD-20250301</OrgnlMsgId>
+      <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Rsn>
+          <Cd>AC03</Cd>
+        </Rsn>
+        <AddtlInf>Account number invalid per receiving agent</AddtlInf>
+      </StsRsnInf>
+    </OrgnlGrpInfAndSts>
+    <TxInfAndSts>
+      <OrgnlInstrId>DBCC-OUR-77811</OrgnlInstrId>
+      <OrgnlEndToEndId>ACME-COVER-PO-77811</OrgnlEndToEndId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Rsn>
+          <Cd>AC03</Cd>
+        </Rsn>
+        <Orgtr>
+          <Id>
+            <OrgId>
+              <BICOrBEI>HMBKUS44GAR</BICOrBEI>
+            </OrgId>
+          </Id>
+        </Orgtr>
+      </StsRsnInf>
+      <RtrRsnInf>
+        <AddtlInf>Please verify IBAN and resubmit</AddtlInf>
+      </RtrRsnInf>
+    </TxInfAndSts>
+  </FIToFIPmtStsRpt>
+</Document>

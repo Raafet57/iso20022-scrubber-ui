@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.105.001.05">
+  <ChrgsNtfctn>
+    <GrpHdr>
+      <MsgId>CHRG-NOTICE-20250320</MsgId>
+      <CreDtTm>2025-03-20T08:45:00Z</CreDtTm>
+    </GrpHdr>
+    <ChrgsNtfctnDtls>
+      <ChrgsNtfctnId>c.105.1.1</ChrgsNtfctnId>
+      <ChrgsNtfctnSeqNb>1</ChrgsNtfctnSeqNb>
+      <ChrgsAcct>
+        <Id>
+          <IBAN>US98HMBK09120446200111</IBAN>
+        </Id>
+      </ChrgsAcct>
+      <Chrgs>
+        <Amt Ccy="USD">125.50</Amt>
+        <Tp>INGA</Tp>
+        <FctvDt>2025-03-19</FctvDt>
+        <ChrgsPty>
+          <Nm>HARMONY BANK GARLAND</Nm>
+        </ChrgsPty>
+        <RmtInf>
+          <Ustrd>Charges for investigation ref GAR-991</Ustrd>
+        </RmtInf>
+      </Chrgs>
+    </ChrgsNtfctnDtls>
+  </ChrgsNtfctn>
+</Document>

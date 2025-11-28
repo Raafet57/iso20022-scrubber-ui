@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.08">
+  <BkToCstmrAcctRpt>
+    <GrpHdr>
+      <MsgId>INTRADAY-20250319-01</MsgId>
+      <CreDtTm>2025-03-19T10:30:00+02:00</CreDtTm>
+    </GrpHdr>
+    <Rpt>
+      <Id>AVIO-INTRADAY-1</Id>
+      <CreDtTm>2025-03-19T10:15:00+02:00</CreDtTm>
+      <Acct>
+        <Id>
+          <IBAN>IT40X0100501600000001234567</IBAN>
+        </Id>
+        <Ownr>
+          <Nm>AVIO S.P.A.</Nm>
+        </Ownr>
+      </Acct>
+      <Bal>
+        <Tp>
+          <CdOrPrtry>
+            <Cd>ITBD</Cd>
+          </CdOrPrtry>
+        </Tp>
+        <Amt Ccy="EUR">3015000.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt>
+          <Dt>2025-03-19</Dt>
+        </Dt>
+      </Bal>
+      <Ntry>
+        <Amt Ccy="EUR">-45000.00</Amt>
+        <CdtDbtInd>DBIT</CdtDbtInd>
+        <BookgDt>
+          <Dt>2025-03-19</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2025-03-19</Dt>
+        </ValDt>
+        <AcctSvcrRef>AVIO-IT-001</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <Refs>
+              <EndToEndId>INTRA-SUPPLIER-01</EndToEndId>
+            </Refs>
+            <RmtInf>
+              <Ustrd>Intraday supplier payout</Ustrd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+    </Rpt>
+  </BkToCstmrAcctRpt>
+</Document>

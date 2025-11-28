@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.12">
+  <FIToFIPmtStsRpt>
+    <GrpHdr>
+      <MsgId>REJECT-RC01-20250318</MsgId>
+      <CreDtTm>2025-03-18T14:20:00+05:30</CreDtTm>
+    </GrpHdr>
+    <OrgnlGrpInfAndSts>
+      <OrgnlMsgId>PNB-COVER-20250311</OrgnlMsgId>
+      <OrgnlMsgNmId>pacs.009.001.08</OrgnlMsgNmId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Rsn>
+          <Cd>RC01</Cd>
+        </Rsn>
+        <AddtlInf>Invalid BIC for creditor agent</AddtlInf>
+      </StsRsnInf>
+    </OrgnlGrpInfAndSts>
+    <TxInfAndSts>
+      <OrgnlInstrId>PNB-CPPC-JPR-458</OrgnlInstrId>
+      <OrgnlEndToEndId>CPPC-RET-458</OrgnlEndToEndId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Rsn>
+          <Cd>RC01</Cd>
+        </Rsn>
+        <Orgtr>
+          <Id>
+            <OrgId>
+              <BICOrBEI>PUNBINBBXXX</BICOrBEI>
+            </OrgId>
+          </Id>
+        </Orgtr>
+      </StsRsnInf>
+      <RtrRsnInf>
+        <AddtlInf>Creditor agent BIC must be 11 characters</AddtlInf>
+      </RtrRsnInf>
+    </TxInfAndSts>
+  </FIToFIPmtStsRpt>
+</Document>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>MULTI-AGENTS-20250310</MsgId>
+      <CreDtTm>2025-03-10T22:05:00+09:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>MULTI-HOP-778</InstrId>
+        <EndToEndId>MULTI-HOP-CLIENT-778</EndToEndId>
+        <TxId>HARMONY-TOKYO-778</TxId>
+        <UETR>55d7b7ab-1205-47fa-bce1-0dc647fa81d7</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="JPY">89000000</IntrBkSttlmAmt>
+      <Dbtr>
+        <Nm>HARMONY BANK TOKYO BRANCH</Nm>
+        <PstlAdr>
+          <StrtNm>1-3 Nihonbashi</StrtNm>
+          <TwnNm>TOKYO</TwnNm>
+          <Ctry>JP</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>JP89HARM00000098765432</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKJPJTXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <IntrmyAgt1>
+        <FinInstnId>
+          <BICFI>HMBKUS44GAR</BICFI>
+          <Nm>HARMONY BANK GARLAND</Nm>
+        </FinInstnId>
+      </IntrmyAgt1>
+      <IntrmyAgt2>
+        <FinInstnId>
+          <BICFI>PUNBINBBXXX</BICFI>
+          <Nm>PUNJAB NATIONAL BANK</Nm>
+        </FinInstnId>
+      </IntrmyAgt2>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>IDIBINBBLAL</BICFI>
+          <Nm>INDIAN BANK LAL DARWAJA</Nm>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>INDIAN BANK LAL DARWAJA</Nm>
+        <PstlAdr>
+          <StrtNm>LAL DARWAJA GLORY AVENUE</StrtNm>
+          <TwnNm>AHMEDABAD</TwnNm>
+          <Ctry>IN</Ctry>
+          <PstCd>380001</PstCd>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>IN48IDIB000L52388881234</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Capital expenditure for India branch expansion</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

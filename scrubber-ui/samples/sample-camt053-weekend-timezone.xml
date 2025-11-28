@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.10">
+  <BkToCstmrStmt>
+    <GrpHdr>
+      <MsgId>WEEKEND-CH-SUB-20250317</MsgId>
+      <CreDtTm>2025-03-17T00:05:00-03:00</CreDtTm>
+    </GrpHdr>
+    <Stmt>
+      <Id>BBVA-HARMON-2025-03-17</Id>
+      <CreDtTm>2025-03-16T23:45:00-03:00</CreDtTm>
+      <Acct>
+        <Id>
+          <IBAN>BR15000099990000123456</IBAN>
+        </Id>
+        <Ownr>
+          <Nm>HARMONIA IMPORTACAO LTDA</Nm>
+        </Ownr>
+        <Svcr>
+          <FinInstnId>
+            <BICFI>BRASBRRJXXX</BICFI>
+          </FinInstnId>
+        </Svcr>
+      </Acct>
+      <Bal>
+        <Tp>
+          <CdOrPrtry>
+            <Cd>CLBD</Cd>
+          </CdOrPrtry>
+        </Tp>
+        <Amt Ccy="BRL">972300.80</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt>
+          <Dt>2025-03-15</Dt>
+        </Dt>
+      </Bal>
+      <Ntry>
+        <Amt Ccy="BRL">-45000.00</Amt>
+        <CdtDbtInd>DBIT</CdtDbtInd>
+        <BookgDt>
+          <Dt>2025-03-16</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2025-03-16</Dt>
+        </ValDt>
+        <AcctSvcrRef>BR-REF-120</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <Refs>
+              <EndToEndId>IMPORT-DUTY-120</EndToEndId>
+            </Refs>
+            <RmtInf>
+              <Ustrd>Import duty weekend execution</Ustrd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>

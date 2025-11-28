@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>US-HV-20250312</MsgId>
+      <CreDtTm>2025-03-12T13:44:00-04:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <TtlIntrBkSttlmAmt Ccy="USD">97500000.00</TtlIntrBkSttlmAmt>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>HMBK-GLOBE-991</InstrId>
+        <EndToEndId>HARMONY-INTERCO-991</EndToEndId>
+        <TxId>HMBKUS44GAR-991</TxId>
+        <UETR>9baafda9-4f91-45f0-8db5-c2f9aee1ba1d</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="USD">97500000.00</IntrBkSttlmAmt>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKUS44GAR</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <IntermediaryAgt1>
+        <FinInstnId>
+          <BICFI>BKTRUS33XXX</BICFI>
+          <Nm>BANK OF NEW YORK MELLON</Nm>
+        </FinInstnId>
+      </IntermediaryAgt1>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>MCBKBQBNXXX</BICFI>
+          <Nm>MADURO AND CURIEL'S BANK</Nm>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>MADURO AND CURIEL'S BANK (BONAIRE)</Nm>
+        <PstlAdr>
+          <StrtNm>BULEVAR GOBERNADOR DEBR 70</StrtNm>
+          <TwnNm>KRALENDIJK</TwnNm>
+          <Ctry>BQ</Ctry>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>BQ70MCBK039344000704351</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Liquidity transfer for Caribbean operations</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

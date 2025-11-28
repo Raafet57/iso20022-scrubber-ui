@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>PARTIAL-ACTORS-20250309</MsgId>
+      <CreDtTm>2025-03-09T06:15:00Z</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>NO-ULTIMATES-110</InstrId>
+        <EndToEndId>CLIENT-REF-110</EndToEndId>
+        <TxId>PRUDENTIAL-ACCRA-110</TxId>
+        <UETR>a6b1a449-e7ef-41fd-b0ac-1eaa842d6db9</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="GHS">98000.00</IntrBkSttlmAmt>
+      <Dbtr>
+        <Nm>PRUDENTIAL BANK LTD</Nm>
+        <PstlAdr>
+          <StrtNm>FL 2 8 RING ROAD CENTRAL JOHN</StrtNm>
+          <TwnNm>ACCRA</TwnNm>
+          <Ctry>GH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>GH45PRUD00000001499</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>PUBKGHACXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <Cdtr>
+        <Nm>QIDONG COUNTY RURAL CREDIT</Nm>
+        <PstlAdr>
+          <StrtNm>HALL OF SUPREME HARMONY</StrtNm>
+          <TwnNm>QIDONG</TwnNm>
+          <Ctry>CN</Ctry>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>CN12QDRC0345600011223</IBAN>
+        </Id>
+      </CdtrAcct>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>QDRCCNBAXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <RmtInf>
+        <Ustrd>Missing ultimate parties scenario</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

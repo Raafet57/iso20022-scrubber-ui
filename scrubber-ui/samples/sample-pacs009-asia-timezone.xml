@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>ASIA-TZ-20250313</MsgId>
+      <CreDtTm>2025-03-13T21:55:00+09:30</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <TtlIntrBkSttlmAmt Ccy="AUD">18500000.25</TtlIntrBkSttlmAmt>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>JP-AU-334</InstrId>
+        <EndToEndId>JPMELBOURNE-334</EndToEndId>
+        <TxId>HMBKJPJT-AUD-334</TxId>
+        <UETR>d7f1441a-5bd8-4599-a6df-f1422cf9c2f0</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="AUD">18500000.25</IntrBkSttlmAmt>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKJPJTXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <IntermediaryAgt1>
+        <FinInstnId>
+          <BICFI>HMBKUS44GAR</BICFI>
+          <Nm>HARMONY BANK GARLAND</Nm>
+        </FinInstnId>
+      </IntermediaryAgt1>
+      <IntermediaryAgt2>
+        <FinInstnId>
+          <BICFI>PUNBINBBXXX</BICFI>
+          <Nm>PUNJAB NATIONAL BANK</Nm>
+        </FinInstnId>
+      </IntermediaryAgt2>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>WESTAU2SXXX</BICFI>
+          <Nm>WESTPAC BANKING CORPORATION</Nm>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>WESTPAC RESOURCES PTY</Nm>
+        <PstlAdr>
+          <StrtNm>275 KINGS WAY</StrtNm>
+          <TwnNm>MELBOURNE</TwnNm>
+          <Ctry>AU</Ctry>
+          <PstCd>3006</PstCd>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>AU12099998887776665443</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Project financing disbursement with +09:30 timestamp</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>EUR-MULTIHOP-20250314</MsgId>
+      <CreDtTm>2025-03-14T11:05:00+00:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <TtlIntrBkSttlmAmt Ccy="EUR">6400000.00</TtlIntrBkSttlmAmt>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>BNP-EUR-771</InstrId>
+        <EndToEndId>BNP-INTERCO-771</EndToEndId>
+        <TxId>BNPAFRPPCRT-771</TxId>
+        <UETR>ad23e96e-8b6b-474c-900c-9df7a182bcb9</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="EUR">6400000.00</IntrBkSttlmAmt>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>BNPAFRPPCRT</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <IntermediaryAgt1>
+        <FinInstnId>
+          <BICFI>BNPAFRPPCHS</BICFI>
+        </FinInstnId>
+      </IntermediaryAgt1>
+      <IntermediaryAgt2>
+        <FinInstnId>
+          <BICFI>CITIFRPPCTI</BICFI>
+          <Nm>CITIBANK EUROPE PLC FRANCE BRANCH</Nm>
+        </FinInstnId>
+      </IntermediaryAgt2>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>AVIOITM1XXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>AVIO S.P.A.</Nm>
+        <PstlAdr>
+          <StrtNm>VIA MAURO MACCHI 27</StrtNm>
+          <TwnNm>MILANO</TwnNm>
+          <Ctry>IT</Ctry>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>IT11Z0300203280000400034789</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Intercompany netting payout</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>EU-STRUCT-20250307</MsgId>
+      <CreDtTm>2025-03-07T14:25:00+01:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>BNPA-CHARTRES-991</InstrId>
+        <EndToEndId>BNPA-INV-CHS-991</EndToEndId>
+        <TxId>BNPAFRPPCHS-2025-991</TxId>
+        <UETR>7111da35-0ac1-4a65-be46-3c5c8526f863</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="EUR">58200.75</IntrBkSttlmAmt>
+      <ChrgBr>SHA</ChrgBr>
+      <Dbtr>
+        <Nm>BNP PARIBAS CHARTRES</Nm>
+        <PstlAdr>
+          <StrtNm>12 RUE DU DOCTEUR MAZET</StrtNm>
+          <TwnNm>CHARTRES</TwnNm>
+          <Ctry>FR</Ctry>
+          <PstCd>28000</PstCd>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>FR7610096000301234567890188</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>BNPAFRPPCHS</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>AVIOITM1XXX</BICFI>
+          <Nm>AVIO S.P.A.</Nm>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>AVIO S.P.A.</Nm>
+        <PstlAdr>
+          <StrtNm>VIA MAURO MACCHI 27</StrtNm>
+          <TwnNm>MILANO</TwnNm>
+          <Ctry>IT</Ctry>
+          <PstCd>20124</PstCd>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>IT40X0100501600000001234567</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Strd>
+          <CdtrRefInf>
+            <Tp>
+              <CdOrPrtry>
+                <Cd>SCOR</Cd>
+              </CdOrPrtry>
+            </Tp>
+            <Ref>RF18539007520034000011</Ref>
+          </CdtrRefInf>
+          <AddtlRmtInf>Structured SEPA reference</AddtlRmtInf>
+        </Strd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

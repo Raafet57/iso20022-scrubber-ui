@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.004.001.11">
+  <PmtRtr>
+    <GrpHdr>
+      <MsgId>RETURN-20250319</MsgId>
+      <CreDtTm>2025-03-19T08:05:00Z</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <TtlRtrdIntrBkSttlmAmt Ccy="USD">25000.00</TtlRtrdIntrBkSttlmAmt>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <OrgnlGrpInf>
+      <OrgnlMsgId>COVER-DBCC-USD-20250301</OrgnlMsgId>
+      <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
+    </OrgnlGrpInf>
+    <TxInf>
+      <OrgnlInstrId>DBCC-OUR-77811</OrgnlInstrId>
+      <OrgnlEndToEndId>ACME-COVER-PO-77811</OrgnlEndToEndId>
+      <OrgnlTxId>BDCCBQBN-2025-COVER</OrgnlTxId>
+      <RtrId>HMBK-RETURN-2025-15</RtrId>
+      <RtrdIntrBkSttlmAmt Ccy="USD">25000.00</RtrdIntrBkSttlmAmt>
+      <ChrgBr>SHA</ChrgBr>
+      <RtrRsnInf>
+        <Rsn>
+          <Cd>MD07</Cd>
+        </Rsn>
+        <AddtlInf>Beneficiary refused due to duplicate</AddtlInf>
+      </RtrRsnInf>
+      <Dbtr>
+        <Nm>HARMONY BANK GARLAND</Nm>
+      </Dbtr>
+      <Cdtr>
+        <Nm>BANCO DI CARIBE N.V. BONAIRE</Nm>
+      </Cdtr>
+    </TxInf>
+  </PmtRtr>
+</Document>

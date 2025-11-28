@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.12">
+  <FIToFIPmtStsRpt>
+    <GrpHdr>
+      <MsgId>REJECT-BE04-20250318</MsgId>
+      <CreDtTm>2025-03-18T12:00:00+01:00</CreDtTm>
+    </GrpHdr>
+    <OrgnlGrpInfAndSts>
+      <OrgnlMsgId>EU-STRUCT-20250307</OrgnlMsgId>
+      <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Rsn>
+          <Cd>BE04</Cd>
+        </Rsn>
+        <AddtlInf>Missing creditor address lines</AddtlInf>
+      </StsRsnInf>
+    </OrgnlGrpInfAndSts>
+    <TxInfAndSts>
+      <OrgnlInstrId>BNPA-CHARTRES-991</OrgnlInstrId>
+      <OrgnlEndToEndId>BNPA-INV-CHS-991</OrgnlEndToEndId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Rsn>
+          <Cd>BE04</Cd>
+        </Rsn>
+        <Orgtr>
+          <Id>
+            <OrgId>
+              <BICOrBEI>AVIOITM1XXX</BICOrBEI>
+            </OrgId>
+          </Id>
+        </Orgtr>
+      </StsRsnInf>
+      <RtrRsnInf>
+        <AddtlInf>Provide complete postal address or structured remittance</AddtlInf>
+      </RtrRsnInf>
+    </TxInfAndSts>
+  </FIToFIPmtStsRpt>
+</Document>

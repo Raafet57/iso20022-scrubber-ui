@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>APAC-MULTI-THB-20250305</MsgId>
+      <CreDtTm>2025-03-05T18:05:00+07:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>TM-CLIENT-225</InstrId>
+        <EndToEndId>TM-IMPORT-PO-9921</EndToEndId>
+        <TxId>TMBKTH22-2025-225</TxId>
+        <UETR>c2787a44-ff6e-4c76-946a-11d161b838e9</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="THB">3560000.55</IntrBkSttlmAmt>
+      <ChrgBr>SHA</ChrgBr>
+      <Dbtr>
+        <Nm>TODAY'S BANK HARMONY BRANCH</Nm>
+        <PstlAdr>
+          <StrtNm>432 HARMONY ROAD</StrtNm>
+          <TwnNm>HUNTSVILLE</TwnNm>
+          <Ctry>US</Ctry>
+          <PstCd>72740</PstCd>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>US30TODB08290174500123</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>PPCTGRAAXXX</BICFI>
+          <Nm>PUBLIC POWER CORPORATION S.A.</Nm>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>TMBKTH22XXX</BICFI>
+          <Nm>TMBThanachart Bank Public Co.</Nm>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Bangkok Components Co. Ltd.</Nm>
+        <PstlAdr>
+          <StrtNm>88 Sukhumvit Soi 12</StrtNm>
+          <TwnNm>BANGKOK</TwnNm>
+          <Ctry>TH</Ctry>
+          <PstCd>10110</PstCd>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>TH45TMBK00001234567890</IBAN>
+        </Id>
+      </CdtrAcct>
+      <UltmtCdtr>
+        <Nm>Harmony Manufacturing Asia</Nm>
+      </UltmtCdtr>
+      <FxInf>
+        <XchgRate>0.029</XchgRate>
+        <CtrctId>FX-THBUSD-2025-77</CtrctId>
+      </FxInf>
+      <RmtInf>
+        <Strd>
+          <CdtrRefInf>
+            <Ref>INV-2025-TH-551</Ref>
+          </CdtrRefInf>
+          <AddtlRmtInf>Structured remittance for customs duties</AddtlRmtInf>
+        </Strd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

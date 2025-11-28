@@ -1,0 +1,5 @@
+.DS_Store
+
+# Licensed reference datasets (do not commit)
+reference/
+scrubber-ui/reference/

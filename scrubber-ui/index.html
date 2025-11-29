@@ -43,6 +43,7 @@
         border: 1px solid #d4d8e1;
         padding: 0.75rem;
         resize: vertical;
+        box-sizing: border-box;
       }
       textarea:focus,
       input:focus {
@@ -358,6 +359,9 @@
         try {
           loader.classList.remove('hidden');
           const response = await fetch(path);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
           const text = await response.text();
           inputXml.value = text;
           inputError.classList.add('hidden');
@@ -528,7 +532,7 @@
         const diff = [];
         for (let i = 0; i < max; i += 1) {
           const o = origLines[i] ?? '';
-          const a = anonymized[i] ?? '';
+          const a = anonLines[i] ?? '';
           if (o === a) {
             diff.push({ type: 'same', value: a });
           } else {
@@ -557,16 +561,22 @@
         });
       }
 
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
       function renderMapping(mapping) {
         mappingTable.innerHTML = '';
         mapping.forEach((item, idx) => {
           const row = document.createElement('tr');
           row.innerHTML = `
             <td>${idx + 1}</td>
-            <td>${item.type}</td>
-            <td><pre style="white-space: pre-wrap;">${item.original}</pre></td>
-            <td><pre style="white-space: pre-wrap;">${item.replacement}</pre></td>
-            <td>${item.tag}</td>
+            <td>${escapeHtml(item.type)}</td>
+            <td><pre style="white-space: pre-wrap;">${escapeHtml(item.original)}</pre></td>
+            <td><pre style="white-space: pre-wrap;">${escapeHtml(item.replacement)}</pre></td>
+            <td>${escapeHtml(item.tag)}</td>
           `;
           mappingTable.appendChild(row);
         });

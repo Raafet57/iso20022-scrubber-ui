@@ -54,16 +54,41 @@
 
           <div class="space-y-3">
             <label class="block text-slate-400 text-sm">Load sample:</label>
-            <select
-              id="sampleSelect"
-              class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
-            >
-              <option value="">Select sample...</option>
-              <option value="./samples/sample-pacs008.xml">pacs.008 – Landing Page c.105.1.1</option>
-              <option value="./samples/sample-pacs008-swiftref.xml">pacs.008 – Banco di Caribe → Harmony Bank (SWIFTRef)</option>
-              <option value="./samples/sample-pacs009-swiftref.xml">pacs.009 – Punjab National → Indian Bank (SWIFTRef)</option>
-              <option value="./samples/sample-camt053-swiftref.xml">camt.053 – BNP Paribas Statement (SWIFTRef)</option>
-            </select>
+              <select
+                id="sampleSelect"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+              >
+                <option value="">Select sample...</option>
+                <option value="./samples/sample-pacs008.xml">pacs.008 – Landing Page c.105.1.1</option>
+                <option value="./samples/sample-pacs008-swiftref.xml">pacs.008 – Banco di Caribe → Harmony Bank (SWIFTRef)</option>
+                <option value="./samples/sample-pacs008-usa-cover.xml">pacs.008 – USA cover payment</option>
+                <option value="./samples/sample-pacs008-apac-multicurrency.xml">pacs.008 – APAC multi-currency</option>
+                <option value="./samples/sample-pacs008-eu-structured-remit.xml">pacs.008 – EU structured remittance</option>
+                <option value="./samples/sample-pacs008-intermediaries.xml">pacs.008 – With intermediaries</option>
+                <option value="./samples/sample-pacs008-partial-actors.xml">pacs.008 – Partial actor info</option>
+
+                <option value="./samples/sample-pacs009-swiftref.xml">pacs.009 – Punjab National → Indian Bank (SWIFTRef)</option>
+                <option value="./samples/sample-pacs009-asia-timezone.xml">pacs.009 – Asia timezone</option>
+                <option value="./samples/sample-pacs009-eu-cover.xml">pacs.009 – EU cover</option>
+                <option value="./samples/sample-pacs009-eur-multi-hop.xml">pacs.009 – EUR multi-hop</option>
+                <option value="./samples/sample-pacs009-highvalue-usd.xml">pacs.009 – High value USD</option>
+
+                <option value="./samples/sample-pacs002-reject-ac03.xml">pacs.002 – Reject AC03 (account closed)</option>
+                <option value="./samples/sample-pacs002-reject-be04.xml">pacs.002 – Reject BE04 (missing info)</option>
+                <option value="./samples/sample-pacs002-reject-rc01.xml">pacs.002 – Reject RC01 (currency)</option>
+
+                <option value="./samples/sample-pacs004-return-fee.xml">pacs.004 – Return with fees</option>
+
+                <option value="./samples/sample-camt053-swiftref.xml">camt.053 – BNP Paribas Statement (SWIFTRef)</option>
+                <option value="./samples/sample-camt053-multi-entry.xml">camt.053 – Multi-entry</option>
+                <option value="./samples/sample-camt053-nostro-dualcurrency.xml">camt.053 – Nostro dual currency</option>
+                <option value="./samples/sample-camt053-weekend-timezone.xml">camt.053 – Weekend/timezone</option>
+
+                <option value="./samples/sample-camt052-intraday.xml">camt.052 – Intraday</option>
+                <option value="./samples/sample-camt054-credit-advice.xml">camt.054 – Credit advice</option>
+                <option value="./samples/sample-camt105-charges-notice.xml">camt.105 – Charges notice</option>
+                <option value="./samples/sample-camt106-charges-request.xml">camt.106 – Charges request</option>
+              </select>
 
             <input
               id="fileInput"

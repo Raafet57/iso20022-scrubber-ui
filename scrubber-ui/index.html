@@ -4,343 +4,214 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Smart XML Anonymizer</title>
-    <style>
-      :root {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        line-height: 1.5;
-        color: #1f2933;
-        background-color: #f6f7fb;
-      }
-      body {
-        margin: 0;
-        padding: 2rem;
-        background: #f6f7fb;
-      }
-      h1 {
-        margin-bottom: 0.25rem;
-      }
-      .page {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .layout {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 1.5rem;
-      }
-      .card {
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
-        padding: 1.5rem;
-      }
-      textarea {
-        width: 100%;
-        min-height: 280px;
-        font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-        font-size: 0.9rem;
-        border-radius: 12px;
-        border: 1px solid #d4d8e1;
-        padding: 0.75rem;
-        resize: vertical;
-        box-sizing: border-box;
-      }
-      input[type='text'],
-      input[type='url'],
-      input[type='password'],
-      input[type='number'] {
-        width: 100%;
-        border-radius: 12px;
-        border: 1px solid #d4d8e1;
-        padding: 0.65rem 0.75rem;
-        font-size: 0.95rem;
-        box-sizing: border-box;
-      }
-      textarea:focus,
-      input:focus {
-        outline: 2px solid #3b82f6;
-        border-color: transparent;
-      }
-      .controls {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
-      .btn {
-        border: none;
-        border-radius: 999px;
-        padding: 0.75rem 1.5rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 150ms ease, box-shadow 150ms ease;
-      }
-      .btn-primary {
-        background: linear-gradient(135deg, #2563eb, #7c3aed);
-        color: #fff;
-        box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
-      }
-      .btn-primary:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-      }
-      .btn-primary:not(:disabled):hover {
-        transform: translateY(-2px);
-        box-shadow: 0 16px 32px rgba(37, 99, 235, 0.35);
-      }
-      label {
-        font-size: 0.95rem;
-        color: #5c6274;
-      }
-      .toggles {
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
-      }
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 0.8rem;
-      }
-      .stat-card {
-        border: 1px solid #e2e4ec;
-        border-radius: 14px;
-        padding: 0.85rem;
-        text-align: center;
-      }
-      .stat-card .label {
-        font-size: 0.75rem;
-        color: #6b7280;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-      .stat-card .value {
-        font-size: 1.4rem;
-        font-weight: 700;
-      }
-      .tabs {
-        display: flex;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-      }
-      .tab-button {
-        border: none;
-        border-radius: 999px;
-        padding: 0.5rem 1rem;
-        background: #e6e8f2;
-        cursor: pointer;
-      }
-      .tab-button.active {
-        background: #1f6feb;
-        color: #fff;
-      }
-      pre {
-        background: #0f172a;
-        color: #e2e8f0;
-        border-radius: 12px;
-        padding: 1rem;
-        overflow: auto;
-        max-height: 360px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-      }
-      th,
-      td {
-        padding: 0.5rem;
-        border-bottom: 1px solid #e5e7eb;
-        vertical-align: top;
-      }
-      th {
-        text-align: left;
-        color: #6b7280;
-      }
-      .actions {
-        display: flex;
-        gap: 0.5rem;
-      }
-      .btn-secondary {
-        background: #eef2ff;
-        color: #3730a3;
-      }
-      .btn-secondary:hover {
-        background: #e0e7ff;
-      }
-      .alert {
-        background: #fee2e2;
-        color: #b91c1c;
-        border-radius: 12px;
-        padding: 0.75rem 1rem;
-        margin-top: 1rem;
-      }
-      .loader {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #2563eb;
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        animation: spin 0.8s linear infinite;
-        margin: 1rem auto;
-      }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      .diff-line {
-        white-space: pre-wrap;
-        font-family: 'JetBrains Mono', monospace;
-      }
-      .diff-add {
-        color: #10b981;
-      }
-      .diff-remove {
-        color: #ef4444;
-      }
-      .hidden {
-        display: none;
-      }
-      .file-input {
-        width: 100%;
-      }
-      @media (max-width: 640px) {
-        body {
-          padding: 1rem;
-        }
-        .actions {
-          flex-direction: column;
-        }
-      }
-    </style>
+
+    <!-- Tailwind CDN with custom brand color -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                500: '#5b8aff',
+                600: '#3f6bff',
+                700: '#1f4fff',
+              },
+            },
+            boxShadow: {
+              'brand-glow': '0 20px 80px rgba(91,138,255,0.25)',
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body>
-    <div class="page">
-      <header>
-        <p style="color: #6b7280; margin-bottom: 0.2rem">ISO 20022 Micro-tools</p>
-        <h1>Smart XML Anonymizer (“The Scrubber”)</h1>
-        <p style="max-width: 720px; color: #4b5563">
+  <body class="bg-slate-950 text-slate-100 min-h-screen">
+    <div class="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <header class="space-y-2">
+        <p class="text-sm text-slate-500 uppercase tracking-[0.2em]">ISO 20022 Micro-tools</p>
+        <h1 class="text-3xl font-semibold">Smart XML Anonymizer (“The Scrubber”)</h1>
+        <p class="text-slate-400 max-w-3xl">
           Paste or upload ISO 20022 messages (pacs.008/009, camt.053, etc.) and get a vendor-safe version that preserves
           schema fidelity while masking PII. Works entirely locally—no data leaves your browser.
         </p>
       </header>
 
-      <section class="layout" style="margin-top: 1.5rem">
-        <div class="card">
-          <h2>Input payment XML</h2>
-          <textarea id="inputXml" placeholder="Paste ISO 20022 XML here..."></textarea>
-          <div class="controls">
-            <label>
-              Load sample:
-              <select id="sampleSelect">
-                <option value="">Select sample...</option>
-                <option value="./samples/sample-pacs008.xml">pacs.008 – Landing Page c.105.1.1</option>
-                <option value="./samples/sample-pacs008-swiftref.xml">pacs.008 – Banco di Caribe → Harmony Bank (SWIFTRef)</option>
-                <option value="./samples/sample-pacs009-swiftref.xml">pacs.009 – Punjab National → Indian Bank (SWIFTRef)</option>
-                <option value="./samples/sample-camt053-swiftref.xml">camt.053 – BNP Paribas Statement (SWIFTRef)</option>
-              </select>
-            </label>
-            <input id="fileInput" class="file-input" type="file" accept=".xml,text/xml" />
-            <div class="toggles">
-              <label>
-                <input type="checkbox" id="consistencyToggle" checked />
+      <section class="grid md:grid-cols-2 gap-6">
+        <div class="bg-slate-900 border border-slate-800 shadow-2xl rounded-2xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-lg font-semibold">Input payment XML</h2>
+              <p class="text-slate-500 text-sm">Paste, upload, or fetch from core.</p>
+            </div>
+          </div>
+
+          <textarea
+            id="inputXml"
+            class="w-full h-72 resize-none font-mono text-sm leading-tight bg-slate-900/70 text-slate-100 rounded-xl border border-slate-800 p-3 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+            placeholder="Paste ISO 20022 XML here..."
+          ></textarea>
+
+          <div class="space-y-3">
+            <label class="block text-slate-400 text-sm">Load sample:</label>
+            <select
+              id="sampleSelect"
+              class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+            >
+              <option value="">Select sample...</option>
+              <option value="./samples/sample-pacs008.xml">pacs.008 – Landing Page c.105.1.1</option>
+              <option value="./samples/sample-pacs008-swiftref.xml">pacs.008 – Banco di Caribe → Harmony Bank (SWIFTRef)</option>
+              <option value="./samples/sample-pacs009-swiftref.xml">pacs.009 – Punjab National → Indian Bank (SWIFTRef)</option>
+              <option value="./samples/sample-camt053-swiftref.xml">camt.053 – BNP Paribas Statement (SWIFTRef)</option>
+            </select>
+
+            <input
+              id="fileInput"
+              type="file"
+              accept=".xml,text/xml"
+              class="w-full text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-brand-600 file:text-white file:cursor-pointer file:hover:bg-brand-700"
+            />
+
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="flex items-center gap-2 text-slate-400 text-sm">
+                <input type="checkbox" id="consistencyToggle" checked class="accent-brand-500" />
                 Consistency mode (same values → same pseudonym)
               </label>
-              <label>
-                <input type="checkbox" id="remittanceToggle" />
+              <label class="flex items-center gap-2 text-slate-400 text-sm">
+                <input type="checkbox" id="remittanceToggle" class="accent-brand-500" />
                 Preserve remittance text (Ustrd)
               </label>
-              <label>
-                <input type="checkbox" id="shiftToggle" />
+              <label class="flex items-center gap-2 text-slate-400 text-sm">
+                <input type="checkbox" id="shiftToggle" class="accent-brand-500" />
                 Shift timestamps
                 <input
                   type="number"
                   id="shiftDays"
                   value="0"
-                  style="width: 120px; margin-left: 0.5rem"
+                  class="ml-2 w-20 bg-slate-950/80 border border-slate-800 rounded-lg px-2 py-1 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
                   disabled
                 />
                 days
               </label>
             </div>
-            <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 0.85rem; background: #f8fafc">
-              <h3 style="margin: 0 0 0.25rem 0; font-size: 1rem">Fetch from core banking API</h3>
-              <p style="margin: 0 0 0.75rem 0; color: #6b7280">
-                Pull an ISO 20022 message directly from your core. All calls are client-side; nothing is stored.
-              </p>
-              <label>
+
+            <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-4 space-y-2">
+              <div>
+                <h3 class="text-slate-200 font-semibold text-sm">Fetch from core banking API</h3>
+                <p class="text-slate-500 text-xs">Client-side only; nothing is stored.</p>
+              </div>
+              <label class="block text-slate-400 text-sm space-y-1">
                 API base URL
-                <input type="url" id="coreBaseUrl" placeholder="https://core.example.com/api" />
+                <input
+                  type="url"
+                  id="coreBaseUrl"
+                  placeholder="https://core.example.com/api"
+                  class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                />
               </label>
-              <label>
-                Message path template (use {id} placeholder)
-                <input type="text" id="corePathTemplate" value="/messages/{id}" />
+              <label class="block text-slate-400 text-sm space-y-1">
+                Message path template (use {id})
+                <input
+                  type="text"
+                  id="corePathTemplate"
+                  value="/messages/{id}"
+                  class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                />
               </label>
-              <label>
+              <label class="block text-slate-400 text-sm space-y-1">
                 Message ID
-                <input type="text" id="coreMessageId" placeholder="e.g. pacs-12345" />
+                <input
+                  type="text"
+                  id="coreMessageId"
+                  placeholder="e.g. pacs-12345"
+                  class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                />
               </label>
-              <label>
-                API key (optional, sent as Bearer)
-                <input type="password" id="coreApiKey" autocomplete="off" />
+              <label class="block text-slate-400 text-sm space-y-1">
+                API key (optional, Bearer)
+                <input
+                  type="password"
+                  id="coreApiKey"
+                  autocomplete="off"
+                  class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                />
               </label>
-              <div style="margin-top: 0.6rem; display: flex; gap: 0.5rem; align-items: center">
-                <button class="btn btn-secondary" id="fetchFromCore">Fetch ISO message</button>
-                <span id="coreApiStatus" class="hidden" style="font-size: 0.9rem; color: #374151"></span>
+              <div class="flex items-center gap-3">
+                <button
+                  class="btn btn-secondary bg-slate-800 border border-slate-700 text-slate-100 px-4 py-2 rounded-lg hover:bg-slate-700 transition-all"
+                  id="fetchFromCore"
+                >
+                  Fetch ISO message
+                </button>
+                <span id="coreApiStatus" class="text-slate-400 text-sm hidden"></span>
               </div>
             </div>
-            <button class="btn btn-primary" id="scrubButton">Scrub XML</button>
-            <div id="inputError" class="alert hidden"></div>
+
+            <button
+              class="btn btn-primary w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl shadow-brand-glow transition-all hover:scale-105"
+              id="scrubButton"
+            >
+              Scrub XML
+            </button>
+            <div id="inputError" class="hidden bg-red-900/50 border border-red-700 text-red-200 text-sm rounded-lg p-3"></div>
           </div>
         </div>
 
-        <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem">
+        <div class="bg-slate-900 border border-slate-800 shadow-2xl rounded-2xl p-5 space-y-4">
+          <div class="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <h2 style="margin: 0">Results</h2>
-              <p style="margin: 0; color: #6b7280">
-                Review anonymized XML, inspect diffs, and export mapping logs for vendor sharing.
-              </p>
+              <h2 class="text-lg font-semibold">Results</h2>
+              <p class="text-slate-500 text-sm">Review anonymized XML, diffs, and mapping.</p>
             </div>
-            <div class="actions">
-              <button class="btn btn-secondary" id="copyButton" disabled>Copy XML</button>
-              <button class="btn btn-secondary" id="downloadButton" disabled>Download XML</button>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" id="copyButton" disabled>
+                Copy XML
+              </button>
+              <button class="btn btn-secondary bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" id="downloadButton" disabled>
+                Download XML
+              </button>
             </div>
           </div>
-          <div id="loader" class="loader hidden"></div>
-          <div id="resultsEmpty" style="color: #6b7280; margin-top: 1rem">
-            Run the scrubber to visualize anonymized output, diffs, and replacement mappings.
-          </div>
-          <div id="resultsContainer" class="hidden">
-            <div class="stats" id="statsContainer"></div>
-            <div class="tabs">
-              <button class="tab-button active" data-tab="output">Anonymized XML</button>
-              <button class="tab-button" data-tab="diff">Diff</button>
-              <button class="tab-button" data-tab="mapping">Mapping</button>
+
+          <div id="loader" class="hidden mx-auto border-4 border-slate-800 border-t-brand-500 rounded-full w-10 h-10 animate-spin"></div>
+          <div id="resultsEmpty" class="text-slate-500 text-sm">Run the scrubber to visualize results.</div>
+
+          <div id="resultsContainer" class="hidden space-y-4">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2" id="statsContainer"></div>
+
+            <div class="flex gap-2">
+              <button class="tab-button active bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" data-tab="output">
+                Anonymized XML
+              </button>
+              <button class="tab-button bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" data-tab="diff">Diff</button>
+              <button class="tab-button bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" data-tab="mapping">Mapping</button>
             </div>
+
             <div id="tab-output">
-              <textarea id="outputXml" readonly></textarea>
+              <textarea
+                id="outputXml"
+                readonly
+                class="w-full h-72 resize-none font-mono text-sm leading-tight bg-slate-900/70 text-slate-100 rounded-xl border border-slate-800 p-3 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+              ></textarea>
             </div>
+
             <div id="tab-diff" class="hidden">
-              <div id="diffContainer" style="max-height: 360px; overflow: auto"></div>
+              <div id="diffContainer" class="max-h-80 overflow-auto space-y-1"></div>
             </div>
+
             <div id="tab-mapping" class="hidden">
-              <div style="max-height: 360px; overflow: auto">
-                <table>
-                  <thead>
+              <div class="max-h-80 overflow-auto">
+                <table class="w-full text-sm text-slate-200">
+                  <thead class="text-slate-500">
                     <tr>
-                      <th>#</th>
-                      <th>Type</th>
-                      <th>Original</th>
-                      <th>Pseudonym</th>
-                      <th>Tag</th>
+                      <th class="py-2 text-left">#</th>
+                      <th class="py-2 text-left">Type</th>
+                      <th class="py-2 text-left">Original</th>
+                      <th class="py-2 text-left">Pseudonym</th>
+                      <th class="py-2 text-left">Tag</th>
                     </tr>
                   </thead>
-                  <tbody id="mappingTable"></tbody>
+                  <tbody id="mappingTable" class="divide-y divide-slate-800"></tbody>
                 </table>
               </div>
             </div>
@@ -439,13 +310,13 @@
       function setCoreStatus(message, type = 'info') {
         coreApiStatus.textContent = message;
         coreApiStatus.classList.remove('hidden');
-        coreApiStatus.style.color = type === 'error' ? '#b91c1c' : '#111827';
+        coreApiStatus.style.color = type === 'error' ? '#fca5a5' : '#e5e7eb';
       }
 
       tabButtons.forEach((button) => {
         button.addEventListener('click', () => {
-          tabButtons.forEach((btn) => btn.classList.remove('active'));
-          button.classList.add('active');
+          tabButtons.forEach((btn) => btn.classList.remove('active', 'bg-slate-700'));
+          button.classList.add('active', 'bg-slate-700');
           Object.values(tabs).forEach((tab) => tab.classList.add('hidden'));
           const target = button.dataset.tab;
           tabs[target].classList.remove('hidden');
@@ -483,6 +354,9 @@
         try {
           loader.classList.remove('hidden');
           const response = await fetch(path);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
           const text = await response.text();
           inputXml.value = text;
           inputError.classList.add('hidden');
@@ -511,9 +385,7 @@
         if (type === 'iban') {
           const country = 'DE';
           const body = `${counter + 11}`.padStart(20, '0');
-          const raw = `${body}${(country.charCodeAt(0) - 55).toString()}${(
-            country.charCodeAt(1) - 55
-          ).toString()}00`;
+          const raw = `${body}${(country.charCodeAt(0) - 55).toString()}${(country.charCodeAt(1) - 55).toString()}00`;
           let remainder = 0n;
           for (const ch of raw) {
             remainder = (remainder * 10n + BigInt(ch)) % 97n;
@@ -653,7 +525,7 @@
         const diff = [];
         for (let i = 0; i < max; i += 1) {
           const o = origLines[i] ?? '';
-          const a = anonymized[i] ?? '';
+          const a = anonLines[i] ?? '';
           if (o === a) {
             diff.push({ type: 'same', value: a });
           } else {
@@ -676,8 +548,8 @@
         };
         Object.entries(stats).forEach(([key, value]) => {
           const card = document.createElement('div');
-          card.className = 'stat-card';
-          card.innerHTML = `<div class="label">${labels[key] ?? key}</div><div class="value">${value}</div>`;
+          card.className = 'bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-center';
+          card.innerHTML = `<div class="text-xs uppercase tracking-wide text-slate-500">${labels[key] ?? key}</div><div class="text-xl font-semibold text-slate-100">${value}</div>`;
           statsContainer.appendChild(card);
         });
       }
@@ -686,12 +558,13 @@
         mappingTable.innerHTML = '';
         mapping.forEach((item, idx) => {
           const row = document.createElement('tr');
+          row.className = 'hover:bg-slate-800/60';
           row.innerHTML = `
-            <td>${idx + 1}</td>
-            <td>${item.type}</td>
-            <td><pre style="white-space: pre-wrap;">${item.original}</pre></td>
-            <td><pre style="white-space: pre-wrap;">${item.replacement}</pre></td>
-            <td>${item.tag}</td>
+            <td class="py-2">${idx + 1}</td>
+            <td class="py-2">${item.type}</td>
+            <td class="py-2"><pre class="whitespace-pre-wrap font-mono text-slate-200">${item.original}</pre></td>
+            <td class="py-2"><pre class="whitespace-pre-wrap font-mono text-slate-200">${item.replacement}</pre></td>
+            <td class="py-2">${item.tag}</td>
           `;
           mappingTable.appendChild(row);
         });
@@ -701,9 +574,9 @@
         diffContainer.innerHTML = '';
         diff.forEach((part) => {
           const div = document.createElement('div');
-          div.className = 'diff-line';
-          if (part.type === 'add') div.classList.add('diff-add');
-          if (part.type === 'remove') div.classList.add('diff-remove');
+          div.className = 'font-mono text-sm whitespace-pre-wrap';
+          if (part.type === 'add') div.classList.add('text-emerald-400');
+          if (part.type === 'remove') div.classList.add('text-rose-400');
           div.textContent = part.value;
           diffContainer.appendChild(div);
         });

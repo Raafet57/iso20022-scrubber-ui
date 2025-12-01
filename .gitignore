@@ -3,3 +3,11 @@
 # Licensed reference datasets (do not commit)
 reference/
 scrubber-ui/reference/
+
+# Untracked personal/docs and duplicated UI copies
+about_me/
+scrubber-ui/.replit
+scrubber-ui/scrubber-ui/
+test-write
+scrubber-ui/README.md
+scrubber-ui/docs/

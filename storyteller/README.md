@@ -1,34 +1,45 @@
-## Storyteller Prototype
+## Storyteller – ISO 20022 Narrative Generator
 
-This folder contains an offline prototype of the “Storyteller” ISO 20022 narrative generator covering pacs.008, pacs.009, and camt.053 messages. It parses XML files client-side (no services) and produces descriptive summaries using deterministic templates. The goal is to validate extraction logic before wiring in an LLM and UI.
+Client-side tool that ingests pacs.008 / pacs.009 / camt.053 XML and produces readable narratives (paragraph + concise modes) for ops and compliance analysts. No backend required; everything runs locally.
 
 ### Features
-- Detects the message type (pacs.008, pacs.009, camt.053) by inspecting the `Document` payload.
-- Extracts key actors, financial data, references, remittance information, and routing metadata.
-- Generates two narrative styles:
-  - `narrative`: paragraph-style summary suitable for quick reading.
-  - `concise`: bullet-style output for scanning.
-- Includes sample files sourced from SWIFTRef-inspired test data.
+- Auto-detects message type from the ISO 20022 payload.
+- Extracts actors, financials, references, remittance, routing, and charges.
+- Two outputs: narrative paragraph and concise summary (plus JSON view and key fields in the UI).
+- Ships with a broad sample set to exercise parsing edge cases.
 
-### Usage
+### Quick start – browser UI
+```
+cd storyteller/ui
+python3 -m http.server 4185
+# then open http://localhost:4185/index.html
+```
+- Samples are bundled under `ui/samples/` for easy local hosting.
+- Paste your own XML or load a sample; everything stays in-browser.
+
+### Quick start – CLI
 ```
 cd storyteller
 python cli.py samples/pacs008-sample.xml --mode narrative
 python cli.py samples/pacs009-sample.xml --mode concise
 python cli.py samples/camt053-sample.xml
-python generate_samples.py  # regenerate the extended synthetic dataset
-
-# Launch browser UI (static)
-cd ui
-python3 -m http.server 4185
-# open http://localhost:4185/index.html
+python generate_samples.py   # regenerate synthetic samples
 ```
 
 ### Extending
-- New message types can be supported by adding an extraction function in `parser.py` and updating `generate_narrative` in `narrative.py`.
-- Narrative templates are intentionally simple; replace them with LLM calls once the canonical schema stabilises.
+- Add new message parsers in `parser.py` and update `generate_narrative` in `narrative.py`.
+- Swap the deterministic templates for an LLM call once prompts and guardrails are ready.
+
+### Layout
+```
+storyteller/
+  cli.py, parser.py, narrative.py    # core extraction + template generation
+  samples/                           # canonical sample inputs
+  ui/                                # static HTML/CSS/JS front-end
+    index.html
+    samples/                         # copy of samples for static hosting
+```
 
 ### Notes
-- No network calls or storage; everything runs locally for experimentation.
-- Sample files are lightweight and use SWIFTRef-style identifiers to exercise the parser.
-- The `/ui` subfolder reuses the same parsing logic in browser JavaScript and reads samples from `../samples`.
+- No network/storage; intended for offline experimentation and UX validation.
+- Uses deterministic templates to prove extraction quality before wiring in an LLM.

@@ -6,246 +6,315 @@
     <title>Storyteller – ISO 20022 Narrative Generator</title>
     <style>
       :root {
+        color: #e5e7eb;
+        background-color: #0b1220;
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        background-color: #f5f6fb;
-        color: #111827;
+        line-height: 1.5;
+      }
+      * {
+        box-sizing: border-box;
       }
       body {
         margin: 0;
-        padding: 2rem;
+        min-height: 100vh;
+        background: #0b1220;
+        color: #e5e7eb;
       }
       .page {
-        max-width: 1200px;
+        max-width: 1150px;
         margin: 0 auto;
+        padding: 40px 18px 64px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .headline {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-size: 12px;
+        color: #94a3b8;
       }
       h1 {
-        margin-bottom: 0.5rem;
+        margin: 0;
+        font-size: 30px;
+        font-weight: 700;
       }
-      p {
-        color: #4b5563;
+      .lede {
+        max-width: 720px;
+        color: #9ca3af;
+        margin: 0;
       }
-      .layout {
+      .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 1.5rem;
-        margin-top: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        gap: 18px;
       }
       .card {
-        background: #fff;
+        background: linear-gradient(145deg, rgba(17, 24, 39, 0.95), rgba(12, 20, 34, 0.95));
+        border: 1px solid #1f2937;
         border-radius: 18px;
-        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
-        padding: 1.5rem;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+        padding: 20px;
+      }
+      .card h2 {
+        margin: 0 0 6px 0;
+        font-size: 18px;
+      }
+      .card p.label {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 14px;
       }
       textarea {
         width: 100%;
-        min-height: 260px;
-        font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-        font-size: 0.95rem;
+        height: 280px;
+        resize: none;
+        background: #0f172a;
+        color: #e2e8f0;
+        border: 1px solid #1f2937;
         border-radius: 14px;
-        border: 1px solid #d1d5db;
-        padding: 0.9rem;
-        resize: vertical;
-        background: #f9fafb;
+        font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+        font-size: 13px;
+        line-height: 1.3;
+        padding: 12px;
+        transition: border 150ms ease, box-shadow 150ms ease;
       }
       textarea:focus,
-      input:focus,
-      select:focus {
-        outline: 2px solid #2563eb;
-        border-color: transparent;
-        background: #fff;
-      }
-      label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-        color: #374151;
+      select:focus,
+      input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
       }
       select,
-      input[type="file"] {
+      input[type='file'] {
         width: 100%;
-        padding: 0.5rem;
-        border: 1px solid #d1d5db;
-        border-radius: 10px;
-        background: #fff;
+        padding: 10px 12px;
+        background: #0f172a;
+        color: #e5e7eb;
+        border: 1px solid #1f2937;
+        border-radius: 12px;
+        font-size: 14px;
       }
       .controls {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
-      .btn {
-        border: none;
-        border-radius: 999px;
-        padding: 0.75rem 1.5rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: box-shadow 150ms ease, transform 150ms ease;
+        gap: 12px;
+        margin-top: 12px;
       }
       .btn-primary {
-        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        width: 100%;
+        background: linear-gradient(135deg, #3f6bff, #5b8aff);
         color: #fff;
-        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.35);
+        border: none;
+        border-radius: 14px;
+        padding: 14px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        transition: transform 150ms ease, box-shadow 150ms ease;
+        box-shadow: 0 20px 60px rgba(63, 107, 255, 0.35);
       }
       .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 25px 60px rgba(37, 99, 235, 0.45);
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 28px 70px rgba(63, 107, 255, 0.45);
       }
       .btn-secondary {
-        background: #eef2ff;
-        color: #312e81;
+        background: #1f2937;
+        color: #e5e7eb;
+        border: 1px solid #273449;
+        border-radius: 12px;
+        padding: 10px 14px;
+        cursor: pointer;
+        transition: background 150ms ease, transform 150ms ease;
       }
-      .actions {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
+      .btn-secondary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .btn-secondary:not(:disabled):hover {
+        background: #273449;
+        transform: translateY(-1px);
       }
       .tabs {
         display: flex;
-        gap: 0.5rem;
-        margin: 1rem 0;
+        gap: 8px;
       }
       .tab-button {
-        border: none;
-        border-radius: 999px;
-        padding: 0.5rem 1rem;
+        background: #1f2937;
+        color: #e5e7eb;
+        border: 1px solid #273449;
+        border-radius: 12px;
+        padding: 10px 12px;
         cursor: pointer;
-        background: #e5e7eb;
+        transition: background 150ms ease, transform 150ms ease;
       }
       .tab-button.active {
-        background: #1d4ed8;
-        color: #fff;
+        background: #3f6bff;
+        border-color: #3f6bff;
+        box-shadow: 0 12px 30px rgba(63, 107, 255, 0.3);
       }
-      pre {
-        background: #0f172a;
-        color: #e2e8f0;
-        border-radius: 12px;
-        padding: 1rem;
-        max-height: 320px;
-        overflow: auto;
-        font-size: 0.9rem;
+      .tab-button:hover {
+        transform: translateY(-1px);
       }
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 0.75rem;
-        margin-bottom: 1rem;
+      .loader {
+        margin: 16px auto;
+        border: 4px solid #1f2937;
+        border-top: 4px solid #3f6bff;
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        animation: spin 0.8s linear infinite;
       }
-      .stat-card {
-        border: 1px solid #e5e7eb;
-        border-radius: 14px;
-        padding: 0.75rem;
-        background: #f9fafb;
-      }
-      .stat-card .label {
-        font-size: 0.8rem;
-        color: #6b7280;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-      .stat-card .value {
-        font-size: 1.2rem;
-        font-weight: 700;
-        margin-top: 0.2rem;
-      }
-      .alert {
-        background: #fee2e2;
-        color: #b91c1c;
-        border-radius: 12px;
-        padding: 0.75rem 1rem;
-        margin-top: 1rem;
-      }
-      .summary-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
-        font-size: 0.9rem;
-      }
-      .summary-table th,
-      .summary-table td {
-        padding: 0.5rem;
-        border-bottom: 1px solid #e5e7eb;
-        text-align: left;
-      }
-      .summary-table th {
-        color: #6b7280;
-        font-weight: 600;
-      }
-      .hidden {
-        display: none;
-      }
-      @media (max-width: 640px) {
-        body {
-          padding: 1rem;
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
         }
       }
+      .hidden { display: none; }
+      .stack { display: flex; flex-direction: column; gap: 12px; }
+      .output-box {
+        min-height: 220px;
+        background: #0f172a;
+        border: 1px solid #1f2937;
+        border-radius: 14px;
+        padding: 14px;
+        color: #e5e7eb;
+      }
+      pre.code {
+        background: #0f172a;
+        border: 1px solid #1f2937;
+        border-radius: 14px;
+        padding: 12px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        line-height: 1.3;
+        max-height: 320px;
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      th, td {
+        padding: 10px 6px;
+        text-align: left;
+      }
+      th { color: #9ca3af; font-weight: 600; }
+      tr + tr td, tr + tr th { border-top: 1px solid #1f2937; }
+      .actions { display: flex; gap: 10px; flex-wrap: wrap; }
     </style>
   </head>
   <body>
     <div class="page">
-      <header>
-        <h1>Storyteller</h1>
-        <p>
-          ISO 20022 narrative generator (pacs.008 / pacs.009 / camt.053). Paste XML or load a sample to produce
-          both paragraph and concise summaries.
+      <header class="headline">
+        <div class="kicker">ISO 20022 Micro-tools</div>
+        <h1>Storyteller – Narrative Generator</h1>
+        <p class="lede">
+          Paste or upload pacs.008 / pacs.009 / camt.053 XML, then generate paragraph and concise summaries for analysts.
+          All parsing happens in your browser.
         </p>
       </header>
 
-      <section class="layout">
-        <div class="card">
-          <label for="xmlInput">Payment XML</label>
+      <section class="grid">
+        <div class="card stack">
+          <div>
+            <h2>Input message XML</h2>
+            <p class="label">Paste, upload, or load a sample.</p>
+          </div>
+
           <textarea id="xmlInput" placeholder="Paste ISO 20022 XML here..."></textarea>
-          <div class="controls">
-            <div>
-              <label for="sampleSelect">Load sample</label>
-              <select id="sampleSelect">
-                <option value="">Select sample...</option>
-                <option value="../samples/pacs008-sample.xml">pacs.008 – cover payment</option>
-                <option value="../samples/pacs009-sample.xml">pacs.009 – CPPC route</option>
-                <option value="../samples/camt053-sample.xml">camt.053 – multi-entry statement</option>
-              </select>
-            </div>
-            <div>
-              <label for="fileInput">Upload XML file</label>
-              <input type="file" id="fileInput" accept=".xml,text/xml" />
-            </div>
-            <button class="btn btn-primary" id="summarizeButton">Generate narrative</button>
-            <div id="inputError" class="alert hidden"></div>
+
+          <div class="stack">
+            <label class="label" style="color: #94a3b8; font-weight: 600">Load sample:</label>
+            <select id="sampleSelect">
+              <option value="">Select sample...</option>
+              <option value="./samples/pacs008-sample.xml">pacs.008 – sample</option>
+              <option value="./samples/pacs009-sample.xml">pacs.009 – sample</option>
+              <option value="./samples/camt053-sample.xml">camt.053 – sample</option>
+              <option value="./samples/bulk-pacs008-asia-urgent.xml">pacs.008 – Asia urgent</option>
+              <option value="./samples/bulk-pacs008-eur-cover.xml">pacs.008 – EUR cover</option>
+              <option value="./samples/bulk-pacs008-fx-multicurrency.xml">pacs.008 – FX multicurrency</option>
+              <option value="./samples/bulk-pacs008-gbp-priority.xml">pacs.008 – GBP priority</option>
+              <option value="./samples/bulk-pacs008-highcharges.xml">pacs.008 – High charges</option>
+              <option value="./samples/bulk-pacs008-latam-trade.xml">pacs.008 – LATAM trade</option>
+              <option value="./samples/bulk-pacs008-missing-remittance.xml">pacs.008 – Missing remittance</option>
+              <option value="./samples/bulk-pacs008-sme-payroll.xml">pacs.008 – SME payroll</option>
+              <option value="./samples/bulk-pacs008-structured-remittance.xml">pacs.008 – Structured remittance</option>
+              <option value="./samples/bulk-pacs008-uat-test.xml">pacs.008 – UAT test</option>
+              <option value="./samples/bulk-pacs008-weekend.xml">pacs.008 – Weekend</option>
+              <option value="./samples/bulk-pacs009-africa-hvl.xml">pacs.009 – Africa HVL</option>
+              <option value="./samples/bulk-pacs009-asia-multi-hop.xml">pacs.009 – Asia multi-hop</option>
+              <option value="./samples/bulk-pacs009-cover-chf.xml">pacs.009 – CHF cover</option>
+              <option value="./samples/bulk-pacs009-latam-eur.xml">pacs.009 – LATAM EUR</option>
+              <option value="./samples/bulk-pacs009-serial-usd.xml">pacs.009 – Serial USD</option>
+              <option value="./samples/bulk-pacs009-weekend.xml">pacs.009 – Weekend</option>
+              <option value="./samples/bulk-pacs002-reject.md07.xml">pacs.002 – Reject MD07</option>
+              <option value="./samples/bulk-pacs004-return.xml">pacs.004 – Return</option>
+              <option value="./samples/bulk-camt052-intraday.xml">camt.052 – Intraday</option>
+              <option value="./samples/bulk-camt053-asia-multi-entry.xml">camt.053 – Asia multi-entry</option>
+              <option value="./samples/bulk-camt053-eur-weekend.xml">camt.053 – EUR weekend</option>
+              <option value="./samples/bulk-camt053-latam.xml">camt.053 – LATAM</option>
+              <option value="./samples/bulk-camt053-uat.xml">camt.053 – UAT</option>
+              <option value="./samples/bulk-camt053-us-multicurrency.xml">camt.053 – US multicurrency</option>
+              <option value="./samples/bulk-camt054-credit.xml">camt.054 – Credit advice</option>
+            </select>
+
+            <input id="fileInput" type="file" accept=".xml,text/xml" />
+
+            <button class="btn-primary" id="summarizeButton">Generate narratives</button>
+            <div id="inputError" class="hidden" style="background:#3f1d29;border:1px solid #7f1d1d;color:#fecdd3;padding:10px 12px;border-radius:10px;font-size:13px;"></div>
           </div>
         </div>
 
-        <div class="card">
-          <div style="display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap">
+        <div class="card stack">
+          <div class="actions" style="justify-content: space-between; align-items: flex-start;">
             <div>
-              <h2 style="margin: 0">Narratives</h2>
-              <p style="margin: 0">
-                Select narrative or concise mode; view parsed data below.
-              </p>
+              <h2>Results</h2>
+              <p class="label">Narrative, concise summary, JSON, and key fields.</p>
             </div>
             <div class="actions">
-              <button class="btn btn-secondary" id="copyNarrative" disabled>Copy narrative</button>
-              <button class="btn btn-secondary" id="copyConcise" disabled>Copy concise</button>
+              <button class="btn-secondary" id="copyNarrative" disabled>Copy narrative</button>
+              <button class="btn-secondary" id="copyConcise" disabled>Copy concise</button>
             </div>
           </div>
-          <div id="loader" class="alert hidden">Processing...</div>
-          <div id="resultsEmpty" style="margin-top: 1rem; color: #6b7280">
-            Paste XML or load a sample to generate narratives.
-          </div>
-          <div id="resultsContainer" class="hidden">
+
+          <div id="loader" class="loader hidden"></div>
+          <div id="resultsEmpty" class="label">Run the generator to see results.</div>
+
+          <div id="resultsContainer" class="hidden stack">
             <div class="tabs">
               <button class="tab-button active" data-tab="narrative">Narrative</button>
               <button class="tab-button" data-tab="concise">Concise</button>
-              <button class="tab-button" data-tab="data">Data</button>
+              <button class="tab-button" data-tab="json">JSON</button>
+              <button class="tab-button" data-tab="summary">Summary</button>
             </div>
+
             <div id="tab-narrative">
-              <pre id="narrativeOutput"></pre>
+              <div id="narrativeOutput" class="output-box"></div>
             </div>
+
             <div id="tab-concise" class="hidden">
-              <pre id="conciseOutput"></pre>
+              <div id="conciseOutput" class="output-box"></div>
             </div>
-            <div id="tab-data" class="hidden">
-              <table class="summary-table" id="summaryTable"></table>
-              <pre id="jsonOutput"></pre>
+
+            <div id="tab-json" class="hidden">
+              <pre id="jsonOutput" class="code"></pre>
+            </div>
+
+            <div id="tab-summary" class="hidden">
+              <table>
+                <tbody id="summaryTable"></tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -268,286 +337,29 @@
       const copyNarrative = document.getElementById('copyNarrative');
       const copyConcise = document.getElementById('copyConcise');
 
-      const tabs = document.querySelectorAll('.tab-button');
-      tabs.forEach((tab) => {
+      document.querySelectorAll('.tab-button').forEach((tab) => {
         tab.addEventListener('click', () => {
-          tabs.forEach((btn) => btn.classList.remove('active'));
+          document.querySelectorAll('.tab-button').forEach((btn) => btn.classList.remove('active'));
           tab.classList.add('active');
-          ['narrative', 'concise', 'data'].forEach((key) => {
-            document.getElementById(`tab-${key}`).classList.add('hidden');
-          });
+          ['narrative', 'concise', 'json', 'summary'].forEach((key) =>
+            document.getElementById(`tab-${key}`).classList.add('hidden'),
+          );
           document.getElementById(`tab-${tab.dataset.tab}`).classList.remove('hidden');
         });
       });
 
-      const INLINE_SAMPLES = {
-        '../samples/pacs008-sample.xml': `<?xml version="1.0" encoding="UTF-8"?>
-<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
-  <FIToFICstmrCdtTrf>
-    <GrpHdr>
-      <MsgId>COVER-DBCC-USD-20250301</MsgId>
-      <CreDtTm>2025-03-01T09:15:00-05:00</CreDtTm>
-      <NbOfTxs>1</NbOfTxs>
-      <SttlmInf>
-        <SttlmMtd>COVE</SttlmMtd>
-      </SttlmInf>
-    </GrpHdr>
-    <CdtTrfTxInf>
-      <PmtId>
-        <InstrId>DBCC-OUR-77811</InstrId>
-        <EndToEndId>ACME-COVER-PO-77811</EndToEndId>
-        <TxId>BDCCBQBN-2025-COVER</TxId>
-        <UETR>f1d2f3a4-1111-4c5d-bbed-f5791b1f4412</UETR>
-      </PmtId>
-      <IntrBkSttlmAmt Ccy="USD">125000.00</IntrBkSttlmAmt>
-      <ChrgBr>OUR</ChrgBr>
-      <UltmtDbtr>
-        <Nm>ACME HOLDINGS LLC</Nm>
-      </UltmtDbtr>
-      <Dbtr>
-        <Nm>BANCO DI CARIBE N.V. BONAIRE</Nm>
-        <PstlAdr>
-          <StrtNm>KAYA GRANDI 22</StrtNm>
-          <TwnNm>KRALENDIJK</TwnNm>
-          <Ctry>BQ</Ctry>
-          <PstCd>00000</PstCd>
-        </PstlAdr>
-      </Dbtr>
-      <DbtrAcct>
-        <Id>
-          <IBAN>BQ20BDCC12345678901234</IBAN>
-        </Id>
-      </DbtrAcct>
-      <DbtrAgt>
-        <FinInstnId>
-          <BICFI>BDCCBQBNXXX</BICFI>
-        </FinInstnId>
-      </DbtrAgt>
-      <IntrmyAgt1>
-        <FinInstnId>
-          <BICFI>BKTRUS33XXX</BICFI>
-          <Nm>THE BANK OF NEW YORK MELLON</Nm>
-        </FinInstnId>
-      </IntrmyAgt1>
-      <CdtrAgt>
-        <FinInstnId>
-          <BICFI>HMBKUS44GAR</BICFI>
-        </FinInstnId>
-      </CdtrAgt>
-      <Cdtr>
-        <Nm>HARMONY BANK GARLAND</Nm>
-        <PstlAdr>
-          <StrtNm>515 WEST AVENUE</StrtNm>
-          <TwnNm>GARLAND</TwnNm>
-          <Ctry>US</Ctry>
-          <PstCd>75042</PstCd>
-        </PstlAdr>
-      </Cdtr>
-      <CdtrAcct>
-        <Id>
-          <IBAN>US12HMBK11192511300001</IBAN>
-        </Id>
-      </CdtrAcct>
-      <RmtInf>
-        <Ustrd>Cover payment for invoice set GAR-2025-03</Ustrd>
-      </RmtInf>
-    </CdtTrfTxInf>
-  </FIToFICstmrCdtTrf>
-</Document>`,
-        '../samples/pacs009-sample.xml': `<?xml version="1.0" encoding="UTF-8"?>
-<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
-  <FICdtTrf>
-    <GrpHdr>
-      <MsgId>PNB-COVER-20250311</MsgId>
-      <CreDtTm>2025-03-11T07:30:00+05:30</CreDtTm>
-      <NbOfTxs>1</NbOfTxs>
-      <TtlIntrBkSttlmAmt Ccy="INR">450000000</TtlIntrBkSttlmAmt>
-      <SttlmInf>
-        <SttlmMtd>COVE</SttlmMtd>
-      </SttlmInf>
-    </GrpHdr>
-    <CdtTrfTxInf>
-      <PmtId>
-        <InstrId>PNB-CPPC-JPR-458</InstrId>
-        <EndToEndId>CPPC-RET-458</EndToEndId>
-        <TxId>PUNB0746500-2025-458</TxId>
-        <UETR>1d1d67e3-30b2-44fb-8d6a-7cfc8654d0e6</UETR>
-      </PmtId>
-      <IntrBkSttlmAmt Ccy="INR">450000000</IntrBkSttlmAmt>
-      <ChrgBr>SHA</ChrgBr>
-      <DbtrAgt>
-        <FinInstnId>
-          <BICFI>PUNBINBBXXX</BICFI>
-        </FinInstnId>
-      </DbtrAgt>
-      <IntermediaryAgt1>
-        <FinInstnId>
-          <BICFI>PUNB0746500</BICFI>
-          <Nm>PUNJAB NATIONAL BANK CPPC JAIPUR</Nm>
-        </FinInstnId>
-      </IntermediaryAgt1>
-      <IntermediaryAgt2>
-        <FinInstnId>
-          <BICFI>PUNB0747000</BICFI>
-          <Nm>PUNJAB NATIONAL BANK CPPC KOLKATA</Nm>
-        </FinInstnId>
-      </IntermediaryAgt2>
-      <CdtrAgt>
-        <FinInstnId>
-          <BICFI>IDIBINBBLAL</BICFI>
-        </FinInstnId>
-      </CdtrAgt>
-      <Cdtr>
-        <Nm>ICICI BANK LTD PANJRAPOLE</Nm>
-        <PstlAdr>
-          <StrtNm>SHIVALIK SHARDA HARMONY</StrtNm>
-          <TwnNm>AHMEDABAD</TwnNm>
-          <Ctry>IN</Ctry>
-          <PstCd>380015</PstCd>
-        </PstlAdr>
-      </Cdtr>
-      <CdtrAcct>
-        <Id>
-          <IBAN>IN98ICIC00083660004567890</IBAN>
-        </Id>
-      </CdtrAcct>
-      <RmtInf>
-        <Ustrd>Corporate pension reimbursement</Ustrd>
-      </RmtInf>
-    </CdtTrfTxInf>
-  </FICdtTrf>
-</Document>`,
-        '../samples/camt053-sample.xml': `<?xml version="1.0" encoding="UTF-8"?>
-<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.10">
-  <BkToCstmrStmt>
-    <GrpHdr>
-      <MsgId>MULTI-ENTRY-20250315</MsgId>
-      <CreDtTm>2025-03-15T05:40:00Z</CreDtTm>
-    </GrpHdr>
-    <Stmt>
-      <Id>HARMONY-DAILY-2025-03-15</Id>
-      <ElctrncSeqNb>88</ElctrncSeqNb>
-      <CreDtTm>2025-03-15T05:30:00Z</CreDtTm>
-      <Acct>
-        <Id>
-          <IBAN>US98HMBK09120446200111</IBAN>
-        </Id>
-        <Ownr>
-          <Nm>FIRST SOUTHEAST BANK HARMONY</Nm>
-        </Ownr>
-        <Svcr>
-          <FinInstnId>
-            <BICFI>HMBKUS44GAR</BICFI>
-          </FinInstnId>
-        </Svcr>
-      </Acct>
-      <Bal>
-        <Tp>
-          <CdOrPrtry>
-            <Cd>CLBD</Cd>
-          </CdOrPrtry>
-        </Tp>
-        <Amt Ccy="USD">2150000.00</Amt>
-        <CdtDbtInd>CRDT</CdtDbtInd>
-        <Dt>
-          <Dt>2025-03-14</Dt>
-        </Dt>
-      </Bal>
-      <Ntry>
-        <Amt Ccy="USD">-250000.00</Amt>
-        <CdtDbtInd>DBIT</CdtDbtInd>
-        <BookgDt>
-          <Dt>2025-03-14</Dt>
-        </BookgDt>
-        <ValDt>
-          <Dt>2025-03-14</Dt>
-        </ValDt>
-        <AcctSvcrRef>HMBK-REF-991</AcctSvcrRef>
-        <NtryDtls>
-          <TxDtls>
-            <Refs>
-              <EndToEndId>GARLAND-PAYROLL-MAR</EndToEndId>
-              <TxId>HMBKUS44GAR-991</TxId>
-            </Refs>
-            <RltdPties>
-              <Cdtr>
-                <Nm>HARMONY PAYROLL SERVICES</Nm>
-              </Cdtr>
-            </RltdPties>
-            <RmtInf>
-              <Ustrd>Payroll batch March</Ustrd>
-            </RmtInf>
-          </TxDtls>
-        </NtryDtls>
-      </Ntry>
-      <Ntry>
-        <Amt Ccy="USD">+125000.00</Amt>
-        <CdtDbtInd>CRDT</CdtDbtInd>
-        <BookgDt>
-          <Dt>2025-03-14</Dt>
-        </BookgDt>
-        <ValDt>
-          <Dt>2025-03-14</Dt>
-        </ValDt>
-        <AcctSvcrRef>HMBK-REF-992</AcctSvcrRef>
-        <NtryDtls>
-          <TxDtls>
-            <Refs>
-              <EndToEndId>CLIENT-FEE-145</EndToEndId>
-              <TxId>HMBKUS44GAR-992</TxId>
-            </Refs>
-            <RltdPties>
-              <Dbtr>
-                <Nm>ACME CONSULTING</Nm>
-              </Dbtr>
-            </RltdPties>
-            <RmtInf>
-              <Ustrd>Consulting fees</Ustrd>
-            </RmtInf>
-          </TxDtls>
-        </NtryDtls>
-      </Ntry>
-      <Ntry>
-        <Amt Ccy="USD">-17500.50</Amt>
-        <CdtDbtInd>DBIT</CdtDbtInd>
-        <BookgDt>
-          <Dt>2025-03-14</Dt>
-        </BookgDt>
-        <ValDt>
-          <Dt>2025-03-14</Dt>
-        </ValDt>
-        <AcctSvcrRef>HMBK-REF-993</AcctSvcrRef>
-        <NtryDtls>
-          <TxDtls>
-            <Refs>
-              <EndToEndId>UTILITY-294</EndToEndId>
-            </Refs>
-            <RmtInf>
-              <Ustrd>Utility settlement</Ustrd>
-            </RmtInf>
-          </TxDtls>
-        </NtryDtls>
-      </Ntry>
-    </Stmt>
-  </BkToCstmrStmt>
-</Document>`,
-      };
-
       sampleSelect.addEventListener('change', async (event) => {
         const path = event.target.value;
         if (!path) return;
-        if (INLINE_SAMPLES[path]) {
-          textarea.value = INLINE_SAMPLES[path];
-          inputError.classList.add('hidden');
-          return;
-        }
-        loader.classList.remove('hidden');
         try {
+          loader.classList.remove('hidden');
           const response = await fetch(path);
-          textarea.value = await response.text();
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const text = await response.text();
+          textarea.value = text;
           inputError.classList.add('hidden');
         } catch (err) {
-          inputError.textContent = 'Unable to load sample file via browser fetch. Serve the UI via http.server or upload the XML manually.';
+          inputError.textContent = 'Unable to load sample file.';
           inputError.classList.remove('hidden');
         } finally {
           loader.classList.add('hidden');
@@ -560,322 +372,217 @@
         const reader = new FileReader();
         reader.onload = () => {
           textarea.value = reader.result;
+          inputError.classList.add('hidden');
         };
         reader.readAsText(file);
       });
 
-      copyNarrative.addEventListener('click', () => {
-        navigator.clipboard.writeText(narrativeOutput.textContent);
-        copyNarrative.textContent = 'Copied';
-        setTimeout(() => (copyNarrative.textContent = 'Copy narrative'), 1500);
-      });
-      copyConcise.addEventListener('click', () => {
-        navigator.clipboard.writeText(conciseOutput.textContent);
-        copyConcise.textContent = 'Copied';
-        setTimeout(() => (copyConcise.textContent = 'Copy concise'), 1500);
-      });
-
-      button.addEventListener('click', () => {
+      button.addEventListener('click', async () => {
         const xml = textarea.value.trim();
         if (!xml) {
-          inputError.textContent = 'Paste ISO 20022 XML or load a sample.';
+          inputError.textContent = 'Please paste or upload XML to summarize.';
           inputError.classList.remove('hidden');
           return;
         }
         inputError.classList.add('hidden');
         loader.classList.remove('hidden');
-        setTimeout(() => {
-          try {
-            const payload = parseMessage(xml);
-            const narrative = generateNarrative(payload, 'narrative');
-            const concise = generateNarrative(payload, 'concise');
-            renderResults(payload, narrative, concise);
-          } catch (err) {
-            inputError.textContent = err.message;
-            inputError.classList.remove('hidden');
-            resultsContainer.classList.add('hidden');
-            resultsEmpty.classList.remove('hidden');
-          } finally {
-            loader.classList.add('hidden');
-          }
-        }, 50);
+        resultsContainer.classList.add('hidden');
+        resultsEmpty.classList.add('hidden');
+        copyNarrative.disabled = true;
+        copyConcise.disabled = true;
+
+        try {
+          const payload = await parseXml(xml);
+          const narrative = buildNarrative(payload);
+          const concise = buildConcise(payload);
+          renderResults(payload, narrative, concise);
+        } catch (err) {
+          console.error(err);
+          inputError.textContent = err.message || 'Failed to parse XML';
+          inputError.classList.remove('hidden');
+        } finally {
+          loader.classList.add('hidden');
+        }
       });
 
-      function parseMessage(xmlText) {
-        const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
-        const root = doc.documentElement;
-        if (!root || !root.children.length) {
-          throw new Error('Invalid ISO 20022 payload.');
+      copyNarrative.addEventListener('click', async () => {
+        if (!narrativeOutput.textContent) return;
+        await navigator.clipboard.writeText(narrativeOutput.textContent);
+        copyNarrative.textContent = 'Copied!';
+        setTimeout(() => (copyNarrative.textContent = 'Copy narrative'), 1200);
+      });
+
+      copyConcise.addEventListener('click', async () => {
+        if (!conciseOutput.textContent) return;
+        await navigator.clipboard.writeText(conciseOutput.textContent);
+        copyConcise.textContent = 'Copied!';
+        setTimeout(() => (copyConcise.textContent = 'Copy concise'), 1200);
+      });
+
+      function parseXml(xml) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(xml, 'text/xml');
+        const parsererror = doc.getElementsByTagName('parsererror');
+        if (parsererror.length) throw new Error('Invalid XML. Please check formatting.');
+
+        const ns = doc.documentElement.namespaceURI || '';
+        let messageType = 'unknown';
+        if (/pacs\.008/.test(ns) || /pacs-008/.test(xml)) messageType = 'pacs.008';
+        else if (/pacs\.009/.test(ns) || /pacs-009/.test(xml)) messageType = 'pacs.009';
+        else if (/camt\.053/.test(ns) || /camt-053/.test(xml)) messageType = 'camt.053';
+
+        if (messageType === 'camt.053') {
+          return parseCamt053(doc, messageType);
         }
-        const documentNode = root.children[0];
-        const type = documentNode.localName;
-        if (type === 'FIToFICstmrCdtTrf') return extractPacs008(documentNode);
-        if (type === 'FICdtTrf') return extractPacs009(documentNode);
-        if (type === 'BkToCstmrStmt') return extractCamt053(documentNode);
-        throw new Error(`Unsupported ISO 20022 message: ${type}`);
+        return parsePayment(doc, messageType);
       }
 
-      const child = (node, name) => {
-        if (!node) return null;
-        return Array.from(node.children).find((c) => c.localName === name) || null;
-      };
-      const children = (node, name) => {
-        if (!node) return [];
-        return Array.from(node.children).filter((c) => c.localName === name);
-      };
+      function textContent(node, selector) {
+        const el = node.querySelector(selector);
+        return el ? (el.textContent || '').trim() : '';
+      }
 
-      const text = (node) => (node && node.textContent ? node.textContent.trim() : '');
-
-      const actor = (node) => {
-        if (!node) return null;
-        const addr = child(node, 'PstlAdr');
-        const parts = addr
-          ? Array.from(addr.children).map((c) => text(c)).filter(Boolean)
-          : [];
-        let name = text(child(node, 'Nm'));
-        if (!name) {
-          const bic = child(child(node, 'FinInstnId'), 'BICFI');
-          name = text(bic);
-        }
-        return {
-          name: name || null,
-          address: parts.length ? parts.join(', ') : null,
+      function parsePayment(doc, messageType) {
+        const payload = {
+          message_type: messageType,
+          actors: {},
+          financial: {},
+          references: {},
+          remittance: {},
+          charges: {},
         };
-      };
 
-      function extractPacs008(doc) {
-        const grpHdr = child(doc, 'GrpHdr');
-        const tx = child(doc, 'CdtTrfTxInf');
-        if (!tx) throw new Error('pacs.008 missing transaction information.');
-        const pmtId = child(tx, 'PmtId');
-        const timeline = {
-          created: text(child(grpHdr, 'CreDtTm')),
-          requested_execution: text(child(child(child(tx, 'PmtTpInf'), 'SvcLvl'), 'ReqdExctnDt')) || text(child(child(tx, 'PmtTpInf'), 'ReqdExctnDt')),
-          settlement: text(child(tx, 'SttlmDt')),
+        payload.actors.debtor = buildActor(doc, 'Dbtr');
+        payload.actors.ultimate_debtor = buildActor(doc, 'UltmtDbtr');
+        payload.actors.creditor = buildActor(doc, 'Cdtr');
+        payload.actors.ultimate_creditor = buildActor(doc, 'UltmtCdtr');
+        payload.actors.debtor_agent = buildActor(doc, 'DbtrAgt');
+        payload.actors.creditor_agent = buildActor(doc, 'CdtrAgt');
+        payload.actors.intermediary1 = buildActor(doc, 'IntrmyAgt1');
+        payload.actors.intermediary2 = buildActor(doc, 'IntrmyAgt2');
+
+        payload.financial.instructed_amount = {
+          amount: textContent(doc, 'InstdAmt'),
+          currency: doc.querySelector('InstdAmt')?.getAttribute('Ccy') || '',
         };
-        const rem = child(tx, 'RmtInf');
-        const unstructured = rem
-          ? children(rem, 'Ustrd').map((node) => text(node)).filter(Boolean)
-          : [];
-        const structured = rem
-          ? children(rem, 'Strd')
-              .map((node) => text(child(child(node, 'CdtrRefInf'), 'Ref')))
-              .filter(Boolean)
-          : [];
-        const intermediaries = [];
-        for (let i = 1; i <= 3; i += 1) {
-          const agent = child(tx, `IntrmyAgt${i}`);
-          const bic = text(child(child(agent, 'FinInstnId'), 'BICFI'));
-          if (bic) intermediaries.push(bic);
-        }
-        const debtorAgent = child(tx, 'DbtrAgt');
-        const creditorAgent = child(tx, 'CdtrAgt');
-        const debtorAgentBic = text(child(child(debtorAgent, 'FinInstnId'), 'BICFI'));
-        const creditorAgentBic = text(child(child(creditorAgent, 'FinInstnId'), 'BICFI'));
-        return {
-          message_type: 'pacs.008',
-          actors: {
-            debtor: actor(child(tx, 'Dbtr')),
-            ultimate_debtor: actor(child(tx, 'UltmtDbtr')),
-            creditor: actor(child(tx, 'Cdtr')),
-            ultimate_creditor: actor(child(tx, 'UltmtCdtr')),
-          },
-          financial: {
-            settlement_amount: amountNode(child(tx, 'IntrBkSttlmAmt')),
-            instructed_amount: amountNode(child(tx, 'InstdAmt')),
-            charge_bearer: text(child(tx, 'ChrgBr')) || 'unspecified',
-          },
-          timeline,
-          references: {
-            instruction: text(child(pmtId, 'InstrId')),
-            end_to_end: text(child(pmtId, 'EndToEndId')),
-            transaction: text(child(pmtId, 'TxId')),
-            uetr: text(child(pmtId, 'UETR')),
-          },
-          remittance: {
-            unstructured,
-            structured,
-          },
-          route: {
-            debtor_agent: debtorAgentBic || text(child(debtorAgent, 'FinInstnId')),
-            creditor_agent: creditorAgentBic || text(child(creditorAgent, 'FinInstnId')),
-            intermediaries,
-          },
+        payload.financial.settlement_amount = {
+          amount: textContent(doc, 'IntrBkSttlmAmt'),
+          currency: doc.querySelector('IntrBkSttlmAmt')?.getAttribute('Ccy') || '',
         };
-      }
+        payload.financial.settlement_date = textContent(doc, 'IntrBkSttlmDt');
 
-      function extractPacs009(doc) {
-        const grpHdr = child(doc, 'GrpHdr');
-        const tx = child(doc, 'CdtTrfTxInf');
-        if (!tx) throw new Error('pacs.009 missing transaction information.');
-        const pmtId = child(tx, 'PmtId');
-        const intermediaries = [];
-        for (let i = 1; i <= 3; i += 1) {
-          const agt = child(tx, `IntermediaryAgt${i}`);
-          const bic = text(child(child(agt, 'FinInstnId'), 'BICFI'));
-          if (bic) intermediaries.push(bic);
-        }
-        return {
-          message_type: 'pacs.009',
-          actors: {
-            debtor_agent: actor(child(tx, 'DbtrAgt')),
-            creditor_agent: actor(child(tx, 'CdtrAgt')),
-            creditor: actor(child(tx, 'Cdtr')),
-          },
-          financial: {
-            settlement_amount: amountNode(child(grpHdr, 'TtlIntrBkSttlmAmt')),
-            charge_bearer: text(child(tx, 'ChrgBr')) || 'unspecified',
-          },
-          timeline: {
-            created: text(child(grpHdr, 'CreDtTm')),
-            settlement: text(child(child(grpHdr, 'SttlmInf'), 'SttlmDt')),
-          },
-          references: {
-            instruction: text(child(pmtId, 'InstrId')),
-            end_to_end: text(child(pmtId, 'EndToEndId')),
-            transaction: text(child(pmtId, 'TxId')),
-            uetr: text(child(pmtId, 'UETR')),
-          },
-          remittance: {
-            unstructured: children(child(tx, 'RmtInf'), 'Ustrd').map((node) => text(node)).filter(Boolean),
-          },
-          route: { intermediaries },
+        payload.references = {
+          end_to_end: textContent(doc, 'EndToEndId'),
+          instruction: textContent(doc, 'InstrId'),
+          transaction: textContent(doc, 'TxId'),
+          uetr: textContent(doc, 'UETR'),
         };
-      }
 
-      function extractCamt053(doc) {
-        const stmt = child(doc, 'Stmt');
-        if (!stmt) throw new Error('camt.053 missing statement block.');
-        const entries = children(stmt, 'Ntry').map((entry) => ({
-          amount: text(child(entry, 'Amt')),
-          currency: attr(child(entry, 'Amt'), 'Ccy'),
-          credit_debit: text(child(entry, 'CdtDbtInd')),
-          booking_date: text(child(child(entry, 'BookgDt'), 'Dt')),
-          value_date: text(child(child(entry, 'ValDt'), 'Dt')),
-          reference: text(child(entry, 'AcctSvcrRef')),
-          remittance: text(child(child(child(entry, 'NtryDtls'), 'TxDtls'), 'RmtInf') && child(child(child(entry, 'NtryDtls'), 'TxDtls'), 'RmtInf').children.length ? text(child(child(child(entry, 'NtryDtls'), 'TxDtls'), 'RmtInf').children[0]) : '',
-        }));
-        const acct = child(stmt, 'Acct');
-        const bal = child(stmt, 'Bal');
-        const closingAmtNode = child(bal, 'Amt');
-        return {
-          message_type: 'camt.053',
-          statement_id: text(child(stmt, 'Id')),
-          generated_at: text(child(stmt, 'CreDtTm')),
-          account: {
-            iban: text(child(child(acct, 'Id'), 'IBAN')),
-            owner: actor(child(acct, 'Ownr')),
-          },
-          closing_balance: {
-            amount: text(closingAmtNode),
-            currency: attr(closingAmtNode, 'Ccy'),
-            date: text(child(child(bal, 'Dt'), 'Dt')),
-          },
-          entries,
+        payload.remittance = {
+          unstructured: textContent(doc, 'Ustrd'),
+          structured: textContent(doc, 'Strd') || '',
         };
-      }
 
-      function amountNode(node) {
-        if (!node) return { value: '', currency: null };
-        return {
-          value: text(node),
-          currency: attr(node, 'Ccy') || null,
+        payload.charges = {
+          bearer: textContent(doc, 'ChrgBr'),
         };
+
+        return payload;
       }
 
-      function attr(node, name) {
-        return node ? node.getAttribute(name) || '' : '';
+      function parseCamt053(doc, messageType) {
+        const payload = {
+          message_type: messageType,
+          account: {},
+          closing_balance: null,
+          entries: [],
+        };
+
+        payload.account.iban = textContent(doc, 'Acct IBAN');
+        payload.account.owner = buildActor(doc, 'Acct Ownr');
+
+        payload.closing_balance = {
+          amount: textContent(doc, 'Bal Clsg BkTtlAmt'),
+          currency: doc.querySelector('Bal Clsg BkTtlAmt')?.getAttribute('Ccy') || '',
+          date: textContent(doc, 'Bal Clsg Dt'),
+        };
+
+        doc.querySelectorAll('Ntry').forEach((entry) => {
+          payload.entries.push({
+            amount: textContent(entry, 'Amt'),
+            currency: entry.querySelector('Amt')?.getAttribute('Ccy') || '',
+            credit_debit: textContent(entry, 'CdtDbtInd'),
+            booking_date: textContent(entry, 'BookgDt'),
+            reference: textContent(entry, 'AcctSvcrRef') || textContent(entry, 'NtryRef'),
+          });
+        });
+
+        return payload;
       }
 
-      function formatAmount(node) {
-        if (!node || !node.value) return 'an unspecified amount';
-        let formatted = node.value;
-        const numeric = Number(node.value.replace(/,/g, ''));
-        if (!Number.isNaN(numeric)) {
-          formatted = numeric.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-        return node.currency ? `${formatted} ${node.currency}` : formatted;
+      function buildActor(doc, tag) {
+        const el = doc.querySelector(tag);
+        if (!el) return null;
+        const name = textContent(el, 'Nm');
+        const account = textContent(el, 'IBAN') || textContent(el, 'Acct Id IBAN');
+        const bic = textContent(el, 'BICFI') || textContent(el, 'FinInstnId BICFI');
+        const country = textContent(el, 'Ctry') || textContent(el, 'PstlAdr Ctry');
+        return { name, account, bic, country };
       }
 
-      const actorName = (actorObj) => (actorObj && actorObj.name ? actorObj.name : 'an unspecified party');
-
-      function generateNarrative(payload, mode) {
-        if (payload.message_type === 'camt.053') {
-          return statementNarrative(payload, mode);
-        }
-        return paymentNarrative(payload, mode);
+      function actorName(actor) {
+        if (!actor) return 'n/a';
+        return actor.name || actor.account || actor.bic || 'n/a';
       }
 
-      function paymentNarrative(payload, mode) {
-        const actors = payload.actors || {};
-        const financial = payload.financial || {};
-        const timeline = payload.timeline || {};
-        const references = payload.references || {};
-        const remittance = payload.remittance || {};
-        const route = payload.route || {};
-
-        const payer = actorName(actors.debtor || actors.debtor_agent);
-        const beneficiary = actorName(actors.creditor);
-        const amount = formatAmount(financial.settlement_amount);
-        const charge = financial.charge_bearer || 'unspecified';
-        const created = timeline.created || timeline.requested_execution || 'n/a';
-        const uetr = references.uetr || 'n/a';
-        const purpose = remittance.unstructured && remittance.unstructured.length
-          ? remittance.unstructured.join('; ')
-          : remittance.structured && remittance.structured.length
-            ? remittance.structured.join('; ')
-            : 'no remittance information';
-        const intermediaries = route.intermediaries && route.intermediaries.length
-          ? route.intermediaries.join(', ')
-          : 'none';
-
-        if (mode === 'concise') {
-          return [
-            `Payer: ${payer}`,
-            `Beneficiary: ${beneficiary}`,
-            `Amount: ${amount}`,
-            `Charge bearer: ${charge}`,
-            `Created: ${created}`,
-            `UETR: ${uetr}`,
-            `Purpose: ${purpose}`,
-            `Intermediaries: ${intermediaries}`,
-          ].map((line) => `- ${line}`).join('\n');
-        }
-
-        let textBlock = `${payer} is sending ${amount} to ${beneficiary}. `;
-        textBlock += `The request was created on ${created}, with charge bearer set to ${charge}. `;
-        textBlock += `Routing involves ${intermediaries}. `;
-        textBlock += `Purpose: ${purpose}. `;
-        if (references.uetr) {
-          textBlock += `The transaction UETR is ${references.uetr}.`;
-        }
-        return textBlock.trim();
+      function formatAmount(obj) {
+        if (!obj) return 'n/a';
+        if (obj.amount && obj.currency) return `${obj.amount} ${obj.currency}`;
+        return obj.amount || 'n/a';
       }
 
-      function statementNarrative(payload, mode) {
-        const account = payload.account || {};
-        const closing = payload.closing_balance || {};
+      function buildNarrative(payload) {
+        if (payload.message_type === 'camt.053') return buildCamt053Narrative(payload);
+        const payer = actorName(payload.actors.debtor || payload.actors.debtor_agent);
+        const beneficiary = actorName(payload.actors.creditor);
+        const amount = formatAmount(payload.financial.settlement_amount || payload.financial.instructed_amount);
+        const ref = payload.references.end_to_end || payload.references.instruction || payload.references.transaction || 'n/a';
+        const uetr = payload.references.uetr || 'n/a';
+        const rem = payload.remittance.unstructured || payload.remittance.structured || 'no remittance info provided';
+        const bearer = payload.charges.bearer || 'n/a';
+        return `${payload.message_type}: ${payer} pays ${beneficiary} ${amount}. Reference ${ref}, UETR ${uetr}. Charges borne by ${bearer}. Remittance: ${rem}`;
+      }
+
+      function buildConcise(payload) {
+        if (payload.message_type === 'camt.053') return buildCamt053Concise(payload);
+        const payer = actorName(payload.actors.debtor || payload.actors.debtor_agent);
+        const beneficiary = actorName(payload.actors.creditor);
+        const amount = formatAmount(payload.financial.settlement_amount || payload.financial.instructed_amount);
+        const bearer = payload.charges.bearer || 'n/a';
+        return `Type: ${payload.message_type}; Payer: ${payer}; Beneficiary: ${beneficiary}; Amount: ${amount}; Charges: ${bearer}`;
+      }
+
+      function buildCamt053Narrative(payload) {
+        const owner = actorName(payload.account.owner);
+        const iban = payload.account.iban || 'n/a';
+        const closing = payload.closing_balance;
+        const amount = closing && closing.amount ? `${closing.amount} ${closing.currency || ''}` : 'n/a';
+        const date = closing && closing.date ? closing.date : 'n/a';
         const entries = payload.entries || [];
-        const owner = actorName(account.owner);
-        const iban = account.iban || 'unspecified account';
-        const amount = closing.amount ? `${Number(closing.amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${closing.currency || ''}`.trim() : 'unspecified balance';
-        const date = closing.date || payload.generated_at || 'n/a';
-
-        if (mode === 'concise') {
-          return [
-            `Account owner: ${owner}`,
-            `IBAN: ${iban}`,
-            `Closing balance: ${amount} on ${date}`,
-            `Entries: ${entries.length}`,
-          ].map((line) => `- ${line}`).join('\n');
-        }
-
         const samples = entries.slice(0, 3).map((entry) => {
           const entryAmount = entry.amount && entry.currency ? `${entry.amount} ${entry.currency}` : entry.amount || 'n/a';
           return `${entry.credit_debit} entry of ${entryAmount} on ${entry.booking_date} (ref ${entry.reference || 'n/a'})`;
         });
         const sampleText = samples.length ? samples.join('; ') : 'no booked entries described';
         return `Statement for ${owner} (${iban}) reports a closing balance of ${amount} on ${date}. The file lists ${entries.length} entries; examples include ${sampleText}.`;
+      }
+
+      function buildCamt053Concise(payload) {
+        const owner = actorName(payload.account.owner);
+        const iban = payload.account.iban || 'n/a';
+        const closing = payload.closing_balance;
+        const amount = closing && closing.amount ? `${closing.amount} ${closing.currency || ''}` : 'n/a';
+        return `Type: camt.053; Account: ${iban}; Owner: ${owner}; Closing balance: ${amount}; Entries: ${payload.entries.length}`;
       }
 
       function renderResults(payload, narrative, concise) {

@@ -96,54 +96,66 @@
             </div>
 
             <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-4 space-y-2">
-              <div>
-                <h3 class="text-slate-200 font-semibold text-sm">Fetch from core banking API</h3>
-                <p class="text-slate-500 text-xs">Client-side only; nothing is stored.</p>
-              </div>
-              <label class="block text-slate-400 text-sm space-y-1">
-                API base URL
-                <input
-                  type="url"
-                  id="coreBaseUrl"
-                  placeholder="https://core.example.com/api"
-                  class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
-                />
-              </label>
-              <label class="block text-slate-400 text-sm space-y-1">
-                Message path template (use {id})
-                <input
-                  type="text"
-                  id="corePathTemplate"
-                  value="/messages/{id}"
-                  class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
-                />
-              </label>
-              <label class="block text-slate-400 text-sm space-y-1">
-                Message ID
-                <input
-                  type="text"
-                  id="coreMessageId"
-                  placeholder="e.g. pacs-12345"
-                  class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
-                />
-              </label>
-              <label class="block text-slate-400 text-sm space-y-1">
-                API key (optional, Bearer)
-                <input
-                  type="password"
-                  id="coreApiKey"
-                  autocomplete="off"
-                  class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
-                />
-              </label>
-              <div class="flex items-center gap-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-slate-200 font-semibold text-sm">Fetch from core banking API</h3>
+                  <p class="text-slate-500 text-xs">Client-side only; nothing is stored.</p>
+                </div>
                 <button
-                  class="btn btn-secondary bg-slate-800 border border-slate-700 text-slate-100 px-4 py-2 rounded-lg hover:bg-slate-700 transition-all"
-                  id="fetchFromCore"
+                  id="toggleCorePanel"
+                  class="text-xs px-3 py-2 rounded-lg border border-slate-700 text-slate-200 hover:bg-slate-800 transition"
+                  type="button"
+                  aria-expanded="false"
                 >
-                  Fetch ISO message
+                  Show
                 </button>
-                <span id="coreApiStatus" class="text-slate-400 text-sm hidden"></span>
+              </div>
+              <div id="coreApiPanel" class="space-y-2 hidden">
+                <label class="block text-slate-400 text-sm space-y-1">
+                  API base URL
+                  <input
+                    type="url"
+                    id="coreBaseUrl"
+                    placeholder="https://core.example.com/api"
+                    class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                  />
+                </label>
+                <label class="block text-slate-400 text-sm space-y-1">
+                  Message path template (use {id})
+                  <input
+                    type="text"
+                    id="corePathTemplate"
+                    value="/messages/{id}"
+                    class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                  />
+                </label>
+                <label class="block text-slate-400 text-sm space-y-1">
+                  Message ID
+                  <input
+                    type="text"
+                    id="coreMessageId"
+                    placeholder="e.g. pacs-12345"
+                    class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                  />
+                </label>
+                <label class="block text-slate-400 text-sm space-y-1">
+                  API key (optional, Bearer)
+                  <input
+                    type="password"
+                    id="coreApiKey"
+                    autocomplete="off"
+                    class="w-full bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                  />
+                </label>
+                <div class="flex items-center gap-3">
+                  <button
+                    class="btn btn-secondary bg-slate-800 border border-slate-700 text-slate-100 px-4 py-2 rounded-lg hover:bg-slate-700 transition-all"
+                    id="fetchFromCore"
+                  >
+                    Fetch ISO message
+                  </button>
+                  <span id="coreApiStatus" class="text-slate-400 text-sm hidden"></span>
+                </div>
               </div>
             </div>
 
@@ -245,6 +257,8 @@
       const coreApiKey = document.getElementById('coreApiKey');
       const fetchFromCoreButton = document.getElementById('fetchFromCore');
       const coreApiStatus = document.getElementById('coreApiStatus');
+      const toggleCorePanel = document.getElementById('toggleCorePanel');
+      const coreApiPanel = document.getElementById('coreApiPanel');
 
       const tabButtons = Array.from(document.querySelectorAll('.tab-button'));
       const tabs = {
@@ -325,6 +339,13 @@
 
       shiftToggle.addEventListener('change', () => {
         shiftDays.disabled = !shiftToggle.checked;
+      });
+
+      toggleCorePanel.addEventListener('click', () => {
+        const isHidden = coreApiPanel.classList.contains('hidden');
+        coreApiPanel.classList.toggle('hidden', !isHidden);
+        toggleCorePanel.textContent = isHidden ? 'Hide' : 'Show';
+        toggleCorePanel.setAttribute('aria-expanded', String(isHidden));
       });
 
       fetchFromCoreButton.addEventListener('click', async () => {

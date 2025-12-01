@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>PAYROLL-045</MsgId>
+      <CreDtTm>2025-03-28T06:30:00+02:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>PAY-045</InstrId>
+        <EndToEndId>PAYROLL-BATCH-045</EndToEndId>
+        <TxId>HMBKFRPP-045</TxId>
+        <UETR>aefe88c9-a6cf-4021-a0c2-e1ee1c923121</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        <ReqdExctnDt>2025-03-28</ReqdExctnDt>
+      </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="EUR">78000.00</IntrBkSttlmAmt>
+      <ChrgBr>SHA</ChrgBr>
+
+
+      <Dbtr>
+        <Nm>Harmony SME Payroll</Nm>
+        <PstlAdr>
+          <StrtNm>5 Avenue d'Italie</StrtNm>
+          <TwnNm>Paris</TwnNm>
+          <Ctry>FR</Ctry>
+          <PstCd>75013</PstCd>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>FR1420041010050500013M02606</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKFRPPXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>BNPAFRPPXXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>NDEAFIHHXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Nordic Payroll Hub</Nm>
+        <PstlAdr>
+          <StrtNm>2 Fredrikinkatu</StrtNm>
+          <TwnNm>Helsinki</TwnNm>
+          <Ctry>FI</Ctry>
+          <PstCd>00120</PstCd>
+        </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>FI2112345600000785</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>SME payroll batch 45</Ustrd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

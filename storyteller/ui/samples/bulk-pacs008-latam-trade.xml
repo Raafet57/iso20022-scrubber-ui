@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>LATAM-TRADE-019</MsgId>
+      <CreDtTm>2025-02-05T13:45:00-05:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>LATAM-19</InstrId>
+        <EndToEndId>SHIPMENT-19</EndToEndId>
+        <TxId>ANDESCCO-19</TxId>
+        <UETR>a65d6099-173c-4177-8c34-fe1ece87aa8d</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        <ReqdExctnDt>2025-02-05</ReqdExctnDt>
+      </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="USD">2100000.00</IntrBkSttlmAmt>
+      <ChrgBr>SHA</ChrgBr>
+
+
+      <Dbtr>
+        <Nm>Andes Commodities</Nm>
+        <PstlAdr>
+          <StrtNm>Av Libertadores 500</StrtNm>
+          <TwnNm>Bogota</TwnNm>
+          <Ctry>CO</Ctry>
+          <PstCd>110111</PstCd>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CO1230000000123456789</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>ANDESCCOBXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>CITIUS33XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+
+        <IntrmyAgt2>
+          <FinInstnId>
+            <BICFI>BESZPTPLXXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt2>
+
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>BESZPTPLXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Lisbon Metals SA</Nm>
+        <PstlAdr>
+          <StrtNm>Rua do Comércio 20</StrtNm>
+          <TwnNm>Lisbon</TwnNm>
+          <Ctry>PT</Ctry>
+          <PstCd>1100-003</PstCd>
+        </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>PT50002700000012345678921</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Concentrate shipment 19</Ustrd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>ASIA-MH-004</MsgId>
+      <CreDtTm>2025-02-10T18:30:00+09:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <TtlIntrBkSttlmAmt Ccy="JPY">45000000.00</TtlIntrBkSttlmAmt>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>HMBKJPJT-004</InstrId>
+        <EndToEndId>CORRIDOR-JP-FI</EndToEndId>
+        <TxId>HMBKJPJT-MH-004</TxId>
+        <UETR>140f1102-92cc-47c2-bf0a-69639102ca41</UETR>
+      </PmtId>
+      <ChrgBr>SHA</ChrgBr>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKJPJTXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <IntermediaryAgt1>
+          <FinInstnId>
+            <BICFI>HMBKUS44GAR</BICFI>
+          </FinInstnId>
+        </IntermediaryAgt1>
+
+        <IntermediaryAgt2>
+          <FinInstnId>
+            <BICFI>CITIUS33XXX</BICFI>
+          </FinInstnId>
+        </IntermediaryAgt2>
+
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>NDEAFIHHXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Nordic Bank Helsinki</Nm>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>FI2112345600000777</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Japan to Finland liquidity move</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

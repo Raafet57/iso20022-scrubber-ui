@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>COVER-DBCC-USD-20250301</MsgId>
+      <CreDtTm>2025-03-01T09:15:00-05:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>COVE</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>DBCC-OUR-77811</InstrId>
+        <EndToEndId>ACME-COVER-PO-77811</EndToEndId>
+        <TxId>BDCCBQBN-2025-COVER</TxId>
+        <UETR>f1d2f3a4-1111-4c5d-bbed-f5791b1f4412</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="USD">125000.00</IntrBkSttlmAmt>
+      <ChrgBr>OUR</ChrgBr>
+      <UltmtDbtr>
+        <Nm>ACME HOLDINGS LLC</Nm>
+      </UltmtDbtr>
+      <Dbtr>
+        <Nm>BANCO DI CARIBE N.V. BONAIRE</Nm>
+        <PstlAdr>
+          <StrtNm>KAYA GRANDI 22</StrtNm>
+          <TwnNm>KRALENDIJK</TwnNm>
+          <Ctry>BQ</Ctry>
+          <PstCd>00000</PstCd>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>BQ20BDCC12345678901234</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>BDCCBQBNXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <IntrmyAgt1>
+        <FinInstnId>
+          <BICFI>BKTRUS33XXX</BICFI>
+          <Nm>THE BANK OF NEW YORK MELLON</Nm>
+        </FinInstnId>
+      </IntrmyAgt1>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKUS44GAR</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>HARMONY BANK GARLAND</Nm>
+        <PstlAdr>
+          <StrtNm>515 WEST AVENUE</StrtNm>
+          <TwnNm>GARLAND</TwnNm>
+          <Ctry>US</Ctry>
+          <PstCd>75042</PstCd>
+        </PstlAdr>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>US12HMBK11192511300001</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Cover payment for invoice set GAR-2025-03</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

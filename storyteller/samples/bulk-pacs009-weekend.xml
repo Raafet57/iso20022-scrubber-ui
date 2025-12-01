@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>WKND-009-03</MsgId>
+      <CreDtTm>2025-04-06T05:45:00+05:30</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <TtlIntrBkSttlmAmt Ccy="INR">65000000.00</TtlIntrBkSttlmAmt>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>WKND-03</InstrId>
+        <EndToEndId>WKND-03</EndToEndId>
+        <TxId>PUNBINBB-WKND-03</TxId>
+        <UETR>c0988f73-f2cf-48dd-9033-90f188a92a4f</UETR>
+      </PmtId>
+      <ChrgBr>SHA</ChrgBr>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>PUNBINBBXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <IntermediaryAgt1>
+          <FinInstnId>
+            <BICFI>HMBKUS44GAR</BICFI>
+          </FinInstnId>
+        </IntermediaryAgt1>
+
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>SBININBBXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>State Bank of India</Nm>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>IN45SBIN00001122334455</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Weekend clearing buffer</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

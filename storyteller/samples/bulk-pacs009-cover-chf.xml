@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>CH-COVER-001</MsgId>
+      <CreDtTm>2025-03-01T10:10:00+01:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <TtlIntrBkSttlmAmt Ccy="CHF">9500000.00</TtlIntrBkSttlmAmt>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>UBS-COVER-001</InstrId>
+        <EndToEndId>UBS-COVER-001</EndToEndId>
+        <TxId>UBSWCHZH-001</TxId>
+        <UETR>6020ece3-0bb1-480e-bb9a-6491c3932c49</UETR>
+      </PmtId>
+      <ChrgBr>SHA</ChrgBr>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>UBSWCHZHXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <IntermediaryAgt1>
+          <FinInstnId>
+            <BICFI>UBSWCHZHXXX</BICFI>
+          </FinInstnId>
+        </IntermediaryAgt1>
+
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>CITIUS33XXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Citibank N.A. Treasury</Nm>
+      </Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>US33CITI000000987654</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Cover payment for USD leg</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

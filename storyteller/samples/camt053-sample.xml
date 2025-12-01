@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.10">
+  <BkToCstmrStmt>
+    <GrpHdr>
+      <MsgId>MULTI-ENTRY-20250315</MsgId>
+      <CreDtTm>2025-03-15T05:40:00Z</CreDtTm>
+    </GrpHdr>
+    <Stmt>
+      <Id>HARMONY-DAILY-2025-03-15</Id>
+      <ElctrncSeqNb>88</ElctrncSeqNb>
+      <CreDtTm>2025-03-15T05:30:00Z</CreDtTm>
+      <Acct>
+        <Id>
+          <IBAN>US98HMBK09120446200111</IBAN>
+        </Id>
+        <Ownr>
+          <Nm>FIRST SOUTHEAST BANK HARMONY</Nm>
+        </Ownr>
+        <Svcr>
+          <FinInstnId>
+            <BICFI>HMBKUS44GAR</BICFI>
+          </FinInstnId>
+        </Svcr>
+      </Acct>
+      <Bal>
+        <Tp>
+          <CdOrPrtry>
+            <Cd>CLBD</Cd>
+          </CdOrPrtry>
+        </Tp>
+        <Amt Ccy="USD">2150000.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt>
+          <Dt>2025-03-14</Dt>
+        </Dt>
+      </Bal>
+      <Ntry>
+        <Amt Ccy="USD">-250000.00</Amt>
+        <CdtDbtInd>DBIT</CdtDbtInd>
+        <BookgDt>
+          <Dt>2025-03-14</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2025-03-14</Dt>
+        </ValDt>
+        <AcctSvcrRef>HMBK-REF-991</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <Refs>
+              <EndToEndId>GARLAND-PAYROLL-MAR</EndToEndId>
+              <TxId>HMBKUS44GAR-991</TxId>
+            </Refs>
+            <RltdPties>
+              <Cdtr>
+                <Nm>HARMONY PAYROLL SERVICES</Nm>
+              </Cdtr>
+            </RltdPties>
+            <RmtInf>
+              <Ustrd>Payroll batch March</Ustrd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+      <Ntry>
+        <Amt Ccy="USD">+125000.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <BookgDt>
+          <Dt>2025-03-14</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2025-03-14</Dt>
+        </ValDt>
+        <AcctSvcrRef>HMBK-REF-992</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <Refs>
+              <EndToEndId>CLIENT-FEE-145</EndToEndId>
+              <TxId>HMBKUS44GAR-992</TxId>
+            </Refs>
+            <RltdPties>
+              <Dbtr>
+                <Nm>ACME CONSULTING</Nm>
+              </Dbtr>
+            </RltdPties>
+            <RmtInf>
+              <Ustrd>Consulting fees</Ustrd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+      <Ntry>
+        <Amt Ccy="USD">-17500.50</Amt>
+        <CdtDbtInd>DBIT</CdtDbtInd>
+        <BookgDt>
+          <Dt>2025-03-14</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2025-03-14</Dt>
+        </ValDt>
+        <AcctSvcrRef>HMBK-REF-993</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <Refs>
+              <EndToEndId>UTILITY-294</EndToEndId>
+            </Refs>
+            <RmtInf>
+              <Ustrd>Utility settlement</Ustrd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>

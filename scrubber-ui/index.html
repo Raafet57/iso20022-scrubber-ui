@@ -43,6 +43,18 @@
         border: 1px solid #d4d8e1;
         padding: 0.75rem;
         resize: vertical;
+        box-sizing: border-box;
+      }
+      input[type='text'],
+      input[type='url'],
+      input[type='password'],
+      input[type='number'] {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid #d4d8e1;
+        padding: 0.65rem 0.75rem;
+        font-size: 0.95rem;
+        box-sizing: border-box;
       }
       textarea:focus,
       input:focus {
@@ -255,6 +267,32 @@
                 days
               </label>
             </div>
+            <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 0.85rem; background: #f8fafc">
+              <h3 style="margin: 0 0 0.25rem 0; font-size: 1rem">Fetch from core banking API</h3>
+              <p style="margin: 0 0 0.75rem 0; color: #6b7280">
+                Pull an ISO 20022 message directly from your core. All calls are client-side; nothing is stored.
+              </p>
+              <label>
+                API base URL
+                <input type="url" id="coreBaseUrl" placeholder="https://core.example.com/api" />
+              </label>
+              <label>
+                Message path template (use {id} placeholder)
+                <input type="text" id="corePathTemplate" value="/messages/{id}" />
+              </label>
+              <label>
+                Message ID
+                <input type="text" id="coreMessageId" placeholder="e.g. pacs-12345" />
+              </label>
+              <label>
+                API key (optional, sent as Bearer)
+                <input type="password" id="coreApiKey" autocomplete="off" />
+              </label>
+              <div style="margin-top: 0.6rem; display: flex; gap: 0.5rem; align-items: center">
+                <button class="btn btn-secondary" id="fetchFromCore">Fetch ISO message</button>
+                <span id="coreApiStatus" class="hidden" style="font-size: 0.9rem; color: #374151"></span>
+              </div>
+            </div>
             <button class="btn btn-primary" id="scrubButton">Scrub XML</button>
             <div id="inputError" class="alert hidden"></div>
           </div>
@@ -330,6 +368,12 @@
       const remittanceToggle = document.getElementById('remittanceToggle');
       const shiftToggle = document.getElementById('shiftToggle');
       const shiftDays = document.getElementById('shiftDays');
+      const coreBaseUrl = document.getElementById('coreBaseUrl');
+      const corePathTemplate = document.getElementById('corePathTemplate');
+      const coreMessageId = document.getElementById('coreMessageId');
+      const coreApiKey = document.getElementById('coreApiKey');
+      const fetchFromCoreButton = document.getElementById('fetchFromCore');
+      const coreApiStatus = document.getElementById('coreApiStatus');
 
       const tabButtons = Array.from(document.querySelectorAll('.tab-button'));
       const tabs = {
@@ -337,6 +381,66 @@
         diff: document.getElementById('tab-diff'),
         mapping: document.getElementById('tab-mapping'),
       };
+
+      const coreBankingApi = (() => {
+        let config = {
+          baseUrl: '',
+          apiKey: '',
+          pathTemplate: '/messages/{id}',
+        };
+
+        const normalizeBaseUrl = (value) => value.replace(/\/+$/, '');
+
+        function setConfig({ baseUrl, apiKey, pathTemplate }) {
+          config.baseUrl = baseUrl ? normalizeBaseUrl(baseUrl) : '';
+          config.apiKey = apiKey ?? '';
+          config.pathTemplate = pathTemplate && pathTemplate.trim() ? pathTemplate.trim() : '/messages/{id}';
+        }
+
+        function buildUrl(messageId) {
+          const template = config.pathTemplate.includes('{id}')
+            ? config.pathTemplate
+            : `${config.pathTemplate.replace(/\/+$/, '')}/{id}`;
+          const relative = template.startsWith('/') ? template : `/${template}`;
+          return `${config.baseUrl}${relative.replace('{id}', encodeURIComponent(messageId))}`;
+        }
+
+        async function fetchMessage(messageId) {
+          if (!config.baseUrl) throw new Error('API base URL is required.');
+          if (!messageId) throw new Error('Message ID is required.');
+          const url = buildUrl(messageId);
+          const headers = {
+            Accept: 'application/xml, text/xml, application/json;q=0.9, */*;q=0.8',
+          };
+          if (config.apiKey) headers.Authorization = `Bearer ${config.apiKey}`;
+          const response = await fetch(url, { headers });
+          if (!response.ok) {
+            const body = await response.text().catch(() => '');
+            const detail = body ? ` – ${body.slice(0, 140)}` : '';
+            throw new Error(`HTTP ${response.status} ${response.statusText}${detail}`);
+          }
+          const contentType = response.headers.get('content-type') ?? '';
+          if (contentType.includes('json')) {
+            const data = await response.json();
+            const xml = data?.xml ?? data?.message ?? data?.payload ?? data?.data;
+            if (!xml || typeof xml !== 'string') {
+              throw new Error('Response JSON missing XML payload (expected "xml" or "message").');
+            }
+            return xml;
+          }
+          return response.text();
+        }
+
+        return { setConfig, fetchMessage };
+      })();
+
+      window.coreBankingApi = coreBankingApi;
+
+      function setCoreStatus(message, type = 'info') {
+        coreApiStatus.textContent = message;
+        coreApiStatus.classList.remove('hidden');
+        coreApiStatus.style.color = type === 'error' ? '#b91c1c' : '#111827';
+      }
 
       tabButtons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -350,6 +454,27 @@
 
       shiftToggle.addEventListener('change', () => {
         shiftDays.disabled = !shiftToggle.checked;
+      });
+
+      fetchFromCoreButton.addEventListener('click', async () => {
+        fetchFromCoreButton.disabled = true;
+        setCoreStatus('Fetching ISO message from core…', 'info');
+        coreBankingApi.setConfig({
+          baseUrl: coreBaseUrl.value.trim(),
+          apiKey: coreApiKey.value.trim(),
+          pathTemplate: corePathTemplate.value.trim(),
+        });
+        try {
+          const xml = await coreBankingApi.fetchMessage(coreMessageId.value.trim());
+          inputXml.value = xml;
+          inputError.classList.add('hidden');
+          setCoreStatus('Loaded message from core.', 'info');
+        } catch (err) {
+          console.error(err);
+          setCoreStatus(err.message || 'Failed to fetch ISO message.', 'error');
+        } finally {
+          fetchFromCoreButton.disabled = false;
+        }
       });
 
       sampleSelect.addEventListener('change', async (event) => {

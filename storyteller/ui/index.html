@@ -351,19 +351,31 @@
       sampleSelect.addEventListener('change', async (event) => {
         const path = event.target.value;
         if (!path) return;
-        try {
-          loader.classList.remove('hidden');
-          const response = await fetch(path);
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          const text = await response.text();
-          textarea.value = text;
-          inputError.classList.add('hidden');
-        } catch (err) {
+        const tryPaths = [path];
+        if (path.startsWith('./samples/')) {
+          tryPaths.push(path.replace('./samples/', '../samples/'));
+          tryPaths.push(`/storyteller/ui/${path.replace('./', '')}`);
+        }
+        let loaded = false;
+        loader.classList.remove('hidden');
+        inputError.classList.add('hidden');
+        for (const p of tryPaths) {
+          try {
+            const response = await fetch(p);
+            if (!response.ok) continue;
+            const text = await response.text();
+            textarea.value = text;
+            loaded = true;
+            break;
+          } catch (err) {
+            continue;
+          }
+        }
+        if (!loaded) {
           inputError.textContent = 'Unable to load sample file.';
           inputError.classList.remove('hidden');
-        } finally {
-          loader.classList.add('hidden');
         }
+        loader.classList.add('hidden');
       });
 
       fileInput.addEventListener('change', (event) => {

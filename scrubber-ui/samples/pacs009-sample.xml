@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>PNB-COVER-20250311</MsgId>
+      <CreDtTm>2025-03-11T07:30:00+05:30</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>PNB-CPPC-JPR-458</InstrId>
+        <EndToEndId>CPPC-RET-458</EndToEndId>
+        <TxId>PUNB0746500-2025-458</TxId>
+        <UETR>1d1d67e3-30b2-44fb-8d6a-7cfc8654d0e6</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="INR">450000000</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-02-25</IntrBkSttlmDt><InstgAgt><FinInstnId><BICFI>PUNBINBBXXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>IDIBINBBLAL</BICFI></FinInstnId></InstdAgt><IntrmyAgt1><FinInstnId>
+          <BICFI>PUNBINBBXXX</BICFI>
+          <Nm>PUNJAB NATIONAL BANK CPPC JAIPUR</Nm>
+        </FinInstnId>
+      </IntrmyAgt1><IntrmyAgt2><FinInstnId>
+          <BICFI>PUNBINBBXXX</BICFI>
+          <Nm>PUNJAB NATIONAL BANK CPPC KOLKATA</Nm>
+        </FinInstnId>
+      </IntrmyAgt2><Dbtr><FinInstnId><BICFI>PUNBINBBXXX</BICFI></FinInstnId></Dbtr><DbtrAgt>
+        <FinInstnId>
+          <BICFI>PUNBINBBXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>IDIBINBBLAL</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <FinInstnId><BICFI>IDIBINBBLAL</BICFI></FinInstnId></Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>IN98ICIC00083660004567890</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Corporate pension reimbursement</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

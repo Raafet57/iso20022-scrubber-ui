@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>WEEKEND-029</MsgId>
+      <CreDtTm>2025-04-05T10:12:00-03:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>BR-PT-029</InstrId>
+        <EndToEndId>IMP-029</EndToEndId>
+        <TxId>BRASBRRJ-029</TxId>
+        <UETR>21d6b9c5-59ca-4349-ab71-329c9169ab37</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="BRL">98000.00</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-04-05</IntrBkSttlmDt><ChrgBr>SHAR</ChrgBr>
+
+
+      <InstgAgt><FinInstnId><BICFI>BRASBRRJXXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>BCOMPTPLXXX</BICFI></FinInstnId></InstdAgt><IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>BCOMPTPLXXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+
+      <Dbtr>
+        <Nm>Harmonia Importacao LTDA</Nm>
+        <PstlAdr>
+          <StrtNm>Av Paulista 55</StrtNm>
+          <PstCd>01310-100</PstCd>
+        <TwnNm>Sao Paulo</TwnNm>
+          <Ctry>BR</Ctry>
+          </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>BR15000099990000123451</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>BRASBRRJXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <CdtrAgt>
+        <FinInstnId>
+          <BICFI>BCOMPTPLXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Lisboa Trading SA</Nm>
+        <PstlAdr>
+          <StrtNm>Rua Augusta 14</StrtNm>
+          <PstCd>1100-053</PstCd>
+        <TwnNm>Lisbon</TwnNm>
+          <Ctry>PT</Ctry>
+          </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>PT50003300004567890123456</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Weekend customs fees</Ustrd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

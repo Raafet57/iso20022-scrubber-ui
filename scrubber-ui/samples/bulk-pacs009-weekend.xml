@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>WKND-009-03</MsgId>
+      <CreDtTm>2025-04-06T05:45:00+05:30</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>WKND-03</InstrId>
+        <EndToEndId>WKND-03</EndToEndId>
+        <TxId>PUNBINBB-WKND-03</TxId>
+        <UETR>c0988f73-f2cf-48dd-9033-90f188a92a4f</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="INR">65000000.00</IntrBkSttlmAmt><IntrBkSttlmDt>2025-02-25</IntrBkSttlmDt><InstgAgt><FinInstnId><BICFI>PUNBINBBXXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>SBININBBXXX</BICFI></FinInstnId></InstdAgt><IntrmyAgt1><FinInstnId>
+            <BICFI>HMBKUS44GAR</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1><Dbtr><FinInstnId><BICFI>PUNBINBBXXX</BICFI></FinInstnId></Dbtr><DbtrAgt>
+        <FinInstnId>
+          <BICFI>PUNBINBBXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <CdtrAgt>
+        <FinInstnId>
+          <BICFI>SBININBBXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <FinInstnId><BICFI>SBININBBXXX</BICFI></FinInstnId></Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>IN45SBIN00001122334455</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Weekend clearing buffer</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

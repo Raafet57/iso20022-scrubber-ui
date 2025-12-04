@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.054.001.08">
+  <BkToCstmrDbtCdtNtfctn>
+    <GrpHdr>
+      <MsgId>CREDIT-ADV-20250320</MsgId>
+      <CreDtTm>2025-03-20T12:05:00+01:00</CreDtTm>
+    </GrpHdr>
+    <Ntfctn>
+      <Id>BNPA-CREDIT-2025-03-20</Id>
+      <CreDtTm>2025-03-20T12:00:00+01:00</CreDtTm>
+      <Acct>
+        <Id><IBAN>FR7610096000301234567890188</IBAN></Id>
+        <Ccy>EUR</Ccy><Ownr><Nm>BNP PARIBAS CHALON</Nm></Ownr>
+      </Acct>
+      <Ntry>
+        <NtryRef>BNPAFRPPCHL-150</NtryRef><Amt Ccy="EUR">150000.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts><Cd>BOOK</Cd></Sts><BookgDt><DtTm>2025-03-20T12:00:00+01:00</DtTm></BookgDt>
+        <ValDt><Dt>2025-03-20</Dt></ValDt>
+        <AcctSvcrRef>BNPA-CREDIT-ADV-001</AcctSvcrRef><BkTxCd><Domn><Cd>PMNT</Cd><Fmly><Cd>RCDT</Cd><SubFmlyCd>ESCT</SubFmlyCd></Fmly></Domn></BkTxCd><NtryDtls>
+          <TxDtls>
+            <Refs><AcctSvcrRef>BNPAFRPPCHL-150</AcctSvcrRef><InstrId>BNPAFRPPCHL-150</InstrId></Refs>
+            <Amt Ccy="EUR">150000.00</Amt><CdtDbtInd>CRDT</CdtDbtInd><RltdDts><AccptncDtTm>2025-03-20T12:00:00+01:00</AccptncDtTm></RltdDts><AddtlTxInf>Credit advice for energy purchase</AddtlTxInf></TxDtls>
+        </NtryDtls>
+      </Ntry>
+    </Ntfctn>
+  </BkToCstmrDbtCdtNtfctn>
+</Document>

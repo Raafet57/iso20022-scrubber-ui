@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08">
+  <FICdtTrf>
+    <GrpHdr>
+      <MsgId>AF-HVL-090</MsgId>
+      <CreDtTm>2025-02-25T09:10:00+02:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>AF-HVL-090</InstrId>
+        <EndToEndId>AF-HVL-090</EndToEndId>
+        <TxId>PRUDMAMC-090</TxId>
+        <UETR>9f321359-99b2-4770-bb72-fb93da5cf7e2</UETR>
+      </PmtId>
+      <IntrBkSttlmAmt Ccy="USD">22000000.00</IntrBkSttlmAmt><IntrBkSttlmDt>2025-02-25</IntrBkSttlmDt><InstgAgt><FinInstnId><BICFI>PRUDMAMCXXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>SCBLGB2LXXX</BICFI></FinInstnId></InstdAgt><IntrmyAgt1><FinInstnId>
+            <BICFI>CITIUS33XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1><Dbtr><FinInstnId><BICFI>PRUDMAMCXXX</BICFI></FinInstnId></Dbtr><DbtrAgt>
+        <FinInstnId>
+          <BICFI>PRUDMAMCXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <CdtrAgt>
+        <FinInstnId>
+          <BICFI>SCBLGB2LXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <FinInstnId><BICFI>SCBLGB2LXXX</BICFI></FinInstnId></Cdtr>
+      <CdtrAcct>
+        <Id>
+          <IBAN>GB12SCBL40201777777777</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>High value USD sweep</Ustrd>
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FICdtTrf>
+</Document>

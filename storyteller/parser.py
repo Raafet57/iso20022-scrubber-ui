@@ -38,6 +38,14 @@ def parse_message(xml_text: str) -> Dict[str, Any]:
         return _extract_pacs009(document, ns)
     if message_tag == "BkToCstmrStmt":
         return _extract_camt053(document, ns)
+    if message_tag == "BkToCstmrAcctRpt":
+        return _extract_camt052(document, ns)
+    if message_tag == "BkToCstmrDbtCdtNtfctn":
+        return _extract_camt054(document, ns)
+    if message_tag == "FIToFIPmtStsRpt":
+        return _extract_pacs002(document, ns)
+    if message_tag == "PmtRtr":
+        return _extract_pacs004(document, ns)
 
     raise ValueError(f"Unsupported ISO 20022 message: {message_tag}")
 
@@ -234,6 +242,154 @@ def _extract_camt053(document: ET.Element, ns: Dict[str, str]) -> Dict[str, Any]
         },
         "entries": entries,
         "generated_at": _text(stmt.find("ns:CreDtTm", ns)),
+    }
+
+
+def _extract_camt052(document: ET.Element, ns: Dict[str, str]) -> Dict[str, Any]:
+    """Intraday account report."""
+    report = document.find("ns:Rpt", ns)
+    if report is None:
+        raise ValueError("camt.052 missing Rpt element")
+    entries: List[Dict[str, Any]] = []
+    for entry in report.findall("ns:Ntry", ns):
+        amount_node = entry.find("ns:Amt", ns)
+        entries.append(
+            {
+                "amount": _text(amount_node),
+                "currency": amount_node.get("Ccy") if amount_node is not None else None,
+                "credit_debit": _text(entry.find("ns:CdtDbtInd", ns)),
+                "booking_date": _text(entry.find("ns:BookgDt/ns:Dt", ns)),
+                "value_date": _text(entry.find("ns:ValDt/ns:Dt", ns)),
+                "reference": _text(entry.find("ns:AcctSvcrRef", ns)),
+                "remittance": _text(entry.find(".//ns:Ustrd", ns)),
+            }
+        )
+    balance_node = report.find("ns:Bal/ns:Amt", ns)
+    return {
+        "message_type": "camt.052",
+        "statement_id": _text(report.find("ns:Id", ns)),
+        "account": {
+            "iban": _text(report.find("ns:Acct/ns:Id/ns:IBAN", ns)),
+            "owner": _actor(report.find("ns:Acct/ns:Ownr", ns), ns),
+        },
+        "closing_balance": {
+            "amount": _text(balance_node),
+            "currency": balance_node.get("Ccy") if balance_node is not None else None,
+            "date": _text(report.find("ns:Bal/ns:Dt/ns:Dt", ns)),
+        },
+        "entries": entries,
+        "generated_at": _text(report.find("ns:CreDtTm", ns)),
+    }
+
+
+def _extract_camt054(document: ET.Element, ns: Dict[str, str]) -> Dict[str, Any]:
+    """Debit/credit notification."""
+    ntf = document.find("ns:Ntfctn", ns)
+    if ntf is None:
+        raise ValueError("camt.054 missing Ntfctn element")
+    entries: List[Dict[str, Any]] = []
+    for entry in ntf.findall("ns:Ntry", ns):
+        amount_node = entry.find("ns:Amt", ns)
+        entries.append(
+            {
+                "amount": _text(amount_node),
+                "currency": amount_node.get("Ccy") if amount_node is not None else None,
+                "credit_debit": _text(entry.find("ns:CdtDbtInd", ns)),
+                "booking_date": _text(entry.find("ns:BookgDt/ns:Dt", ns)),
+                "value_date": _text(entry.find("ns:ValDt/ns:Dt", ns)),
+                "reference": _text(entry.find("ns:NtryRef", ns)),
+                "remittance": _text(entry.find(".//ns:Ustrd", ns)),
+            }
+        )
+    balance_node = ntf.find("ns:Bal/ns:Amt", ns)
+    return {
+        "message_type": "camt.054",
+        "statement_id": _text(ntf.find("ns:Id", ns)),
+        "account": {
+            "iban": _text(ntf.find("ns:Acct/ns:Id/ns:IBAN", ns)),
+            "owner": _actor(ntf.find("ns:Acct/ns:Ownr", ns), ns),
+        },
+        "closing_balance": {
+            "amount": _text(balance_node),
+            "currency": balance_node.get("Ccy") if balance_node is not None else None,
+            "date": _text(ntf.find("ns:Bal/ns:Dt/ns:Dt", ns)),
+        },
+        "entries": entries,
+        "generated_at": _text(ntf.find("ns:CreDtTm", ns)),
+    }
+
+
+def _extract_pacs002(document: ET.Element, ns: Dict[str, str]) -> Dict[str, Any]:
+    tx = document.find(".//ns:TxInfAndSts", ns)
+    if tx is None:
+        raise ValueError("pacs.002 missing TxInfAndSts")
+    original = tx.find("ns:OrgnlTxRef", ns)
+    references = {
+        "original_end_to_end": _text(tx.find("ns:OrgnlEndToEndId", ns))
+        or _text(original.find("ns:PmtId/ns:EndToEndId", ns)) if original is not None else "",
+        "instruction": _text(original.find("ns:PmtId/ns:InstrId", ns)) if original is not None else "",
+        "transaction": _text(original.find("ns:PmtId/ns:TxId", ns)) if original is not None else "",
+    }
+    amount_node = original.find("ns:IntrBkSttlmAmt", ns) if original is not None else None
+    return {
+        "message_type": "pacs.002",
+        "status": _text(tx.find("ns:TxSts", ns)),
+        "reason": _text(tx.find("ns:StsRsnInf/ns:Rsn/ns:Cd", ns)),
+        "actors": {
+            "debtor": _actor(original.find("ns:Dbtr", ns), ns) if original is not None else None,
+            "creditor": _actor(original.find("ns:Cdtr", ns), ns) if original is not None else None,
+        },
+        "financial": {
+            "settlement_amount": {
+                "value": _text(amount_node),
+                "currency": amount_node.get("Ccy") if amount_node is not None else None,
+            },
+            "charge_bearer": _text(original.find("ns:ChrgBr", ns)) if original is not None else "",
+        },
+        "references": references,
+        "remittance": {
+            "unstructured": [
+                _text(node) for node in original.findall("ns:RmtInf/ns:Ustrd", ns)
+            ]
+            if original is not None
+            else []
+        },
+    }
+
+
+def _extract_pacs004(document: ET.Element, ns: Dict[str, str]) -> Dict[str, Any]:
+    tx = document.find("ns:RtrTxInf", ns)
+    if tx is None:
+        raise ValueError("pacs.004 missing RtrTxInf")
+    original = tx.find("ns:OrgnlTxRef", ns)
+    amount_node = tx.find("ns:Amt", ns) or original.find("ns:IntrBkSttlmAmt", ns) if original is not None else None
+    references = {
+        "original_end_to_end": _text(tx.find("ns:OrgnlEndToEndId", ns)),
+        "instruction": _text(original.find("ns:PmtId/ns:InstrId", ns)) if original is not None else "",
+        "transaction": _text(original.find("ns:PmtId/ns:TxId", ns)) if original is not None else "",
+    }
+    return {
+        "message_type": "pacs.004",
+        "reason": _text(tx.find("ns:RtrRsnInf/ns:Rsn/ns:Cd", ns)),
+        "actors": {
+            "debtor": _actor(original.find("ns:Dbtr", ns), ns) if original is not None else None,
+            "creditor": _actor(original.find("ns:Cdtr", ns), ns) if original is not None else None,
+        },
+        "financial": {
+            "settlement_amount": {
+                "value": _text(amount_node),
+                "currency": amount_node.get("Ccy") if amount_node is not None else None,
+            },
+            "charge_bearer": _text(original.find("ns:ChrgBr", ns)) if original is not None else "",
+        },
+        "references": references,
+        "remittance": {
+            "unstructured": [
+                _text(node) for node in original.findall("ns:RmtInf/ns:Ustrd", ns)
+            ]
+            if original is not None
+            else []
+        },
     }
 
 

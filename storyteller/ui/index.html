@@ -220,7 +220,7 @@
         <div class="kicker">ISO 20022 Micro-tools</div>
         <h1>Storyteller – Narrative Generator</h1>
         <p class="lede">
-          Paste or upload pacs.008 / pacs.009 / camt.053 XML, then generate paragraph and concise summaries for analysts.
+          Paste or upload ISO 20022 XML (pacs.008/009/002/004, camt.052/053/054), then generate paragraph and concise summaries for analysts.
           All parsing happens in your browser.
         </p>
       </header>
@@ -425,14 +425,10 @@
         const parsererror = doc.getElementsByTagName('parsererror');
         if (parsererror.length) throw new Error('Invalid XML. Please check formatting.');
 
-        const ns = doc.documentElement.namespaceURI || '';
-        let messageType = 'unknown';
-        if (/pacs\.008/.test(ns) || /pacs-008/.test(xml)) messageType = 'pacs.008';
-        else if (/pacs\.009/.test(ns) || /pacs-009/.test(xml)) messageType = 'pacs.009';
-        else if (/camt\.053/.test(ns) || /camt-053/.test(xml)) messageType = 'camt.053';
-
-        if (messageType === 'camt.053') {
-          return parseCamt053(doc, messageType);
+        const messageType = detectType(doc);
+        if (messageType === 'unknown') throw new Error('Unsupported or unrecognised ISO 20022 message type.');
+        if (messageType === 'camt.052' || messageType === 'camt.053' || messageType === 'camt.054') {
+          return parseStatement(doc, messageType);
         }
         return parsePayment(doc, messageType);
       }
@@ -442,7 +438,29 @@
         return el ? (el.textContent || '').trim() : '';
       }
 
+      function detectType(doc) {
+        const rootChild = doc.documentElement.firstElementChild;
+        const tag = (rootChild && rootChild.localName) || '';
+        if (tag === 'FIToFICstmrCdtTrf') return 'pacs.008';
+        if (tag === 'FICdtTrf') return 'pacs.009';
+        if (tag === 'FIToFIPmtStsRpt') return 'pacs.002';
+        if (tag === 'PmtRtr') return 'pacs.004';
+        if (tag === 'BkToCstmrStmt') return 'camt.053';
+        if (tag === 'BkToCstmrAcctRpt') return 'camt.052';
+        if (tag === 'BkToCstmrDbtCdtNtfctn') return 'camt.054';
+        return 'unknown';
+      }
+
       function parsePayment(doc, messageType) {
+        const tx =
+          messageType === 'pacs.002'
+            ? doc.querySelector('TxInfAndSts')
+            : messageType === 'pacs.004'
+              ? doc.querySelector('RtrTxInf')
+              : doc.querySelector('CdtTrfTxInf');
+        if (!tx) throw new Error('Missing transaction information');
+        const original = tx.querySelector('OrgnlTxRef');
+
         const payload = {
           message_type: messageType,
           actors: {},
@@ -452,45 +470,64 @@
           charges: {},
         };
 
-        payload.actors.debtor = buildActor(doc, 'Dbtr');
-        payload.actors.ultimate_debtor = buildActor(doc, 'UltmtDbtr');
-        payload.actors.creditor = buildActor(doc, 'Cdtr');
-        payload.actors.ultimate_creditor = buildActor(doc, 'UltmtCdtr');
-        payload.actors.debtor_agent = buildActor(doc, 'DbtrAgt');
-        payload.actors.creditor_agent = buildActor(doc, 'CdtrAgt');
-        payload.actors.intermediary1 = buildActor(doc, 'IntrmyAgt1');
-        payload.actors.intermediary2 = buildActor(doc, 'IntrmyAgt2');
+        const scope = original || tx;
+        payload.actors.debtor = buildActor(scope, 'Dbtr');
+        payload.actors.ultimate_debtor = buildActor(scope, 'UltmtDbtr');
+        payload.actors.creditor = buildActor(scope, 'Cdtr');
+        payload.actors.ultimate_creditor = buildActor(scope, 'UltmtCdtr');
+        payload.actors.debtor_agent = buildActor(scope, 'DbtrAgt');
+        payload.actors.creditor_agent = buildActor(scope, 'CdtrAgt');
+        payload.actors.intermediary1 = buildActor(scope, 'IntrmyAgt1');
+        payload.actors.intermediary2 = buildActor(scope, 'IntrmyAgt2');
 
         payload.financial.instructed_amount = {
-          amount: textContent(doc, 'InstdAmt'),
-          currency: doc.querySelector('InstdAmt')?.getAttribute('Ccy') || '',
+          amount: textContent(scope, 'InstdAmt'),
+          currency: scope.querySelector('InstdAmt')?.getAttribute('Ccy') || '',
         };
         payload.financial.settlement_amount = {
-          amount: textContent(doc, 'IntrBkSttlmAmt'),
-          currency: doc.querySelector('IntrBkSttlmAmt')?.getAttribute('Ccy') || '',
+          amount: textContent(scope, 'IntrBkSttlmAmt') || textContent(tx, 'Amt'),
+          currency:
+            scope.querySelector('IntrBkSttlmAmt')?.getAttribute('Ccy') ||
+            tx.querySelector('Amt')?.getAttribute('Ccy') ||
+            '',
         };
-        payload.financial.settlement_date = textContent(doc, 'IntrBkSttlmDt');
+        payload.financial.settlement_date = textContent(scope, 'IntrBkSttlmDt');
+        if (messageType === 'pacs.002') {
+          payload.status = textContent(tx, 'TxSts');
+          payload.status_reason = textContent(tx, 'StsRsnInf Rsn Cd');
+        }
+        if (messageType === 'pacs.004') {
+          payload.return_reason = textContent(tx, 'RtrRsnInf Rsn Cd');
+        }
 
         payload.references = {
-          end_to_end: textContent(doc, 'EndToEndId'),
-          instruction: textContent(doc, 'InstrId'),
-          transaction: textContent(doc, 'TxId'),
-          uetr: textContent(doc, 'UETR'),
+          end_to_end: textContent(scope, 'EndToEndId') || textContent(tx, 'OrgnlEndToEndId'),
+          instruction: textContent(scope, 'InstrId'),
+          transaction: textContent(scope, 'TxId'),
+          uetr: textContent(scope, 'UETR'),
         };
 
         payload.remittance = {
-          unstructured: textContent(doc, 'Ustrd'),
-          structured: textContent(doc, 'Strd') || '',
+          unstructured: Array.from(scope.querySelectorAll('RmtInf Ustrd')).map((n) => (n.textContent || '').trim()),
+          structured: textContent(scope, 'Strd') || '',
         };
 
         payload.charges = {
-          bearer: textContent(doc, 'ChrgBr'),
+          bearer: textContent(scope, 'ChrgBr'),
         };
 
         return payload;
       }
 
-      function parseCamt053(doc, messageType) {
+      function parseStatement(doc, messageType) {
+        const container =
+          messageType === 'camt.053'
+            ? doc.querySelector('Stmt')
+            : messageType === 'camt.052'
+              ? doc.querySelector('Rpt')
+              : doc.querySelector('Ntfctn');
+        if (!container) throw new Error('Missing statement/notification node');
+
         const payload = {
           message_type: messageType,
           account: {},
@@ -498,22 +535,23 @@
           entries: [],
         };
 
-        payload.account.iban = textContent(doc, 'Acct IBAN');
-        payload.account.owner = buildActor(doc, 'Acct Ownr');
+        payload.account.iban = textContent(container, 'Acct IBAN');
+        payload.account.owner = buildActor(container, 'Acct Ownr');
 
         payload.closing_balance = {
-          amount: textContent(doc, 'Bal Clsg BkTtlAmt'),
-          currency: doc.querySelector('Bal Clsg BkTtlAmt')?.getAttribute('Ccy') || '',
-          date: textContent(doc, 'Bal Clsg Dt'),
+          amount: textContent(container, 'Bal Clsg BkTtlAmt'),
+          currency: container.querySelector('Bal Clsg BkTtlAmt')?.getAttribute('Ccy') || '',
+          date: textContent(container, 'Bal Clsg Dt'),
         };
 
-        doc.querySelectorAll('Ntry').forEach((entry) => {
+        container.querySelectorAll('Ntry').forEach((entry) => {
           payload.entries.push({
             amount: textContent(entry, 'Amt'),
             currency: entry.querySelector('Amt')?.getAttribute('Ccy') || '',
             credit_debit: textContent(entry, 'CdtDbtInd'),
             booking_date: textContent(entry, 'BookgDt'),
             reference: textContent(entry, 'AcctSvcrRef') || textContent(entry, 'NtryRef'),
+            remittance: textContent(entry, 'Ustrd'),
           });
         });
 
@@ -542,7 +580,7 @@
       }
 
       function buildNarrative(payload) {
-        if (payload.message_type === 'camt.053') return buildCamt053Narrative(payload);
+        if (payload.message_type.startsWith('camt.05')) return buildCamtNarrative(payload);
         const payer = actorName(payload.actors.debtor || payload.actors.debtor_agent);
         const beneficiary = actorName(payload.actors.creditor);
         const amount = formatAmount(payload.financial.settlement_amount || payload.financial.instructed_amount);
@@ -550,19 +588,23 @@
         const uetr = payload.references.uetr || 'n/a';
         const rem = payload.remittance.unstructured || payload.remittance.structured || 'no remittance info provided';
         const bearer = payload.charges.bearer || 'n/a';
-        return `${payload.message_type}: ${payer} pays ${beneficiary} ${amount}. Reference ${ref}, UETR ${uetr}. Charges borne by ${bearer}. Remittance: ${rem}`;
+        const status = payload.status ? ` Status: ${payload.status}${payload.status_reason ? ` (${payload.status_reason})` : ''}.` : '';
+        const reason = payload.return_reason ? ` Return reason: ${payload.return_reason}.` : '';
+        return `${payload.message_type}: ${payer} pays ${beneficiary} ${amount}. Reference ${ref}, UETR ${uetr}. Charges borne by ${bearer}. Remittance: ${rem}.${status}${reason}`;
       }
 
       function buildConcise(payload) {
-        if (payload.message_type === 'camt.053') return buildCamt053Concise(payload);
+        if (payload.message_type.startsWith('camt.05')) return buildCamtConcise(payload);
         const payer = actorName(payload.actors.debtor || payload.actors.debtor_agent);
         const beneficiary = actorName(payload.actors.creditor);
         const amount = formatAmount(payload.financial.settlement_amount || payload.financial.instructed_amount);
         const bearer = payload.charges.bearer || 'n/a';
-        return `Type: ${payload.message_type}; Payer: ${payer}; Beneficiary: ${beneficiary}; Amount: ${amount}; Charges: ${bearer}`;
+        const status = payload.status ? `; Status: ${payload.status}` : '';
+        const reason = payload.status_reason || payload.return_reason ? `; Reason: ${payload.status_reason || payload.return_reason}` : '';
+        return `Type: ${payload.message_type}; Payer: ${payer}; Beneficiary: ${beneficiary}; Amount: ${amount}; Charges: ${bearer}${status}${reason}`;
       }
 
-      function buildCamt053Narrative(payload) {
+      function buildCamtNarrative(payload) {
         const owner = actorName(payload.account.owner);
         const iban = payload.account.iban || 'n/a';
         const closing = payload.closing_balance;
@@ -577,12 +619,12 @@
         return `Statement for ${owner} (${iban}) reports a closing balance of ${amount} on ${date}. The file lists ${entries.length} entries; examples include ${sampleText}.`;
       }
 
-      function buildCamt053Concise(payload) {
+      function buildCamtConcise(payload) {
         const owner = actorName(payload.account.owner);
         const iban = payload.account.iban || 'n/a';
         const closing = payload.closing_balance;
         const amount = closing && closing.amount ? `${closing.amount} ${closing.currency || ''}` : 'n/a';
-        return `Type: camt.053; Account: ${iban}; Owner: ${owner}; Closing balance: ${amount}; Entries: ${payload.entries.length}`;
+        return `Type: ${payload.message_type}; Account: ${iban}; Owner: ${owner}; Closing balance: ${amount}; Entries: ${payload.entries.length}`;
       }
 
       function renderResults(payload, narrative, concise) {
@@ -599,7 +641,16 @@
       function buildSummaryRows(payload) {
         const rows = [];
         rows.push(`<tr><th>Message type</th><td>${payload.message_type}</td></tr>`);
-        if (payload.message_type !== 'camt.053') {
+        if (payload.message_type.startsWith('camt.05')) {
+          rows.push(`<tr><th>Account</th><td>${payload.account && payload.account.iban}</td></tr>`);
+          rows.push(`<tr><th>Owner</th><td>${actorName(payload.account && payload.account.owner)}</td></tr>`);
+          rows.push(
+            `<tr><th>Closing balance</th><td>${
+              payload.closing_balance ? `${payload.closing_balance.amount} ${payload.closing_balance.currency || ''}` : 'n/a'
+            }</td></tr>`,
+          );
+          rows.push(`<tr><th>Entries</th><td>${payload.entries.length}</td></tr>`);
+        } else {
           const actors = payload.actors || {};
           rows.push(`<tr><th>Payer</th><td>${actorName(actors.debtor || actors.debtor_agent)}</td></tr>`);
           rows.push(`<tr><th>Beneficiary</th><td>${actorName(actors.creditor)}</td></tr>`);
@@ -607,10 +658,6 @@
           const refs = payload.references || {};
           rows.push(`<tr><th>Instruction ID</th><td>${refs.instruction || 'n/a'}</td></tr>`);
           rows.push(`<tr><th>UETR</th><td>${refs.uetr || 'n/a'}</td></tr>`);
-        } else {
-          rows.push(`<tr><th>Account</th><td>${payload.account && payload.account.iban}</td></tr>`);
-          rows.push(`<tr><th>Owner</th><td>${actorName(payload.account && payload.account.owner)}</td></tr>`);
-          rows.push(`<tr><th>Closing balance</th><td>${payload.closing_balance ? `${payload.closing_balance.amount} ${payload.closing_balance.currency || ''}` : 'n/a'}</td></tr>`);
         }
         return rows.join('');
       }

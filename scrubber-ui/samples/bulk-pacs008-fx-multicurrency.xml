@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>FX-MULTI-303</MsgId>
+      <CreDtTm>2025-01-18T15:30:00+00:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>EURO-FX-303</InstrId>
+        <EndToEndId>FX-PO-1188</EndToEndId>
+        <TxId>EURODEMM-FX-303</TxId>
+        <UETR>523985e7-b52c-4185-9341-ebf2b4fed31a</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="USD">875000.00</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-01-18</IntrBkSttlmDt><ChrgBr>SHAR</ChrgBr>
+
+        <InstgAgt><FinInstnId><BICFI>EURODEMMXXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>PRIMSGSGXXX</BICFI></FinInstnId></InstdAgt><IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>CITIUS33XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+
+      <Dbtr>
+        <Nm>EuroTech Manufacturing GmbH</Nm>
+        <PstlAdr>
+          <StrtNm>Industriestrasse 5</StrtNm>
+          <PstCd>80331</PstCd>
+        <TwnNm>Munich</TwnNm>
+          <Ctry>DE</Ctry>
+          </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>DE12500105170648489890</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>EURODEMMXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <CdtrAgt>
+        <FinInstnId>
+          <BICFI>PRIMSGSGXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Pacific Rim Logistics</Nm>
+        <PstlAdr>
+          <StrtNm>8 Harbour Drive</StrtNm>
+          <PstCd>117540</PstCd>
+        <TwnNm>Singapore</TwnNm>
+          <Ctry>SG</Ctry>
+          </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>SG58PRIM000000156545</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>FX payment for PO1188</Ustrd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

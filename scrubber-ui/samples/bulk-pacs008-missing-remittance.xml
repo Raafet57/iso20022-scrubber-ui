@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>NO-REM-101</MsgId>
+      <CreDtTm>2025-02-22T17:00:00+00:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>MDW-101</InstrId>
+        <EndToEndId>MDWE2E101</EndToEndId>
+        <TxId>MDWESTUS-101</TxId>
+        <UETR>a37f8dc7-fc6f-4372-a9c6-3800908f70e3</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="USD">425000.00</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-02-22</IntrBkSttlmDt><ChrgBr>SHAR</ChrgBr>
+
+
+      <InstgAgt><FinInstnId><BICFI>MDWESTUSXXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>SVBKUS6SXXX</BICFI></FinInstnId></InstdAgt><Dbtr>
+        <Nm>Midwest Holdings</Nm>
+        <PstlAdr>
+          <StrtNm>455 Main Street</StrtNm>
+          <PstCd>60601</PstCd>
+        <TwnNm>Chicago</TwnNm>
+          <Ctry>US</Ctry>
+          </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>US89MDWE00004567890123</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>MDWESTUSXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>SVBKUS6SXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Pacific Digital Corp</Nm>
+        <PstlAdr>
+          <StrtNm>888 Howard Street</StrtNm>
+          <PstCd>94103</PstCd>
+        <TwnNm>San Francisco</TwnNm>
+          <Ctry>US</Ctry>
+          </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>US07SVBK00000012000001</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

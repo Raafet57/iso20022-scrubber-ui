@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>UAT-008-001</MsgId>
+      <CreDtTm>2025-03-12T12:00:00+00:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>UAT-001</InstrId>
+        <EndToEndId>UAT-E2E-001</EndToEndId>
+        <TxId>TESTUS33-001</TxId>
+        <UETR>d5d2c8fe-ddb4-43d8-9962-5a3cecc36c73</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="USD">1234.56</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-03-12</IntrBkSttlmDt><ChrgBr>SHAR</ChrgBr>
+
+
+        <InstgAgt><FinInstnId><BICFI>TESTUS33XXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>EXAMGB21XXX</BICFI></FinInstnId></InstdAgt><UltmtDbtr>
+          <Nm>Sample Holdings</Nm>
+        </UltmtDbtr>
+
+      <Dbtr>
+        <Nm>Test Sender Inc</Nm>
+        <PstlAdr>
+          <StrtNm>123 Test Lane</StrtNm>
+          <PstCd>12345</PstCd>
+        <TwnNm>Test City</TwnNm>
+          <Ctry>US</Ctry>
+          </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>US00TEST00000012345678</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>TESTUS33XXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+      <CdtrAgt>
+        <FinInstnId>
+          <BICFI>EXAMGB21XXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Test Receiver Ltd</Nm>
+        <PstlAdr>
+          <StrtNm>789 Example Road</StrtNm>
+          <PstCd>E1 1AA</PstCd>
+        <TwnNm>Example City</TwnNm>
+          <Ctry>GB</Ctry>
+          </PstlAdr>
+      </Cdtr>
+
+        <CdtrAcct>
+        <Id>
+          <IBAN>GB29EXAM60161331926819</IBAN>
+        </Id>
+      </CdtrAcct>
+      <UltmtCdtr>
+          <Nm>Sample Subsidiary</Nm>
+        </UltmtCdtr>
+
+      <RmtInf>
+        <Ustrd>Sample narrative for UAT</Ustrd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

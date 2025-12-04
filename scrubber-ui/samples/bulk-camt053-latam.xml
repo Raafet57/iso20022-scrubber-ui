@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<camt:Document xmlns:camt="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08">
+  <camt:BkToCstmrStmt>
+    <camt:GrpHdr>
+      <camt:MsgId>C53-LATAM-010</camt:MsgId>
+      <camt:CreDtTm>2025-02-28T21:00:00-03:00</camt:CreDtTm>
+    </camt:GrpHdr>
+    <camt:Stmt><camt:Id>LATAM-DAILY-010</camt:Id>
+      <camt:StmtPgntn><camt:PgNb>1</camt:PgNb><camt:LastPgInd>true</camt:LastPgInd></camt:StmtPgntn><camt:CreDtTm>2025-02-28T21:00:00-03:00</camt:CreDtTm>
+      <camt:Acct>
+        <camt:Id>
+          <camt:IBAN>CO1230000000123456789</camt:IBAN>
+        </camt:Id>
+        <camt:Ccy>THB</camt:Ccy><camt:Ownr>
+          <camt:Nm>Andes Commodities</camt:Nm>
+        </camt:Ownr>
+      </camt:Acct>
+      <camt:Bal>
+        <camt:Tp><camt:CdOrPrtry><camt:Cd>CLBD</camt:Cd></camt:CdOrPrtry></camt:Tp>
+        <camt:Amt Ccy="USD">780000.00</camt:Amt>
+        <camt:CdtDbtInd>CRDT</camt:CdtDbtInd>
+        <camt:Dt><camt:Dt>2025-02-28</camt:Dt></camt:Dt>
+      </camt:Bal>
+
+        <camt:Ntry><camt:Amt Ccy="USD">500000.00</camt:Amt>
+          <camt:CdtDbtInd>CRDT</camt:CdtDbtInd>
+          <camt:Sts><camt:Cd>BOOK</camt:Cd></camt:Sts><camt:BookgDt><camt:Dt>2025-02-28</camt:Dt></camt:BookgDt>
+          <camt:ValDt><camt:Dt>2025-02-28</camt:Dt></camt:ValDt>
+          <camt:AcctSvcrRef>LATAM-REF-010A</camt:AcctSvcrRef>
+          <camt:BkTxCd><camt:Domn><camt:Cd>PMNT</camt:Cd><camt:Fmly><camt:Cd>RCDT</camt:Cd><camt:SubFmlyCd>ESCT</camt:SubFmlyCd></camt:Fmly></camt:Domn></camt:BkTxCd><camt:NtryDtls>
+            <camt:TxDtls><camt:Refs><camt:AcctSvcrRef>LATAM-REF-010A</camt:AcctSvcrRef></camt:Refs><camt:Amt Ccy="USD">500000.00</camt:Amt><camt:CdtDbtInd>CRDT</camt:CdtDbtInd><camt:RltdPties>
+                <camt:Cdtr>
+                  <camt:Pty><camt:Nm>Lisbon Metals SA</camt:Nm>
+                </camt:Pty></camt:Cdtr>
+              </camt:RltdPties>
+              <camt:RmtInf>
+                <camt:Ustrd>Inbound concentrate payment</camt:Ustrd>
+              </camt:RmtInf>
+            </camt:TxDtls></camt:NtryDtls>
+        </camt:Ntry><camt:Ntry><camt:Amt Ccy="USD">320000.00</camt:Amt>
+          <camt:CdtDbtInd>DBIT</camt:CdtDbtInd>
+          <camt:Sts><camt:Cd>BOOK</camt:Cd></camt:Sts><camt:BookgDt><camt:Dt>2025-02-28</camt:Dt></camt:BookgDt>
+          <camt:ValDt><camt:Dt>2025-02-28</camt:Dt></camt:ValDt>
+          <camt:AcctSvcrRef>LATAM-REF-010B</camt:AcctSvcrRef>
+          <camt:BkTxCd><camt:Domn><camt:Cd>PMNT</camt:Cd><camt:Fmly><camt:Cd>RCDT</camt:Cd><camt:SubFmlyCd>ESCT</camt:SubFmlyCd></camt:Fmly></camt:Domn></camt:BkTxCd><camt:NtryDtls>
+            <camt:TxDtls><camt:Refs><camt:AcctSvcrRef>LATAM-REF-010B</camt:AcctSvcrRef></camt:Refs><camt:Amt Ccy="USD">320000.00</camt:Amt><camt:CdtDbtInd>DBIT</camt:CdtDbtInd><camt:RltdPties>
+                <camt:Cdtr>
+                  <camt:Pty><camt:Nm>Logistics Partner</camt:Nm>
+                </camt:Pty></camt:Cdtr>
+              </camt:RltdPties>
+              <camt:RmtInf>
+                <camt:Ustrd>Shipping costs</camt:Ustrd>
+              </camt:RmtInf>
+            </camt:TxDtls></camt:NtryDtls>
+        </camt:Ntry></camt:Stmt></camt:BkToCstmrStmt>
+</camt:Document>

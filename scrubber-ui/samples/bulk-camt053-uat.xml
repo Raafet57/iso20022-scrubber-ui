@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<camt:Document xmlns:camt="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08">
+  <camt:BkToCstmrStmt>
+    <camt:GrpHdr>
+      <camt:MsgId>C53-UAT-001</camt:MsgId>
+      <camt:CreDtTm>2025-03-10T00:00:00+00:00</camt:CreDtTm>
+    </camt:GrpHdr>
+    <camt:Stmt><camt:Id>UAT-STATEMENT-1</camt:Id>
+      <camt:StmtPgntn><camt:PgNb>1</camt:PgNb><camt:LastPgInd>true</camt:LastPgInd></camt:StmtPgntn><camt:CreDtTm>2025-03-10T00:00:00+00:00</camt:CreDtTm>
+      <camt:Acct>
+        <camt:Id>
+          <camt:IBAN>GB12HMBK40127688990011</camt:IBAN>
+        </camt:Id>
+        <camt:Ccy>THB</camt:Ccy><camt:Ownr>
+          <camt:Nm>Harmony Treasury UK</camt:Nm>
+        </camt:Ownr>
+      </camt:Acct>
+      <camt:Bal>
+        <camt:Tp><camt:CdOrPrtry><camt:Cd>CLBD</camt:Cd></camt:CdOrPrtry></camt:Tp>
+        <camt:Amt Ccy="GBP">1125000.00</camt:Amt>
+        <camt:CdtDbtInd>CRDT</camt:CdtDbtInd>
+        <camt:Dt><camt:Dt>2025-03-09</camt:Dt></camt:Dt>
+      </camt:Bal>
+
+        <camt:Ntry><camt:Amt Ccy="GBP">125000.00</camt:Amt>
+          <camt:CdtDbtInd>CRDT</camt:CdtDbtInd>
+          <camt:Sts><camt:Cd>BOOK</camt:Cd></camt:Sts><camt:BookgDt><camt:Dt>2025-03-09</camt:Dt></camt:BookgDt>
+          <camt:ValDt><camt:Dt>2025-03-09</camt:Dt></camt:ValDt>
+          <camt:AcctSvcrRef>UAT-REF-001</camt:AcctSvcrRef>
+          <camt:BkTxCd><camt:Domn><camt:Cd>PMNT</camt:Cd><camt:Fmly><camt:Cd>RCDT</camt:Cd><camt:SubFmlyCd>ESCT</camt:SubFmlyCd></camt:Fmly></camt:Domn></camt:BkTxCd><camt:NtryDtls>
+            <camt:TxDtls><camt:Refs><camt:AcctSvcrRef>UAT-REF-001</camt:AcctSvcrRef></camt:Refs><camt:Amt Ccy="GBP">125000.00</camt:Amt><camt:CdtDbtInd>CRDT</camt:CdtDbtInd><camt:RltdPties>
+                <camt:Cdtr>
+                  <camt:Pty><camt:Nm>Test Sender Inc</camt:Nm>
+                </camt:Pty></camt:Cdtr>
+              </camt:RltdPties>
+              <camt:RmtInf>
+                <camt:Ustrd>Inbound FX leg</camt:Ustrd>
+              </camt:RmtInf>
+            </camt:TxDtls></camt:NtryDtls>
+        </camt:Ntry></camt:Stmt></camt:BkToCstmrStmt>
+</camt:Document>

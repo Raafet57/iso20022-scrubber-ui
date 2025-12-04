@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>GBP-PRIORITY-014</MsgId>
+      <CreDtTm>2025-03-03T11:20:00+00:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>GBP-PRIO-14</InstrId>
+        <EndToEndId>CAPEX-NZ-14</EndToEndId>
+        <TxId>HMBKGB2L-PRIO-14</TxId>
+        <UETR>3ae5de0f-b4c4-4572-8732-b0d8ddc9710d</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="GBP">1125000.00</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-03-03</IntrBkSttlmDt><ChrgBr>SHAR</ChrgBr>
+
+
+      <InstgAgt><FinInstnId><BICFI>HMBKGB2LXXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>ANZBNZ22XXX</BICFI></FinInstnId></InstdAgt><IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>ANZBNZ22XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+
+      <Dbtr>
+        <Nm>Harmony Treasury UK</Nm>
+        <PstlAdr>
+          <StrtNm>5 Bishopsgate</StrtNm>
+          <PstCd>EC2N4AJ</PstCd>
+        <TwnNm>London</TwnNm>
+          <Ctry>GB</Ctry>
+          </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>GB12HMBK40127688990011</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKGB2LXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <CdtrAgt>
+        <FinInstnId>
+          <BICFI>ANZBNZ22XXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Auckland Infrastructure Ltd</Nm>
+        <PstlAdr>
+          <StrtNm>45 High Street</StrtNm>
+          <PstCd>1010</PstCd>
+        <TwnNm>Auckland</TwnNm>
+          <Ctry>NZ</Ctry>
+          </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>NZ26ANZB0000001234567</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Bridge financing tranche 14</Ustrd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

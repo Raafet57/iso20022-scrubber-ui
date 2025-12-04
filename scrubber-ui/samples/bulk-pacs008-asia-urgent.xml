@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>ASIA-URGENT-001</MsgId>
+      <CreDtTm>2025-03-21T04:05:00+07:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>TH-PRIO-001</InstrId>
+        <EndToEndId>INV-TH-778</EndToEndId>
+        <TxId>HMBKTH-PRIO-001</TxId>
+        <UETR>2b03ce3a-ada8-44f4-aed9-e84c727e406d</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="THB">1450000.75</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-03-21</IntrBkSttlmDt><ChrgBr>SHAR</ChrgBr>
+
+
+      <InstgAgt><FinInstnId><BICFI>HMBKTH2BXXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>MEGAHKHHXXX</BICFI></FinInstnId></InstdAgt><IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>BKTRUS33XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+
+      <Dbtr>
+        <Nm>Harmony Industrial Thai</Nm>
+        <PstlAdr>
+          <StrtNm>99 Narathiwas Road</StrtNm>
+          <PstCd>10120</PstCd>
+        <TwnNm>Bangkok</TwnNm>
+          <Ctry>TH</Ctry>
+          </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>TH12009988001234567890</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKTH2BXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <CdtrAgt>
+        <FinInstnId>
+          <BICFI>MEGAHKHHXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Mega Components SDN BHD</Nm>
+        <PstlAdr>
+          <StrtNm>12 Jalan Bangsar</StrtNm>
+          <PstCd>59000</PstCd>
+        <TwnNm>Kuala Lumpur</TwnNm>
+          <Ctry>MY</Ctry>
+          </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>MY12MEGA00001234005678</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Urgent tooling prepayment</Ustrd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

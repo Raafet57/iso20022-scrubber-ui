@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>EU-COVER-092</MsgId>
+      <CreDtTm>2025-02-11T09:00:00+01:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>BNP-COVER-092</InstrId>
+        <EndToEndId>SE-PO-7782</EndToEndId>
+        <TxId>BNPAFRPPBXL-2025-92</TxId>
+        <UETR>3f150059-812e-4a77-bc85-8c925caf1bcd</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="EUR">250000.00</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-02-11</IntrBkSttlmDt><ChrgBr>SHAR</ChrgBr>
+
+
+      <InstgAgt><FinInstnId><BICFI>BNPAFRPPBXL</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>HARMSESSXXX</BICFI></FinInstnId></InstdAgt><IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>DEUTDEFFXXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+
+        <IntrmyAgt2>
+          <FinInstnId>
+            <BICFI>HMBKUS44GAR</BICFI>
+          </FinInstnId>
+        </IntrmyAgt2>
+
+      <Dbtr>
+        <Nm>BNP Paribas Brussels</Nm>
+        <PstlAdr>
+          <StrtNm>16 Rue Royale</StrtNm>
+          <PstCd>1000</PstCd>
+        <TwnNm>Brussels</TwnNm>
+          <Ctry>BE</Ctry>
+          </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>BE56001100445566</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>BNPAFRPPBXL</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <CdtrAgt>
+        <FinInstnId>
+          <BICFI>HARMSESSXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Harmony Nordic AB</Nm>
+        <PstlAdr>
+          <StrtNm>Sveavagen 15</StrtNm>
+          <PstCd>11157</PstCd>
+        <TwnNm>Stockholm</TwnNm>
+          <Ctry>SE</Ctry>
+          </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>SE4780000456789001234567</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Cover for purchase order 7782</Ustrd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

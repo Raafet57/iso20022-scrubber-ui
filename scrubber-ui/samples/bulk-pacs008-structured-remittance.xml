@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>STRUCT-077</MsgId>
+      <CreDtTm>2025-04-02T08:00:00+02:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>STRUCT-077</InstrId>
+        <EndToEndId>RF18539007520034000011</EndToEndId>
+        <TxId>BNPAFRPPCHS-077</TxId>
+        <UETR>3beeaf3e-af46-4c1f-aa42-c98b23b322ed</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="EUR">65000.25</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-04-02</IntrBkSttlmDt><ChrgBr>SHAR</ChrgBr>
+
+
+      <InstgAgt><FinInstnId><BICFI>BNPAFRPPCHS</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>AVIOITM1XXX</BICFI></FinInstnId></InstdAgt><IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>BNPAFRPPCRT</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+
+      <Dbtr>
+        <Nm>BNP Paribas Chartres</Nm>
+        <PstlAdr>
+          <StrtNm>12 Rue du Docteur Mazet</StrtNm>
+          <PstCd>28000</PstCd>
+        <TwnNm>Chartres</TwnNm>
+          <Ctry>FR</Ctry>
+          </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>FR7610096000301234567890188</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>BNPAFRPPCHS</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <CdtrAgt>
+        <FinInstnId>
+          <BICFI>AVIOITM1XXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>AVIO S.P.A.</Nm>
+        <PstlAdr>
+          <StrtNm>VIA MAURO MACCHI 27</StrtNm>
+          <PstCd>20124</PstCd>
+        <TwnNm>MILANO</TwnNm>
+          <Ctry>IT</Ctry>
+          </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>IT40X0100501600000001234567</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+
+
+        <Strd>
+          <CdtrRefInf>
+            <Ref>RF18539007520034000011</Ref>
+          </CdtrRefInf>
+        </Strd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

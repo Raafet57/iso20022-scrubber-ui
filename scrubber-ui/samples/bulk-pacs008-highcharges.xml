@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+  <FIToFICstmrCdtTrf>
+    <GrpHdr>
+      <MsgId>CHARGES-222</MsgId>
+      <CreDtTm>2025-01-12T09:15:00+08:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <SttlmInf>
+        <SttlmMtd>INDA</SttlmMtd>
+      </SttlmInf>
+    </GrpHdr>
+    <CdtTrfTxInf>
+      <PmtId>
+        <InstrId>MAN-222</InstrId>
+        <EndToEndId>SYD-222</EndToEndId>
+        <TxId>HMBKPHMM-222</TxId>
+        <UETR>d07053c0-01ea-4add-b4e4-ca5dccd1eb66</UETR>
+      </PmtId>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+        </PmtTpInf>
+      <IntrBkSttlmAmt Ccy="USD">310000.00</IntrBkSttlmAmt>
+      <IntrBkSttlmDt>2025-01-12</IntrBkSttlmDt><ChrgBr>SHAR</ChrgBr>
+
+
+      <InstgAgt><FinInstnId><BICFI>HMBKPHMMXXX</BICFI></FinInstnId></InstgAgt><InstdAgt><FinInstnId><BICFI>WPACAU2SXXX</BICFI></FinInstnId></InstdAgt><IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>CITIUS33XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+
+        <IntrmyAgt2>
+          <FinInstnId>
+            <BICFI>WPACAU2SXXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt2>
+
+      <Dbtr>
+        <Nm>Harmony Bank Manila</Nm>
+        <PstlAdr>
+          <StrtNm>23 Ayala Avenue</StrtNm>
+          <PstCd>1226</PstCd>
+        <TwnNm>Makati</TwnNm>
+          <Ctry>PH</Ctry>
+          </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>PH56HMBK00000078901234</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>HMBKPHMMXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+
+        <CdtrAgt>
+        <FinInstnId>
+          <BICFI>WPACAU2SXXX</BICFI>
+        </FinInstnId>
+      </CdtrAgt>
+      <Cdtr>
+        <Nm>Sydney Harbour Services</Nm>
+        <PstlAdr>
+          <StrtNm>48 Barangaroo</StrtNm>
+          <PstCd>2000</PstCd>
+        <TwnNm>Sydney</TwnNm>
+          <Ctry>AU</Ctry>
+          </PstlAdr>
+      </Cdtr>
+
+      <CdtrAcct>
+        <Id>
+          <IBAN>AU12099998887776665000</IBAN>
+        </Id>
+      </CdtrAcct>
+      <RmtInf>
+        <Ustrd>Maritime services retainer</Ustrd>
+
+      </RmtInf>
+    </CdtTrfTxInf>
+  </FIToFICstmrCdtTrf>
+</Document>

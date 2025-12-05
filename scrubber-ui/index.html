@@ -224,19 +224,12 @@
               <h2 class="text-lg font-semibold">Results</h2>
               <p class="text-slate-500 text-sm">Review anonymized XML, diffs, and mapping.</p>
             </div>
-            <div class="flex flex-wrap gap-2 items-center">
-              <div id="validationStatus" class="text-xs px-3 py-2 rounded-lg bg-slate-800 text-slate-200 hidden"></div>
+            <div class="flex gap-2">
               <button class="btn btn-secondary bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" id="copyButton" disabled>
                 Copy XML
               </button>
               <button class="btn btn-secondary bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" id="downloadButton" disabled>
                 Download XML
-              </button>
-              <button class="btn btn-secondary bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" id="exportJsonButton" disabled>
-                Export map (JSON)
-              </button>
-              <button class="btn btn-secondary bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" id="exportCsvButton" disabled>
-                Export map (CSV)
               </button>
             </div>
           </div>
@@ -245,10 +238,7 @@
           <div id="resultsEmpty" class="text-slate-500 text-sm">Run the scrubber to visualize results.</div>
 
           <div id="resultsContainer" class="hidden space-y-4">
-            <div>
-              <div class="text-xs uppercase tracking-wide text-slate-500 mb-2">PII coverage</div>
-              <div class="grid grid-cols-2 md:grid-cols-3 gap-2" id="statsContainer"></div>
-            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2" id="statsContainer"></div>
 
             <div class="flex gap-2">
               <button class="tab-button active bg-slate-800 text-slate-100 px-3 py-2 rounded-lg" data-tab="output">
@@ -299,9 +289,6 @@
       const outputXml = document.getElementById('outputXml');
       const copyButton = document.getElementById('copyButton');
       const downloadButton = document.getElementById('downloadButton');
-      const exportJsonButton = document.getElementById('exportJsonButton');
-      const exportCsvButton = document.getElementById('exportCsvButton');
-      const validationStatus = document.getElementById('validationStatus');
       const statsContainer = document.getElementById('statsContainer');
       const mappingTable = document.getElementById('mappingTable');
       const diffContainer = document.getElementById('diffContainer');
@@ -328,81 +315,6 @@
         diff: document.getElementById('tab-diff'),
         mapping: document.getElementById('tab-mapping'),
       };
-
-      const schemaMap = {
-        'urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08':
-          'https://raw.githubusercontent.com/Raafet57/iso_micro/main/reference/cbpr_guides/CBPRPlus_SR2025_(Combined)_CBPRPlus-MySelection_EnrichedXMLSchema_UG_UG_export_20251202_060819/CBPRPlus_SR2025_(Combined)_CBPRPlus-pacs_008_001_08_FIToFICustomerCreditTransfer_20251202_0608_iso15enriched.xsd',
-        'urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08':
-          'https://raw.githubusercontent.com/Raafet57/iso_micro/main/reference/cbpr_guides/CBPRPlus_SR2025_(Combined)_CBPRPlus-MySelection_EnrichedXMLSchema_UG_UG_export_20251202_060819/CBPRPlus_SR2025_(Combined)_CBPRPlus-pacs_009_001_08_FinancialInstitutionCreditTransfer_20251202_0608_iso15enriched.xsd',
-        'urn:iso:std:iso:20022:tech:xsd:pacs.004.001.09':
-          'https://raw.githubusercontent.com/Raafet57/iso_micro/main/reference/cbpr_guides/CBPRPlus_SR2025_(Combined)_CBPRPlus-MySelection_EnrichedXMLSchema_UG_UG_export_20251202_060819/CBPRPlus_SR2025_(Combined)_CBPRPlus-pacs_004_001_09_PaymentReturn_20251202_0608_iso15enriched.xsd',
-        'urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10':
-          'https://raw.githubusercontent.com/Raafet57/iso_micro/main/reference/cbpr_guides/CBPRPlus_SR2025_(Combined)_CBPRPlus-MySelection_EnrichedXMLSchema_UG_UG_export_20251202_060819/CBPRPlus_SR2025_(Combined)_CBPRPlus-pacs_002_001_10_FIToFIPaymentStatusReport_20251202_0608_iso15enriched.xsd',
-        'urn:iso:std:iso:20022:tech:xsd:camt.052.001.08':
-          'https://raw.githubusercontent.com/Raafet57/iso_micro/main/reference/cbpr_guides/CBPRPlus_SR2025_(Combined)_CBPRPlus-MySelection_EnrichedXMLSchema_UG_UG_export_20251202_060819/CBPRPlus_SR2025_(Combined)_CBPRPlus-camt_052_001_08_BankToCustomerAccountReport_20251202_0608_iso15enriched.xsd',
-        'urn:iso:std:iso:20022:tech:xsd:camt.053.001.08':
-          'https://raw.githubusercontent.com/Raafet57/iso_micro/main/reference/cbpr_guides/CBPRPlus_SR2025_(Combined)_CBPRPlus-MySelection_EnrichedXMLSchema_UG_UG_export_20251202_060819/CBPRPlus_SR2025_(Combined)_CBPRPlus-camt_053_001_08_BankToCustomerStatement_20251202_0608_iso15enriched.xsd',
-        'urn:iso:std:iso:20022:tech:xsd:camt.054.001.08':
-          'https://raw.githubusercontent.com/Raafet57/iso_micro/main/reference/cbpr_guides/CBPRPlus_SR2025_(Combined)_CBPRPlus-MySelection_EnrichedXMLSchema_UG_UG_export_20251202_060819/CBPRPlus_SR2025_(Combined)_CBPRPlus-camt_054_001_08_BankToCustomerDebitCreditNotification_20251202_0608_iso15enriched.xsd',
-      };
-      const schemaCache = new Map();
-      let xmllintReady;
-      let lastResult = null;
-
-      function setValidationStatus(message, tone = 'info') {
-        validationStatus.classList.remove('hidden', 'bg-emerald-900/60', 'bg-amber-900/60', 'bg-red-900/60', 'text-emerald-200', 'text-amber-200', 'text-red-200');
-        if (!message) {
-          validationStatus.classList.add('hidden');
-          return;
-        }
-        const palette =
-          tone === 'success'
-            ? ['bg-emerald-900/60', 'text-emerald-200']
-            : tone === 'warning'
-              ? ['bg-amber-900/60', 'text-amber-200']
-              : ['bg-red-900/60', 'text-red-200'];
-        validationStatus.classList.add(...palette);
-        validationStatus.textContent = message;
-      }
-
-      async function loadXmllint() {
-        if (xmllintReady) return xmllintReady;
-        xmllintReady = import('https://unpkg.com/xmllint-wasm@1.2.1/xmllint.js').then((mod) =>
-          mod.default ? mod.default() : mod(),
-        );
-        return xmllintReady;
-      }
-
-      async function fetchSchema(ns) {
-        const url = schemaMap[ns];
-        if (!url) throw new Error('Unsupported namespace for validation');
-        if (schemaCache.has(ns)) return schemaCache.get(ns);
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`Schema fetch failed (${res.status})`);
-        const text = await res.text();
-        schemaCache.set(ns, text);
-        return text;
-      }
-
-      async function validateXml(xml) {
-        try {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(xml, 'application/xml');
-          if (doc.getElementsByTagName('parsererror').length) {
-            throw new Error('Invalid XML structure');
-          }
-          const ns = doc.documentElement.namespaceURI || '';
-          const schema = await fetchSchema(ns);
-          const { validateXML } = await loadXmllint();
-          const result = validateXML({ xml, schema });
-          if (result.errors && result.errors.length) {
-            throw new Error(result.errors.slice(0, 3).join('; '));
-          }
-          return { ok: true, namespace: ns };
-        } catch (err) {
-          return { ok: false, error: err.message || String(err) };
-        }
-      }
 
       const coreBankingApi = (() => {
         let config = {
@@ -740,37 +652,6 @@
         });
       }
 
-      function exportMapping(format) {
-        if (!lastResult || !lastResult.mapping || lastResult.mapping.length === 0) return;
-        if (format === 'json') {
-          const blob = new Blob([JSON.stringify(lastResult.mapping, null, 2)], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'scrubber-mapping.json';
-          link.click();
-          URL.revokeObjectURL(url);
-          return;
-        }
-        if (format === 'csv') {
-          const header = 'type,original,replacement,tag\n';
-          const rows = lastResult.mapping
-            .map((m) =>
-              [m.type, m.original.replace(/"/g, '""'), m.replacement.replace(/"/g, '""'), m.tag]
-                .map((cell) => `"${cell}"`)
-                .join(','),
-            )
-            .join('\n');
-          const blob = new Blob([header + rows], { type: 'text/csv' });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'scrubber-mapping.csv';
-          link.click();
-          URL.revokeObjectURL(url);
-        }
-      }
-
       async function handleScrub() {
         const xml = inputXml.value.trim();
         if (!xml) {
@@ -782,7 +663,6 @@
         loader.classList.remove('hidden');
         resultsEmpty.classList.add('hidden');
         resultsContainer.classList.add('hidden');
-        setValidationStatus('');
         try {
           const result = scrubXml(xml, {
             consistency: consistencyToggle.checked,
@@ -790,7 +670,6 @@
             shiftDates: shiftToggle.checked,
             dateOffset: shiftToggle.checked ? Number(shiftDays.value) || 0 : 0,
           });
-          lastResult = { ...result, original: xml };
           outputXml.value = result.output;
           renderStats(result.stats);
           renderMapping(
@@ -802,15 +681,6 @@
           renderDiff(computeDiff(xml, result.output));
           copyButton.disabled = false;
           downloadButton.disabled = false;
-          exportJsonButton.disabled = result.mapping.length === 0;
-          exportCsvButton.disabled = result.mapping.length === 0;
-          setValidationStatus('Validating against CBPR+ schema…', 'warning');
-          const validation = await validateXml(result.output);
-          if (validation.ok) {
-            setValidationStatus('Schema valid (CBPR+ SR2025)', 'success');
-          } else {
-            setValidationStatus(`Schema validation failed: ${validation.error}`, 'error');
-          }
           resultsContainer.classList.remove('hidden');
         } catch (err) {
           console.error(err);
@@ -842,9 +712,6 @@
         link.click();
         URL.revokeObjectURL(url);
       });
-
-      exportJsonButton.addEventListener('click', () => exportMapping('json'));
-      exportCsvButton.addEventListener('click', () => exportMapping('csv'));
     </script>
   </body>
 </html>

@@ -1,13 +1,14 @@
 .DS_Store
 
-# Licensed reference datasets (do not commit)
-reference/
-scrubber-ui/reference/
-
-# Untracked personal/docs and duplicated UI copies
+# Non-scrubber modules (keep scrubber-ui self contained)
 about_me/
-scrubber-ui/.replit
-scrubber-ui/scrubber-ui/
+docs/
+reference/
+storyteller/
+tools/
 test-write
-scrubber-ui/README.md
-scrubber-ui/docs/
+ISO20022_MicroTools_PRD*
+
+# Duplicate/static copies we do not version
+scrubber-ui/scrubber-ui/
+scrubber-ui/.replit
